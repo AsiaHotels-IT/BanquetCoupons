@@ -16,7 +16,7 @@ class Program
         {
             Console.WriteLine($"{item.Key} = {item.Value}");
         }
-        MessageBox.Show("Connect success");
+        //MessageBox.Show("Connect success");
 
         string connectionString = $"Server={config["Server"]};Database={config["Database"]};User Id={config["User"]};Password={config["Password"]};";
         Console.WriteLine("\n Connection String: ");
