@@ -58,6 +58,12 @@
     <Compile Include="BanquetDepartment.Designer.cs">
       <DependentUpon>BanquetDepartment.cs</DependentUpon>
     </Compile>
+    <Compile Include="CouponsPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CouponsPage.Designer.cs">
+      <DependentUpon>CouponsPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="FinanceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,11 +91,23 @@
     <Compile Include="service.Designer.cs">
       <DependentUpon>service.cs</DependentUpon>
     </Compile>
+    <Compile Include="BQHome.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BQHome.Designer.cs">
+      <DependentUpon>BQHome.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BanquetDepartment.resx">
       <DependentUpon>BanquetDepartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BQHome.resx">
+      <DependentUpon>BQHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CouponsPage.resx">
+      <DependentUpon>CouponsPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FinanceForm.resx">
       <DependentUpon>FinanceForm.cs</DependentUpon>
@@ -133,6 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\485137362_1078058621033379_2208115647579356284_n.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Asia-Hotel-Logo11.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

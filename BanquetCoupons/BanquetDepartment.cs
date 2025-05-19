@@ -23,5 +23,13 @@ namespace BanquetCoupons
             loginForm.Show();
             this.Close();
         }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            panelContent.Controls.Clear(); // เคลียร์ของเก่า
+            BQHome bQHome = new BQHome();
+            bQHome.Dock = DockStyle.Fill;
+            panelContent.Controls.Add(bQHome);
+        }
     }
 }
