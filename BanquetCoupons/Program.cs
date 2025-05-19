@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BanquetCoupons;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,5 +22,9 @@ class Program
         string connectionString = $"Server={config["Server"]};Database={config["Database"]};User Id={config["User"]};Password={config["Password"]};";
         Console.WriteLine("\n Connection String: ");
         Console.WriteLine(connectionString);
+
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new Form1()); // เรียกฟอร์มหลัก
     }
 }
