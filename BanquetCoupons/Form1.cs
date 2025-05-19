@@ -40,7 +40,7 @@ namespace BanquetCoupons
                 {
                     conn.Open();
 
-                    string sql = "SELECT * FROM ReprintCoupons"; // เปลี่ยนชื่อ ตารางตามจริง
+                    string sql = "SELECT * FROM Users"; // เปลี่ยนชื่อ ตารางตามจริง
 
                     SqlDataAdapter adapter = new SqlDataAdapter(sql, conn);
                     DataTable dt = new DataTable();
