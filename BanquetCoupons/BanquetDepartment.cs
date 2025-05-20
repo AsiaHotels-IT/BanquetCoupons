@@ -31,5 +31,13 @@ namespace BanquetCoupons
             bQHome.Dock = DockStyle.Fill;
             panelContent.Controls.Add(bQHome);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            panelContent.Controls.Clear();
+            Coupons coupons = new Coupons();
+            coupons.Dock = DockStyle.Fill;
+            panelContent.Controls.Add(coupons);
+        }
     }
 }

@@ -25,6 +25,6 @@ class Program
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        Application.Run(new Login()); // เรียกฟอร์มหลัก
+        Application.Run(new BanquetDepartment()); // เรียกฟอร์มหลัก
     }
 }
