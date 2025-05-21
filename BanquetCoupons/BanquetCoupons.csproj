@@ -146,6 +146,7 @@
       <DependentUpon>FinanceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FontInstaller.cs" />
+    <Compile Include="FontManager.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

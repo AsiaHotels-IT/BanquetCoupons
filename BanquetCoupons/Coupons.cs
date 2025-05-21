@@ -21,77 +21,44 @@ namespace BanquetCoupons
 {
     public partial class Coupons : UserControl
     {
-        public Coupons()
+
+        public Coupons(string user)
         {
             InitializeComponent();
+            this.user = user;
+            userLogin.Text = user;
         }
+
+        private string user;
+        private FontManager fontManager;
 
         private bool isDatePicked = false;
         private void Coupons_Load(object sender, EventArgs e)
         {
             loadData();
+            fontManager = new FontManager();  // สร้างครั้งเดียวตอนโหลดฟอร์ม
 
-            // สร้างตัวจัดการฟอนต์แบบส่วนตัว (ไม่ต้องติดตั้งใน Windows)
-            PrivateFontCollection pfc = new PrivateFontCollection();
-
-            // โหลดฟอนต์จากไฟล์ในโฟลเดอร์ fonts (ในโฟลเดอร์โปรแกรม)
-            string fontPath = System.IO.Path.Combine(System.Windows.Forms.Application.StartupPath, "fonts", "NotoSansThai-Regular.ttf");
-            pfc.AddFontFile(fontPath);
-
-            // สร้างฟอนต์จากฟอนต์ที่โหลดมา (ขนาด 12)
-            FontFamily fontFamily = pfc.Families[0];
-
-            // กำหนดขนาดและน้ำหนักแบบต่างๆ
-            Font fontSmall = new Font(fontFamily, 10, FontStyle.Regular);
-            Font fontRegular = new Font(fontFamily, 12, FontStyle.Regular);
-            Font fontBold = new Font(fontFamily, 12, FontStyle.Bold);
-            Font fontSmallBold = new Font(fontFamily, 9, FontStyle.Bold);
-
-            // สมมติอยากใช้ฟอนต์กับ panel1 ที่มี Label อยู่ข้างใน
+            // ตั้งค่าฟอนต์ให้ Label ใน panel1
             foreach (Control ctl in panel1.Controls)
             {
                 if (ctl is Label label)
                 {
-                    // ตั้งฟอนต์ตามชื่อ
-                    if (label.Name == "label6" || label.Name == "label7" || label.Name == "label8")
-                        label.Font = fontBold;
-                    else if (label.Name == "lblPreview" || label.Name == "lblSerialNumber")
-                        label.Font = fontSmall;
+                    
+                    if (label.Name == "lblPreview" || label.Name == "lblSerialNumber")
+                        label.Font = fontManager.FontSmall;
                     else if (label.Name == "label9")
-                        label.Font = fontSmallBold;
+                        label.Font = fontManager.FontSmallBold;
                     else
-                        label.Font = fontRegular;
+                        label.Font = fontManager.FontRegular;
                 }
             }
-
-            panel1.PerformLayout();
-            panel1.Refresh();
-            System.Windows.Forms.Application.DoEvents();
-
-            // ค่อย draw
-            Bitmap panelImage = new Bitmap(panel1.Width, panel1.Height);
-            panel1.DrawToBitmap(panelImage, new Rectangle(0, 0, panel1.Width, panel1.Height));
 
             foreach (Control ctl in panelTopic.Controls)
             {
                 if (ctl is Label label)
                 {
-                    if (label.Name == "label6")
-                    {
-                        label.Font = fontBold;
-                    }
-                    else if (label.Name == "label7")
-                    {
-                        label.Font = fontBold;
-                    }
-                    else if (label.Name == "label8")
-                    {
-                        label.Font = fontBold;
-                    }                    
-                    else
-                    {
-                        label.Font = fontRegular;        // ตัวอื่นขนาดเล็กปกติ
-                    }
+                    if (label.Name == "label6" || label.Name == "label7" || label.Name == "label8")
+                        label.Font = fontManager.FontBold;
                 }
             }
 
@@ -113,10 +80,13 @@ namespace BanquetCoupons
             comboBoxPaperSize.Items.Add("26.7x36.4");
             comboBoxPaperSize.Items.Add("20.5x48");
             comboBoxPaperSize.SelectedIndex = 0; // ค่าเริ่มต้น
+
+            
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.White;
         }
 
        
-
         void loadData()
         {
             string iniPath = "config.ini"; // ที่อยู่ไฟล์ .ini
@@ -224,7 +194,7 @@ namespace BanquetCoupons
         private void PreviewAgency()
         {
             string Agency = agency.Text;
-            agencyPreview.Text = Agency;
+            agencyPreview.Text = $"{Agency}";
         }
 
         private void PreviewCanteen()
@@ -485,6 +455,205 @@ namespace BanquetCoupons
 
                 // วาดเส้นประด้านซ้าย
                 e.Graphics.DrawLine(dashedPen, 0, 0, 0, pnl.Height);
+            }
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                btnSave.Visible= false;
+                btnClearForm.Visible= false;
+                mealDate.Enabled = false;
+                mealType.Enabled = false;
+                agency.Enabled = false;
+                canteenName.Enabled = false;
+                comboBoxPaperSize.Enabled = false;
+                quantity.Value = 1;
+                quantity.Enabled = false;
+                btnEdit.Visible = true;
+                bqid.Visible = true;
+                
+
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                mealDate.Value = Convert.ToDateTime(row.Cells["mealDate"].Value);
+                mealType.Text = row.Cells["mealType"].Value.ToString();
+                agency.Text = row.Cells["agency"].Value.ToString();
+                canteenName.Text = row.Cells["cateringName"].Value.ToString();
+                quantity.Text = row.Cells["quantity"].Value.ToString();
+                comboBoxPaperSize.Text = row.Cells["paperSize"].Value.ToString();
+                lblSerialNumber.Text = row.Cells["SerialNum"].Value.ToString();
+                bqid.Text = row.Cells["bqid"].Value.ToString();
+                
+
+                // หากมี form หรือ panel ซ่อนอยู่ให้แสดง
+                // this.panelAddData.Visible = true; หรือ เปิด Form ใหม่ก็ได้
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            btnEditNprint.Visible = true;
+            mealDate.Enabled = true;
+            mealType.Enabled = true;
+            agency.Enabled = true;
+            canteenName.Enabled = true;
+            comboBoxPaperSize.Enabled = true;
+            quantity.Value = 1;
+            quantity.Enabled = true;           
+        }
+
+        private void btnEditNprint_Click(object sender, EventArgs e)
+        {
+            bool isValid = true;
+
+            if (string.IsNullOrWhiteSpace(mealType.Text))
+            {
+                mealType.BackColor = Color.MistyRose;
+                isValid = false;
+            }
+            else
+            {
+                mealType.BackColor = Color.White;
+            }
+            if (string.IsNullOrWhiteSpace(agency.Text))
+            {
+                agency.BackColor = Color.MistyRose;
+                isValid = false;
+            }
+            else
+            {
+                agency.BackColor = Color.White;
+            }
+            if (string.IsNullOrWhiteSpace(canteenName.Text))
+            {
+                canteenName.BackColor = Color.MistyRose;
+                isValid = false;
+            }
+            else
+            {
+                canteenName.BackColor = Color.White;
+            }
+            if (!int.TryParse(quantity.Text, out int qty) || qty <= 0)
+            {
+                quantity.BackColor = Color.MistyRose;
+                MessageBox.Show("กรุณากรอกจำนวนที่เป็นตัวเลขและต้องมากกว่า 0", "ข้อมูลไม่ถูกต้อง", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                quantity.BackColor = Color.White;
+            }
+
+            if (!isDatePicked)
+            {
+                mealDate.BackColor = Color.MistyRose;
+                MessageBox.Show("กรุณากรอกวันที่", "ข้อมูลไม่ถูกต้อง", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                mealDate.BackColor = Color.White;
+            }
+
+            EditNprint();
+            editedCoupons();
+            btnEdit.Visible = false;
+            btnEditNprint.Visible = false;
+            btnSave.Visible = true;
+            btnClearForm.Visible = true;
+        }
+
+        private void EditNprint()
+        {
+            try
+            {
+                // อ่าน config จาก ini
+                string iniPath = "config.ini";
+                var config = IniReader.ReadIni(iniPath, "Database");
+
+                string server = config.ContainsKey("Server") ? config["Server"] : "";
+                string database = config.ContainsKey("Database") ? config["Database"] : "";
+                string user = config.ContainsKey("User") ? config["User"] : "";
+                string password = config.ContainsKey("Password") ? config["Password"] : "";
+                string selectedBQID = bqid.Text;
+
+                string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    DateTime selectedDate = mealDate.Value;
+                    int qty = int.Parse(quantity.Text);
+
+                    SqlCommand cmd = new SqlCommand("InsertCoupons", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // เพิ่ม BQID เดิมเข้าไปด้วย
+                    cmd.Parameters.AddWithValue("@oldBQID", selectedBQID);
+                    cmd.Parameters.AddWithValue("@mealDate", selectedDate);
+                    cmd.Parameters.AddWithValue("@mealType", mealType.Text);
+                    cmd.Parameters.AddWithValue("@agency", agency.Text);
+                    cmd.Parameters.AddWithValue("@cateringName", canteenName.Text);
+                    cmd.Parameters.AddWithValue("@quantity", qty);
+                    cmd.Parameters.AddWithValue("@paperSize", comboBoxPaperSize.Text);
+
+                    cmd.ExecuteNonQuery();
+
+                    MessageBox.Show("บันทึกคูปองเรียบร้อย", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    loadData();
+                    SaveCouponAsPDF();
+                    clearData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void editedCoupons()
+        {
+            try
+            {
+                // อ่าน config จาก ini
+                string iniPath = "config.ini";
+                var config = IniReader.ReadIni(iniPath, "Database");
+
+                string server = config.ContainsKey("Server") ? config["Server"] : "";
+                string database = config.ContainsKey("Database") ? config["Database"] : "";
+                string user = config.ContainsKey("User") ? config["User"] : "";
+                string password = config.ContainsKey("Password") ? config["Password"] : "";
+                string selectedBQID = bqid.Text;
+                string userlogin = userLogin.Text;
+
+                string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+
+                    SqlCommand cmd = new SqlCommand("InsertEditedCoupons", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // เพิ่ม BQID เดิมเข้าไปด้วย
+                    cmd.Parameters.AddWithValue("@BQID", selectedBQID);
+                    cmd.Parameters.AddWithValue("@UID", userlogin);
+
+                    cmd.ExecuteNonQuery();
+
+                    
+                    loadData();
+                    SaveCouponAsPDF();
+                    clearData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
             }
         }
     }

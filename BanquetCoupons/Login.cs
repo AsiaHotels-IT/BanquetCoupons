@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -53,7 +54,7 @@ namespace BanquetCoupons
                         new FinanceForm().Show();
                         break;
                     case "banquet":
-                        new BanquetDepartment().Show();
+                        new BanquetDepartment(username).Show();
                         break;
                     case "service":
                         new service().Show();
@@ -83,11 +84,13 @@ namespace BanquetCoupons
                     cmd.Parameters.AddWithValue("@pass", Password); // ใช้พารามิเตอร์
                     conn.Open();
 
-                    var result = cmd.ExecuteScalar();
-                    if (result != null)
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        role = result.ToString();
-                        return true;
+                        if (reader.Read())
+                        {
+                            role = reader["Role"].ToString();
+                            return true;
+                        }
                     }
                 }
             }

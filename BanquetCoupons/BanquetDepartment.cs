@@ -7,16 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace BanquetCoupons
 {
     public partial class BanquetDepartment : Form
     {
-        public BanquetDepartment()
+        public BanquetDepartment(string user)
         {
             InitializeComponent();
+            this.user = user;
         }
 
+        private string user;
         private void btnLogout_Click(object sender, EventArgs e)
         {
             Login loginForm = new Login();
@@ -30,12 +33,13 @@ namespace BanquetCoupons
             BQHome bQHome = new BQHome();
             bQHome.Dock = DockStyle.Fill;
             panelContent.Controls.Add(bQHome);
+            MessageBox.Show($"{user}");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             panelContent.Controls.Clear();
-            Coupons coupons = new Coupons();
+            Coupons coupons = new Coupons(user);
             coupons.Dock = DockStyle.Fill;
             panelContent.Controls.Add(coupons);
         }

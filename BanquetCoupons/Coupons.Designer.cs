@@ -61,6 +61,10 @@
             this.btnClearForm = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnEditNprint = new System.Windows.Forms.Button();
+            this.bqid = new System.Windows.Forms.Label();
+            this.userLogin = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panelTopic.SuspendLayout();
@@ -79,6 +83,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1178, 351);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // label11
             // 
@@ -458,6 +463,8 @@
             // 
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.Controls.Add(this.btnEditNprint);
+            this.panel4.Controls.Add(this.btnEdit);
             this.panel4.Controls.Add(this.btnClearForm);
             this.panel4.Controls.Add(this.btnSave);
             this.panel4.Location = new System.Drawing.Point(4, 326);
@@ -467,11 +474,59 @@
             this.panel4.Size = new System.Drawing.Size(1173, 98);
             this.panel4.TabIndex = 21;
             // 
+            // btnEdit
+            // 
+            this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(203)))), ((int)(((byte)(196)))));
+            this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnEdit.Location = new System.Drawing.Point(402, 25);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(106, 51);
+            this.btnEdit.TabIndex = 21;
+            this.btnEdit.Text = "แก้ไข";
+            this.btnEdit.UseVisualStyleBackColor = false;
+            this.btnEdit.Visible = false;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnEditNprint
+            // 
+            this.btnEditNprint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(203)))), ((int)(((byte)(196)))));
+            this.btnEditNprint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnEditNprint.Location = new System.Drawing.Point(524, 25);
+            this.btnEditNprint.Name = "btnEditNprint";
+            this.btnEditNprint.Size = new System.Drawing.Size(117, 51);
+            this.btnEditNprint.TabIndex = 22;
+            this.btnEditNprint.Text = "พิมพ์";
+            this.btnEditNprint.UseVisualStyleBackColor = false;
+            this.btnEditNprint.Visible = false;
+            this.btnEditNprint.Click += new System.EventHandler(this.btnEditNprint_Click);
+            // 
+            // bqid
+            // 
+            this.bqid.AutoSize = true;
+            this.bqid.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.bqid.Location = new System.Drawing.Point(539, 74);
+            this.bqid.Name = "bqid";
+            this.bqid.Size = new System.Drawing.Size(99, 20);
+            this.bqid.TabIndex = 22;
+            this.bqid.Text = "หมายเลขคูปอง";
+            this.bqid.Visible = false;
+            // 
+            // userLogin
+            // 
+            this.userLogin.AutoSize = true;
+            this.userLogin.Location = new System.Drawing.Point(166, 74);
+            this.userLogin.Name = "userLogin";
+            this.userLogin.Size = new System.Drawing.Size(41, 13);
+            this.userLogin.TabIndex = 23;
+            this.userLogin.Text = "label12";
+            // 
             // Coupons
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Cornsilk;
+            this.Controls.Add(this.userLogin);
+            this.Controls.Add(this.bqid);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.panel3);
@@ -530,5 +585,9 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label lblSerialNumber;
+        private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnEditNprint;
+        private System.Windows.Forms.Label bqid;
+        private System.Windows.Forms.Label userLogin;
     }
 }
