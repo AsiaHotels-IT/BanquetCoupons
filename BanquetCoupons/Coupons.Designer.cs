@@ -61,10 +61,12 @@
             this.btnClearForm = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.btnEdit = new System.Windows.Forms.Button();
             this.btnEditNprint = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
             this.bqid = new System.Windows.Forms.Label();
             this.userLogin = new System.Windows.Forms.Label();
+            this.btnDel = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panelTopic.SuspendLayout();
@@ -118,7 +120,7 @@
             // lblSerialNumber
             // 
             this.lblSerialNumber.AutoSize = true;
-            this.lblSerialNumber.Location = new System.Drawing.Point(4, 199);
+            this.lblSerialNumber.Location = new System.Drawing.Point(4, 203);
             this.lblSerialNumber.Name = "lblSerialNumber";
             this.lblSerialNumber.Size = new System.Drawing.Size(41, 13);
             this.lblSerialNumber.TabIndex = 11;
@@ -463,6 +465,8 @@
             // 
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.Controls.Add(this.btnCancel);
+            this.panel4.Controls.Add(this.btnDel);
             this.panel4.Controls.Add(this.btnEditNprint);
             this.panel4.Controls.Add(this.btnEdit);
             this.panel4.Controls.Add(this.btnClearForm);
@@ -474,24 +478,11 @@
             this.panel4.Size = new System.Drawing.Size(1173, 98);
             this.panel4.TabIndex = 21;
             // 
-            // btnEdit
-            // 
-            this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(203)))), ((int)(((byte)(196)))));
-            this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnEdit.Location = new System.Drawing.Point(402, 25);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(106, 51);
-            this.btnEdit.TabIndex = 21;
-            this.btnEdit.Text = "แก้ไข";
-            this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Visible = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            // 
             // btnEditNprint
             // 
-            this.btnEditNprint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(203)))), ((int)(((byte)(196)))));
+            this.btnEditNprint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(179)))), ((int)(((byte)(66)))));
             this.btnEditNprint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnEditNprint.Location = new System.Drawing.Point(524, 25);
+            this.btnEditNprint.Location = new System.Drawing.Point(255, 28);
             this.btnEditNprint.Name = "btnEditNprint";
             this.btnEditNprint.Size = new System.Drawing.Size(117, 51);
             this.btnEditNprint.TabIndex = 22;
@@ -499,6 +490,19 @@
             this.btnEditNprint.UseVisualStyleBackColor = false;
             this.btnEditNprint.Visible = false;
             this.btnEditNprint.Click += new System.EventHandler(this.btnEditNprint_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(203)))), ((int)(((byte)(196)))));
+            this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnEdit.Location = new System.Drawing.Point(19, 28);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(106, 51);
+            this.btnEdit.TabIndex = 21;
+            this.btnEdit.Text = "แก้ไข";
+            this.btnEdit.UseVisualStyleBackColor = false;
+            this.btnEdit.Visible = false;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // bqid
             // 
@@ -519,6 +523,34 @@
             this.userLogin.Size = new System.Drawing.Size(41, 13);
             this.userLogin.TabIndex = 23;
             this.userLogin.Text = "label12";
+            // 
+            // btnDel
+            // 
+            this.btnDel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnDel.ForeColor = System.Drawing.Color.White;
+            this.btnDel.Location = new System.Drawing.Point(130, 28);
+            this.btnDel.Name = "btnDel";
+            this.btnDel.Size = new System.Drawing.Size(117, 51);
+            this.btnDel.TabIndex = 23;
+            this.btnDel.Text = "ลบ";
+            this.btnDel.UseVisualStyleBackColor = false;
+            this.btnDel.Visible = false;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(167)))), ((int)(((byte)(38)))));
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnCancel.ForeColor = System.Drawing.Color.Black;
+            this.btnCancel.Location = new System.Drawing.Point(378, 28);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(117, 51);
+            this.btnCancel.TabIndex = 24;
+            this.btnCancel.Text = "ยกเลิก";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Visible = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // Coupons
             // 
@@ -589,5 +621,7 @@
         private System.Windows.Forms.Button btnEditNprint;
         private System.Windows.Forms.Label bqid;
         private System.Windows.Forms.Label userLogin;
+        private System.Windows.Forms.Button btnDel;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

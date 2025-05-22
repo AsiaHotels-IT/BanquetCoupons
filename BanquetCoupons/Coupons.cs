@@ -110,10 +110,10 @@ namespace BanquetCoupons
                     conn.Open();
 
                     string sql = @"
-                        SELECT * FROM Coupons
-                        ORDER BY 
-                            CAST(SUBSTRING(BQID, 5, LEN(BQID)) AS INT),
-                            CAST(serialNum AS INT)";
+                SELECT * FROM Coupons
+                ORDER BY 
+                    CAST(SUBSTRING(BQID, 5, LEN(BQID)) AS INT),
+                    serialNum";
 
                     SqlDataAdapter adapter = new SqlDataAdapter(sql, conn);
                     DataTable dt = new DataTable();
@@ -215,6 +215,7 @@ namespace BanquetCoupons
             canteenName.Text = "";
             quantity.Text = "";
             comboBoxPaperSize.Text = "";
+            lblSerialNumber.Text = "";
 
             // ล้างวันที่
             mealDate.Format = DateTimePickerFormat.Custom;
@@ -370,6 +371,7 @@ namespace BanquetCoupons
         private void UpdatePanelWithSerialNumber(string serial)
         {
             lblSerialNumber.Text = serial; // หรืออะไรก็ตามที่คุณใช้ใน panel1 เพื่อแสดงหมายเลขคูปอง
+            lblSerialNumber.Font = fontManager.FontBarcode;
             panel1.Refresh();
         }
 
@@ -473,6 +475,7 @@ namespace BanquetCoupons
                 quantity.Enabled = false;
                 btnEdit.Visible = true;
                 bqid.Visible = true;
+                btnDel.Visible = true;
                 
 
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
@@ -485,7 +488,7 @@ namespace BanquetCoupons
                 comboBoxPaperSize.Text = row.Cells["paperSize"].Value.ToString();
                 lblSerialNumber.Text = row.Cells["SerialNum"].Value.ToString();
                 bqid.Text = row.Cells["bqid"].Value.ToString();
-                
+                lblSerialNumber.Font = fontManager.FontBarcode;
 
                 // หากมี form หรือ panel ซ่อนอยู่ให้แสดง
                 // this.panelAddData.Visible = true; หรือ เปิด Form ใหม่ก็ได้
@@ -501,7 +504,8 @@ namespace BanquetCoupons
             canteenName.Enabled = true;
             comboBoxPaperSize.Enabled = true;
             quantity.Value = 1;
-            quantity.Enabled = true;           
+            quantity.Enabled = true;      
+            btnCancel.Visible= true;
         }
 
         private void btnEditNprint_Click(object sender, EventArgs e)
@@ -563,13 +567,14 @@ namespace BanquetCoupons
             btnEditNprint.Visible = false;
             btnSave.Visible = true;
             btnClearForm.Visible = true;
+            btnDel.Visible = false;
+            btnCancel.Visible = false;
         }
 
         private void EditNprint()
         {
             try
             {
-                // อ่าน config จาก ini
                 string iniPath = "config.ini";
                 var config = IniReader.ReadIni(iniPath, "Database");
 
@@ -577,7 +582,10 @@ namespace BanquetCoupons
                 string database = config.ContainsKey("Database") ? config["Database"] : "";
                 string user = config.ContainsKey("User") ? config["User"] : "";
                 string password = config.ContainsKey("Password") ? config["Password"] : "";
-                string selectedBQID = bqid.Text;
+                string selectedBQID = bqid.Text;  // BQID เดิมที่จะแก้ไข
+
+                // ดึง serialNum จากแถวที่เลือกใน DataGridView
+                string serialNum = dataGridView1.CurrentRow.Cells["serialNum"].Value.ToString();
 
                 string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
 
@@ -588,17 +596,19 @@ namespace BanquetCoupons
                     DateTime selectedDate = mealDate.Value;
                     int qty = int.Parse(quantity.Text);
 
-                    SqlCommand cmd = new SqlCommand("InsertCoupons", conn);
+                    SqlCommand cmd = new SqlCommand("InsertOrUpdateCoupon", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    // เพิ่ม BQID เดิมเข้าไปด้วย
-                    cmd.Parameters.AddWithValue("@oldBQID", selectedBQID);
+                    cmd.Parameters.AddWithValue("@oldBQID", selectedBQID);  // ใส่ BQID เก่า
                     cmd.Parameters.AddWithValue("@mealDate", selectedDate);
                     cmd.Parameters.AddWithValue("@mealType", mealType.Text);
                     cmd.Parameters.AddWithValue("@agency", agency.Text);
                     cmd.Parameters.AddWithValue("@cateringName", canteenName.Text);
                     cmd.Parameters.AddWithValue("@quantity", qty);
                     cmd.Parameters.AddWithValue("@paperSize", comboBoxPaperSize.Text);
+
+                    // เพิ่มพารามิเตอร์ serialNum
+                    cmd.Parameters.AddWithValue("@serialNum", serialNum);
 
                     cmd.ExecuteNonQuery();
 
@@ -613,6 +623,7 @@ namespace BanquetCoupons
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
 
         private void editedCoupons()
         {
@@ -635,19 +646,14 @@ namespace BanquetCoupons
                 {
                     conn.Open();
 
-
-                    SqlCommand cmd = new SqlCommand("InsertEditedCoupons", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    string sql = "INSERT INTO EditedCoupons (BQID , editAt, Username) VALUES (@BQID, GETDATE(), @Username)";
+                    SqlCommand cmd = new SqlCommand(sql, conn);
 
                     // เพิ่ม BQID เดิมเข้าไปด้วย
                     cmd.Parameters.AddWithValue("@BQID", selectedBQID);
-                    cmd.Parameters.AddWithValue("@UID", userlogin);
+                    cmd.Parameters.AddWithValue("@Username", userlogin);
 
                     cmd.ExecuteNonQuery();
-
-                    
-                    loadData();
-                    SaveCouponAsPDF();
                     clearData();
                 }
             }
@@ -656,5 +662,125 @@ namespace BanquetCoupons
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            string selectedBQID = bqid.Text.Trim();
+            string selectedSerialNum = lblSerialNumber.Text.Trim();  // เพิ่มรับ serialNum จาก UI
+            string currentUser = userLogin.Text.Trim();
+
+            if (string.IsNullOrEmpty(selectedBQID) || string.IsNullOrEmpty(selectedSerialNum))
+            {
+                MessageBox.Show("กรุณาเลือกคูปองและระบุ Serial Number ที่ต้องการลบ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string iniPath = "config.ini";
+                var config = IniReader.ReadIni(iniPath, "Database");
+
+                string server = config.ContainsKey("Server") ? config["Server"] : "";
+                string database = config.ContainsKey("Database") ? config["Database"] : "";
+                string user = config.ContainsKey("User") ? config["User"] : "";
+                string password = config.ContainsKey("Password") ? config["Password"] : "";
+
+                string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    using (SqlTransaction transaction = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            // 1. ดึงข้อมูลคูปองจากตาราง Coupons ด้วย BQID และ serialNum
+                            string selectSql = "SELECT mealDate, mealType, agency, cateringName, quantity, paperSize, serialNum " +
+                                "FROM Coupons WHERE BQID = @BQID AND serialNum = @serialNum";
+                            SqlCommand cmdSelect = new SqlCommand(selectSql, conn, transaction);
+                            cmdSelect.Parameters.AddWithValue("@BQID", selectedBQID);
+                            cmdSelect.Parameters.AddWithValue("@serialNum", selectedSerialNum);
+
+                            SqlDataReader reader = cmdSelect.ExecuteReader();
+
+                            if (!reader.Read())
+                            {
+                                reader.Close();
+                                MessageBox.Show("ไม่พบคูปองที่ต้องการลบ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                transaction.Rollback();
+                                return;
+                            }
+
+                            DateTime mealDate = reader.IsDBNull(0) ? DateTime.MinValue : reader.GetDateTime(0);
+                            string mealType = reader.IsDBNull(1) ? null : reader.GetString(1);
+                            string agency = reader.IsDBNull(2) ? null : reader.GetString(2);
+                            string cateringName = reader.IsDBNull(3) ? null : reader.GetString(3);
+                            int quantity = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
+                            string paperSize = reader.IsDBNull(5) ? null : reader.GetString(5);
+                            string serialNum = reader.IsDBNull(6) ? null : reader.GetString(6);
+
+                            reader.Close();
+
+                            // 2. Insert ข้อมูลลง RemoveCoupons
+                            string insertSql = @"
+                        INSERT INTO RemoveCoupons 
+                        (BQID, deleteAt, Username, mealDate, mealType, agency, cateringName, quantity, paperSize, serialNum)
+                        VALUES 
+                        (@BQID, GETDATE(), @Username, @mealDate, @mealType, @agency, @cateringName, @quantity, @paperSize, @serialNum)";
+                            SqlCommand cmdInsert = new SqlCommand(insertSql, conn, transaction);
+
+                            cmdInsert.Parameters.AddWithValue("@BQID", selectedBQID);
+                            cmdInsert.Parameters.AddWithValue("@Username", currentUser);
+                            cmdInsert.Parameters.Add("@mealDate", SqlDbType.DateTime).Value = (mealDate == DateTime.MinValue) ? (object)DBNull.Value : mealDate;
+                            cmdInsert.Parameters.AddWithValue("@mealType", (object)mealType ?? DBNull.Value);
+                            cmdInsert.Parameters.AddWithValue("@agency", (object)agency ?? DBNull.Value);
+                            cmdInsert.Parameters.AddWithValue("@cateringName", (object)cateringName ?? DBNull.Value);
+                            cmdInsert.Parameters.AddWithValue("@quantity", quantity);
+                            cmdInsert.Parameters.AddWithValue("@paperSize", (object)paperSize ?? DBNull.Value);
+                            cmdInsert.Parameters.AddWithValue("@serialNum", (object)serialNum ?? DBNull.Value);
+
+                            cmdInsert.ExecuteNonQuery();
+
+                            // 3. ลบข้อมูลจากตาราง Coupons จริง โดยใช้ทั้ง BQID และ serialNum
+                            string deleteSql = "DELETE FROM Coupons WHERE BQID = @BQID AND serialNum = @serialNum";
+                            SqlCommand cmdDelete = new SqlCommand(deleteSql, conn, transaction);
+                            cmdDelete.Parameters.AddWithValue("@BQID", selectedBQID);
+                            cmdDelete.Parameters.AddWithValue("@serialNum", selectedSerialNum);
+                            cmdDelete.ExecuteNonQuery();
+
+                            transaction.Commit();
+
+                            MessageBox.Show("ลบคูปองเรียบร้อยแล้ว", "สำเร็จ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            loadData();   // โหลดข้อมูลใหม่หลังลบ
+                            clearData();  // เคลียร์ฟอร์มหรือค่าใน control ถ้าต้องการ
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            MessageBox.Show("เกิดข้อผิดพลาดในการลบคูปอง: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("เกิดข้อผิดพลาด: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            btnEdit.Visible= false;
+            btnEditNprint.Visible= false;
+            btnDel.Visible= false;
+            btnCancel.Visible= false;
+            btnSave.Visible= true;
+            btnClearForm.Visible= true;
+            clearData();
+        }
     }
 }
+
