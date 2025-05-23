@@ -30,10 +30,10 @@ namespace BanquetCoupons
         private void btnHome_Click(object sender, EventArgs e)
         {
             panelContent.Controls.Clear(); // เคลียร์ของเก่า
-            BQHome bQHome = new BQHome();
+            BQHome bQHome = new BQHome(user);
             bQHome.Dock = DockStyle.Fill;
             panelContent.Controls.Add(bQHome);
-            MessageBox.Show($"{user}");
+            //MessageBox.Show($"{user}");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -42,6 +42,18 @@ namespace BanquetCoupons
             Coupons coupons = new Coupons(user);
             coupons.Dock = DockStyle.Fill;
             panelContent.Controls.Add(coupons);
+        }
+
+        private void panelContent_Paint(object sender, PaintEventArgs e)
+        {
+            BQHome bQHome = new BQHome(user);
+            bQHome.Dock = DockStyle.Fill;
+            panelContent.Controls.Add(bQHome);
+        }
+
+        private void BanquetDepartment_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

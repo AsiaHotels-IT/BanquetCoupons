@@ -28,32 +28,54 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.cateringDate = new System.Windows.Forms.DateTimePicker();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
-            // label1
+            // panel1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(366, 353);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Home";
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1241, 95);
+            this.panel1.TabIndex = 1;
+            // 
+            // cateringDate
+            // 
+            this.cateringDate.Location = new System.Drawing.Point(18, 121);
+            this.cateringDate.Name = "cateringDate";
+            this.cateringDate.Size = new System.Drawing.Size(308, 20);
+            this.cateringDate.TabIndex = 2;
+            this.cateringDate.ValueChanged += new System.EventHandler(this.cateringDate_ValueChanged);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(18, 175);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1067, 609);
+            this.flowLayoutPanel1.TabIndex = 3;
             // 
             // BQHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label1);
+            this.BackColor = System.Drawing.Color.Cornsilk;
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.cateringDate);
+            this.Controls.Add(this.panel1);
             this.Name = "BQHome";
-            this.Size = new System.Drawing.Size(928, 857);
+            this.Size = new System.Drawing.Size(1241, 857);
+            this.Load += new System.EventHandler(this.BQHome_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DateTimePicker cateringDate;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }

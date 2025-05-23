@@ -61,12 +61,13 @@
             this.btnClearForm = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btnReprint = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnDel = new System.Windows.Forms.Button();
             this.btnEditNprint = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.bqid = new System.Windows.Forms.Label();
             this.userLogin = new System.Windows.Forms.Label();
-            this.btnDel = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panelTopic.SuspendLayout();
@@ -85,7 +86,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1178, 351);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // label11
             // 
@@ -122,9 +123,9 @@
             this.lblSerialNumber.AutoSize = true;
             this.lblSerialNumber.Location = new System.Drawing.Point(4, 203);
             this.lblSerialNumber.Name = "lblSerialNumber";
-            this.lblSerialNumber.Size = new System.Drawing.Size(41, 13);
+            this.lblSerialNumber.Size = new System.Drawing.Size(10, 13);
             this.lblSerialNumber.TabIndex = 11;
-            this.lblSerialNumber.Text = "label12";
+            this.lblSerialNumber.Text = ".";
             // 
             // label14
             // 
@@ -153,7 +154,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(90, 196);
+            this.label9.Location = new System.Drawing.Point(90, 194);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(178, 20);
             this.label9.TabIndex = 9;
@@ -465,6 +466,7 @@
             // 
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.Controls.Add(this.btnReprint);
             this.panel4.Controls.Add(this.btnCancel);
             this.panel4.Controls.Add(this.btnDel);
             this.panel4.Controls.Add(this.btnEditNprint);
@@ -478,11 +480,52 @@
             this.panel4.Size = new System.Drawing.Size(1173, 98);
             this.panel4.TabIndex = 21;
             // 
+            // btnReprint
+            // 
+            this.btnReprint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(179)))), ((int)(((byte)(66)))));
+            this.btnReprint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnReprint.Location = new System.Drawing.Point(255, 28);
+            this.btnReprint.Name = "btnReprint";
+            this.btnReprint.Size = new System.Drawing.Size(117, 51);
+            this.btnReprint.TabIndex = 25;
+            this.btnReprint.Text = "พิมพ์ซ้ำ";
+            this.btnReprint.UseVisualStyleBackColor = false;
+            this.btnReprint.Visible = false;
+            this.btnReprint.Click += new System.EventHandler(this.btnReprint_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(167)))), ((int)(((byte)(38)))));
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnCancel.ForeColor = System.Drawing.Color.Black;
+            this.btnCancel.Location = new System.Drawing.Point(378, 25);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(117, 51);
+            this.btnCancel.TabIndex = 24;
+            this.btnCancel.Text = "ยกเลิก";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Visible = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnDel
+            // 
+            this.btnDel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnDel.ForeColor = System.Drawing.Color.White;
+            this.btnDel.Location = new System.Drawing.Point(130, 25);
+            this.btnDel.Name = "btnDel";
+            this.btnDel.Size = new System.Drawing.Size(117, 51);
+            this.btnDel.TabIndex = 23;
+            this.btnDel.Text = "ลบ";
+            this.btnDel.UseVisualStyleBackColor = false;
+            this.btnDel.Visible = false;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            // 
             // btnEditNprint
             // 
             this.btnEditNprint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(179)))), ((int)(((byte)(66)))));
             this.btnEditNprint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnEditNprint.Location = new System.Drawing.Point(255, 28);
+            this.btnEditNprint.Location = new System.Drawing.Point(255, 22);
             this.btnEditNprint.Name = "btnEditNprint";
             this.btnEditNprint.Size = new System.Drawing.Size(117, 51);
             this.btnEditNprint.TabIndex = 22;
@@ -495,7 +538,7 @@
             // 
             this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(203)))), ((int)(((byte)(196)))));
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnEdit.Location = new System.Drawing.Point(19, 28);
+            this.btnEdit.Location = new System.Drawing.Point(19, 25);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(106, 51);
             this.btnEdit.TabIndex = 21;
@@ -523,34 +566,6 @@
             this.userLogin.Size = new System.Drawing.Size(41, 13);
             this.userLogin.TabIndex = 23;
             this.userLogin.Text = "label12";
-            // 
-            // btnDel
-            // 
-            this.btnDel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnDel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnDel.ForeColor = System.Drawing.Color.White;
-            this.btnDel.Location = new System.Drawing.Point(130, 28);
-            this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(117, 51);
-            this.btnDel.TabIndex = 23;
-            this.btnDel.Text = "ลบ";
-            this.btnDel.UseVisualStyleBackColor = false;
-            this.btnDel.Visible = false;
-            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(167)))), ((int)(((byte)(38)))));
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnCancel.ForeColor = System.Drawing.Color.Black;
-            this.btnCancel.Location = new System.Drawing.Point(378, 28);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(117, 51);
-            this.btnCancel.TabIndex = 24;
-            this.btnCancel.Text = "ยกเลิก";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Visible = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // Coupons
             // 
@@ -623,5 +638,6 @@
         private System.Windows.Forms.Label userLogin;
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnReprint;
     }
 }

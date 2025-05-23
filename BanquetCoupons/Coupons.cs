@@ -44,10 +44,12 @@ namespace BanquetCoupons
                 if (ctl is Label label)
                 {
                     
-                    if (label.Name == "lblPreview" || label.Name == "lblSerialNumber")
+                    if (label.Name == "lblPreview" )
                         label.Font = fontManager.FontSmall;
                     else if (label.Name == "label9")
-                        label.Font = fontManager.FontSmallBold;
+                        label.Font = fontManager.FontSmall;
+                    else if (label.Name == "lblSerialNumber")
+                        label.Font = fontManager.FontSmall;
                     else
                         label.Font = fontManager.FontRegular;
                 }
@@ -259,6 +261,8 @@ namespace BanquetCoupons
                 {
                     conn.Open();
 
+                    string newBQID = GenerateNewBQID(conn); // <-- สร้าง BQID ใหม่
+
                     DateTime selectedDate = mealDate.Value;
                     int qty = int.Parse(quantity.Text);
 
@@ -289,12 +293,33 @@ namespace BanquetCoupons
             }
         }
 
+        string GenerateNewBQID(SqlConnection conn)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT ISNULL(MAX(CAST(SUBSTRING(BQID, 5, LEN(BQID)) AS INT)), 0) FROM Coupons", conn);
+            int maxId = (int)cmd.ExecuteScalar();
+            int newId = maxId + 1;
+            return "BQID" + newId.ToString("D3");
+        }
+
+
         private void SaveCouponAsPDF()
         {
             int count = int.Parse(quantity.Text);
             string selectedPaper = comboBoxPaperSize.SelectedItem.ToString();
-            double pageWidth = 21.0, pageHeight = 29.7;
 
+            // เรียก stored procedure เพื่อ insert คูปอง และรับ BQID ที่ใช้
+            string bqid = InsertCouponsAndReturnBQID();
+
+            // ดึง serialNum ตาม BQID ที่เพิ่ง insert
+            List<string> serialNumbers = GetSerialNumbersFromDB(bqid);
+
+            if (serialNumbers.Count != count)
+            {
+                MessageBox.Show("จำนวนคูปองไม่ตรงกับที่คาดไว้", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            double pageWidth = 21.0, pageHeight = 29.7;
             if (selectedPaper == "22.5x35.5") { pageWidth = 22.5; pageHeight = 35.5; }
             else if (selectedPaper == "26.7x36.4") { pageWidth = 26.7; pageHeight = 36.4; }
             else if (selectedPaper == "20.5x48") { pageWidth = 20.5; pageHeight = 48.0; }
@@ -324,14 +349,13 @@ namespace BanquetCoupons
                         int index = (p * couponsPerPage) + couponsPrinted;
                         if (index >= count) break;
 
-                        // 👇 ตั้งหมายเลขคูปองบน panel1
-                        UpdatePanelWithSerialNumber($"00{index + 1}");
+                        string serial = serialNumbers[index]; // ✅ ใช้ serialNum จริงจาก DB
 
-                        // 💥 สำคัญมาก: บังคับให้ panel render ให้เสร็จก่อน
+                        UpdatePanelWithSerialNumber(serial);
+
                         panel1.CreateControl();
                         panel1.Refresh();
                         System.Windows.Forms.Application.DoEvents();
-
 
                         using (Bitmap bmp = new Bitmap(panel1.Width, panel1.Height))
                         {
@@ -366,6 +390,60 @@ namespace BanquetCoupons
             Process.Start(new ProcessStartInfo(tempPath) { UseShellExecute = true });
         }
 
+        private void SaveCurrentCouponAsPDF()
+        {
+            string selectedPaper = comboBoxPaperSize.SelectedItem?.ToString() ?? "A4";
+
+            double pageWidth = 21.0, pageHeight = 29.7; // Default A4
+
+            if (selectedPaper == "22.5x35.5") { pageWidth = 22.5; pageHeight = 35.5; }
+            else if (selectedPaper == "26.7x36.4") { pageWidth = 26.7; pageHeight = 36.4; }
+            else if (selectedPaper == "20.5x48") { pageWidth = 20.5; pageHeight = 48.0; }
+
+            panel1.CreateControl();
+            panel1.Refresh();
+            System.Windows.Forms.Application.DoEvents();
+
+            using (Bitmap bmp = new Bitmap(panel1.Width, panel1.Height))
+            {
+                panel1.DrawToBitmap(bmp, new Rectangle(0, 0, panel1.Width, panel1.Height));
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    ms.Position = 0;
+
+                    XImage ximg = XImage.FromStream(ms);
+                    PdfDocument document = new PdfDocument();
+                    document.Info.Title = "Single Coupon";
+
+                    PdfPage page = document.AddPage();
+                    page.Width = XUnit.FromCentimeter(pageWidth);
+                    page.Height = XUnit.FromCentimeter(pageHeight);
+
+                    XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                    // 🔼 จัดไว้บนกระดาษ: 0.5 ซม. จากขอบบน และซ้าย
+                    double marginTop = 0.5;
+                    double marginLeft = 0.5;
+                    double couponWidth = 10.0;
+                    double couponHeight = 5.0;
+
+                    gfx.DrawImage(
+                        ximg,
+                        XUnit.FromCentimeter(marginLeft).Point,
+                        XUnit.FromCentimeter(marginTop).Point,
+                        XUnit.FromCentimeter(couponWidth).Point,
+                        XUnit.FromCentimeter(couponHeight).Point
+                    );
+
+                    string filePath = Path.Combine(Path.GetTempPath(), "SingleCoupon_Top.pdf");
+                    document.Save(filePath);
+                    Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+                }
+            }
+        }
+
 
 
         private void UpdatePanelWithSerialNumber(string serial)
@@ -373,6 +451,76 @@ namespace BanquetCoupons
             lblSerialNumber.Text = serial; // หรืออะไรก็ตามที่คุณใช้ใน panel1 เพื่อแสดงหมายเลขคูปอง
             lblSerialNumber.Font = fontManager.FontBarcode;
             panel1.Refresh();
+        }
+
+        private string InsertCouponsAndReturnBQID()
+        {
+            // อ่าน config จาก ini
+            string iniPath = "config.ini";
+            var config = IniReader.ReadIni(iniPath, "Database");
+
+            string server = config.ContainsKey("Server") ? config["Server"] : "";
+            string database = config.ContainsKey("Database") ? config["Database"] : "";
+            string user = config.ContainsKey("User") ? config["User"] : "";
+            string password = config.ContainsKey("Password") ? config["Password"] : "";
+
+            string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+
+            string bqid = null;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("InsertCoupons", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@agency", agency.Text);
+                cmd.Parameters.AddWithValue("@mealDate", mealDate.Value);
+                cmd.Parameters.AddWithValue("@mealType", mealType.Text);
+                cmd.Parameters.AddWithValue("@cateringName", canteenName.Text);
+                cmd.Parameters.AddWithValue("@quantity", int.Parse(quantity.Text));
+                cmd.Parameters.AddWithValue("@paperSize", comboBoxPaperSize.SelectedItem.ToString());
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+
+                // ดึง BQID ล่าสุดที่ insert
+                using (SqlCommand getBqidCmd = new SqlCommand("SELECT TOP 1 BQID FROM Coupons ORDER BY createAt DESC", conn))
+                {
+                    bqid = (string)getBqidCmd.ExecuteScalar();
+                }
+            }
+
+            return bqid;
+        }
+
+        private List<string> GetSerialNumbersFromDB(string bqid)
+        {
+            // อ่าน config จาก ini
+            string iniPath = "config.ini";
+            var config = IniReader.ReadIni(iniPath, "Database");
+
+            string server = config.ContainsKey("Server") ? config["Server"] : "";
+            string database = config.ContainsKey("Database") ? config["Database"] : "";
+            string user = config.ContainsKey("User") ? config["User"] : "";
+            string password = config.ContainsKey("Password") ? config["Password"] : "";
+
+            string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+
+            List<string> serials = new List<string>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("SELECT serialNum FROM Coupons WHERE BQID = @bqid ORDER BY createAt", conn))
+            {
+                cmd.Parameters.AddWithValue("@bqid", bqid);
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        serials.Add(reader.GetString(0));
+                    }
+                }
+            }
+
+            return serials;
         }
 
 
@@ -460,40 +608,6 @@ namespace BanquetCoupons
             }
         }
 
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                btnSave.Visible= false;
-                btnClearForm.Visible= false;
-                mealDate.Enabled = false;
-                mealType.Enabled = false;
-                agency.Enabled = false;
-                canteenName.Enabled = false;
-                comboBoxPaperSize.Enabled = false;
-                quantity.Value = 1;
-                quantity.Enabled = false;
-                btnEdit.Visible = true;
-                bqid.Visible = true;
-                btnDel.Visible = true;
-                
-
-                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-
-                mealDate.Value = Convert.ToDateTime(row.Cells["mealDate"].Value);
-                mealType.Text = row.Cells["mealType"].Value.ToString();
-                agency.Text = row.Cells["agency"].Value.ToString();
-                canteenName.Text = row.Cells["cateringName"].Value.ToString();
-                quantity.Text = row.Cells["quantity"].Value.ToString();
-                comboBoxPaperSize.Text = row.Cells["paperSize"].Value.ToString();
-                lblSerialNumber.Text = row.Cells["SerialNum"].Value.ToString();
-                bqid.Text = row.Cells["bqid"].Value.ToString();
-                lblSerialNumber.Font = fontManager.FontBarcode;
-
-                // หากมี form หรือ panel ซ่อนอยู่ให้แสดง
-                // this.panelAddData.Visible = true; หรือ เปิด Form ใหม่ก็ได้
-            }
-        }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
@@ -506,6 +620,7 @@ namespace BanquetCoupons
             quantity.Value = 1;
             quantity.Enabled = true;      
             btnCancel.Visible= true;
+            btnReprint.Visible= false;
         }
 
         private void btnEditNprint_Click(object sender, EventArgs e)
@@ -779,7 +894,50 @@ namespace BanquetCoupons
             btnCancel.Visible= false;
             btnSave.Visible= true;
             btnClearForm.Visible= true;
+            btnReprint.Visible= false;
             clearData();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                btnSave.Visible = false;
+                btnClearForm.Visible = false;
+                mealDate.Enabled = false;
+                mealType.Enabled = false;
+                agency.Enabled = false;
+                canteenName.Enabled = false;
+                comboBoxPaperSize.Enabled = false;
+                quantity.Value = 1;
+                quantity.Enabled = false;
+                btnEdit.Visible = true;
+                bqid.Visible = true;
+                btnDel.Visible = true;
+                btnReprint.Visible = true;
+                btnCancel.Visible = true;
+
+
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                mealDate.Value = Convert.ToDateTime(row.Cells["mealDate"].Value);
+                mealType.Text = row.Cells["mealType"].Value.ToString();
+                agency.Text = row.Cells["agency"].Value.ToString();
+                canteenName.Text = row.Cells["cateringName"].Value.ToString();
+                quantity.Text = row.Cells["quantity"].Value.ToString();
+                comboBoxPaperSize.Text = row.Cells["paperSize"].Value.ToString();
+                lblSerialNumber.Text = row.Cells["SerialNum"].Value.ToString();
+                bqid.Text = row.Cells["bqid"].Value.ToString();
+                lblSerialNumber.Font = fontManager.FontBarcode;
+
+                // หากมี form หรือ panel ซ่อนอยู่ให้แสดง
+                // this.panelAddData.Visible = true; หรือ เปิด Form ใหม่ก็ได้
+            }
+        }
+
+        private void btnReprint_Click(object sender, EventArgs e)
+        {
+            SaveCurrentCouponAsPDF();
         }
     }
 }

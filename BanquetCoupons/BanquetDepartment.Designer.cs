@@ -136,6 +136,7 @@
             this.panelContent.Name = "panelContent";
             this.panelContent.Size = new System.Drawing.Size(1105, 818);
             this.panelContent.TabIndex = 4;
+            this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint);
             // 
             // BanquetDepartment
             // 
@@ -146,6 +147,7 @@
             this.Controls.Add(this.panelMenu);
             this.Name = "BanquetDepartment";
             this.Text = "BanquetDepartment";
+            this.Load += new System.EventHandler(this.BanquetDepartment_Load);
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

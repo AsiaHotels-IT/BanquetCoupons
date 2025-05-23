@@ -12,16 +12,49 @@ namespace BanquetCoupons
 {
     public partial class service : Form
     {
-        public service()
+        public service(string user)
         {
             InitializeComponent();
+            this.user = user;
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private string user;
+
+        private void service_Load(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btnLogout_Click_1(object sender, EventArgs e)
         {
             Login loginForm = new Login();
             loginForm.Show();
             this.Close();
         }
+
+        private void panelContent_Paint(object sender, PaintEventArgs e)
+        {
+            CouponsUsage CU = new CouponsUsage(user);
+            CU.Dock= DockStyle.Fill;
+            panelContent.Controls.Add(CU);
+        }
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            panelContent.Controls.Clear();
+            serviceReport SR = new serviceReport(user);
+            SR.Dock= DockStyle.Fill;
+            panelContent.Controls.Add(SR);
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            panelContent.Controls.Clear();
+            CouponsUsage CU = new CouponsUsage(user);
+            CU.Dock= DockStyle.Fill;
+            panelContent.Controls.Add(CU);
+        }
     }
+
+
 }

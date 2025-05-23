@@ -57,7 +57,7 @@ namespace BanquetCoupons
                         new BanquetDepartment(username).Show();
                         break;
                     case "service":
-                        new service().Show();
+                        new service(username).Show();
                         break;
                     default:
                         MessageBox.Show("ข้อมูลไม่ถูกต้อง");
