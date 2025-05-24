@@ -15,6 +15,8 @@ using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+using System.Reflection;
 
 
 namespace BanquetCoupons
@@ -280,6 +282,7 @@ namespace BanquetCoupons
                     conn.Open();
 
                     string newBQID = GenerateNewBQID(conn); // <-- สร้าง BQID ใหม่
+                    Random rand = new Random();
 
                     DateTime selectedDate = mealDate.Value;
                     int qty = int.Parse(quantity.Text);
@@ -312,7 +315,7 @@ namespace BanquetCoupons
             }
         }
 
-        string GenerateNewBQID(SqlConnection conn)
+            string GenerateNewBQID(SqlConnection conn)
         {
             SqlCommand cmd = new SqlCommand("SELECT ISNULL(MAX(CAST(SUBSTRING(BQID, 5, LEN(BQID)) AS INT)), 0) FROM Coupons", conn);
             int maxId = (int)cmd.ExecuteScalar();
@@ -326,12 +329,12 @@ namespace BanquetCoupons
             int count = int.Parse(quantity.Text);
             string selectedPaper = comboBoxPaperSize.SelectedItem.ToString();
 
-            // ✅ สุ่ม serialNumber แทนการดึงจาก DB
-            List<string> serialNumbers = GenerateRandomSerialNumbers(count);
+            // ✅ serialNumber ดึงจาก DB
+            List<string> serialNumbers = GetSerialNumbersFromDatabase(count);
 
             if (serialNumbers.Count != count)
             {
-                MessageBox.Show("จำนวนคูปองไม่ตรงกับที่คาดไว้", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("จำนวนคูปองในฐานข้อมูลไม่เพียงพอ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -367,9 +370,9 @@ namespace BanquetCoupons
 
                         string serial = serialNumbers[index]; // ✅ ใช้ serialNum ที่สุ่มไว้
 
-                        UpdatePanelWithSerialNumber(serial);
+                        UpdatePanelWithSerialNumber("AS" + serial);
 
-                        seNum.Text = (index + 1).ToString("D3");
+                        seNum.Text = ((index + 1).ToString("D3")) + " - " + serial;
                         panel1.CreateControl();
                         panel1.Refresh();
                         System.Windows.Forms.Application.DoEvents();
@@ -407,7 +410,40 @@ namespace BanquetCoupons
             Process.Start(new ProcessStartInfo(tempPath) { UseShellExecute = true });
         }
 
-  
+        private List<string> GetSerialNumbersFromDatabase(int count)
+        {
+            List<string> serials = new List<string>();
+
+            // อ่าน config จาก ini
+            string iniPath = "config.ini";
+            var config = IniReader.ReadIni(iniPath, "Database");
+
+            string server = config.ContainsKey("Server") ? config["Server"] : "";
+            string database = config.ContainsKey("Database") ? config["Database"] : "";
+            string user = config.ContainsKey("User") ? config["User"] : "";
+            string password = config.ContainsKey("Password") ? config["Password"] : "";
+
+            string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+            string query = "SELECT TOP (@count) serialNum FROM Coupons ORDER BY createAt DESC"; // ✅ หรือเปลี่ยนเป็นเงื่อนไขอื่นที่เหมาะสม เช่น WHERE mealDate = @today
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@count", count);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        serials.Add(reader["serialNum"].ToString());
+                    }
+                }
+            }
+
+            return serials;
+        }
+
 
         private List<string> GenerateRandomSerialNumbers(int count)
         {
@@ -416,10 +452,11 @@ namespace BanquetCoupons
 
             while (serials.Count < count)
             {
-                string serial = "SN" + rnd.Next(100000, 999999); // ตัวอย่างรูปแบบ SN123456
-                if (!serials.Contains(serial)) // หลีกเลี่ยงซ้ำ
+                int serial = rnd.Next(10000, 99999);
+                string serialStr = serial.ToString(); // แปลงเป็น string
+                if (!serials.Contains(serialStr))
                 {
-                    serials.Add(serial);
+                    serials.Add(serialStr);
                 }
             }
 

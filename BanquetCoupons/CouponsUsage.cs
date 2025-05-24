@@ -56,6 +56,7 @@ namespace BanquetCoupons
             dateToday.Font = fontManager.FontShowDate;
 
             LoadEventsToday();
+            
         }
 
         private void LoadEventsToday()
@@ -116,14 +117,14 @@ namespace BanquetCoupons
                 {
                     conn.Open();
                     string query = @"
-                        SELECT 
-                            BQID,
-                            cateringName,
-                            agency,
-                            SUM(quantity) AS totalQuantity
-                        FROM Coupons
-                        WHERE CAST(mealDate AS DATE) = @SelectedDate
-                        GROUP BY BQID, cateringName, agency";
+                SELECT 
+                    BQID,
+                    cateringName,
+                    agency,
+                    SUM(quantity) AS totalQuantity
+                FROM Coupons
+                WHERE CAST(mealDate AS DATE) = @SelectedDate
+                GROUP BY BQID, cateringName, agency";
 
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -134,18 +135,22 @@ namespace BanquetCoupons
                         {
                             while (reader.Read())
                             {
+                                string bqid = reader["BQID"].ToString();
+                                string canteen = reader["cateringName"].ToString();
+
                                 Panel card = new Panel
                                 {
                                     Width = 250,
                                     Height = 120,
                                     BorderStyle = BorderStyle.FixedSingle,
                                     Margin = new Padding(10),
-                                    BackColor = Color.White
+                                    BackColor = Color.White,
+                                    Cursor = Cursors.Hand // เปลี่ยนเมาส์เป็นรูปมือ
                                 };
 
                                 Label lblBQID = new Label
                                 {
-                                    Text = "🆔 BQID: " + reader["BQID"].ToString(),
+                                    Text = "🆔 BQID: " + bqid,
                                     Location = new Point(10, 10),
                                     Font = new Font("Segoe UI", 9, FontStyle.Regular),
                                     AutoSize = true
@@ -178,10 +183,29 @@ namespace BanquetCoupons
                                 card.Controls.Add(lblAgency);
                                 card.Controls.Add(lblQty);
 
+                                // เพิ่ม event เมื่อคลิกการ์ด
+                                card.Click += (s, e) =>
+                                {
+                                    bqTopic.Text = bqid;
+                                    lblCanteen.Text = canteen;
+
+                                    ShowUsageCount();
+                                };
+
+                                // เพิ่ม event สำหรับ label ด้านใน เพื่อให้คลิกได้ผลเหมือนกัน
+                                foreach (Control ctrl in card.Controls)
+                                {
+                                    ctrl.Click += (s, e) =>
+                                    {
+                                        bqTopic.Text = bqid;
+                                        lblCanteen.Text = canteen;
+
+                                        ShowUsageCount();
+                                    };
+                                }
+
                                 flowLayoutPanel1.Controls.Add(card);
                             }
-
-
                         }
                     }
                 }
@@ -191,5 +215,172 @@ namespace BanquetCoupons
                 }
             }
         }
+
+        private void btAdd_Click(object sender, EventArgs e)
+        {
+            saveData();
+        }
+
+        void saveData()
+        {
+            string inputBQID = bqTopic.Text.Trim();
+            string inputCouponNum = txtQty.Text.Trim();
+            string inputSerialNum = txtSerial.Text.Trim();
+            string currentUsername = Environment.UserName;
+            string connectionString = connectDB();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    // ตรวจสอบว่าคูปองนี้มีอยู่จริงหรือไม่
+                    string checkQuery = @"
+                SELECT BQID, cateringName
+                FROM Coupons
+                WHERE BQID = @BQID AND couponNum = @couponNum AND serialNum = @serialNum";
+
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("@BQID", inputBQID);
+                        checkCmd.Parameters.AddWithValue("@couponNum", inputCouponNum);
+                        checkCmd.Parameters.AddWithValue("@serialNum", inputSerialNum);
+
+                        using (SqlDataReader reader = checkCmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                string bqid = reader["BQID"].ToString();
+                                string cateringName = reader["cateringName"].ToString();
+                                reader.Close();
+
+                                string useID = userLogin.Text;
+
+                                // 🔒 ตรวจสอบว่ามีการใช้งานคูปองนี้แล้วหรือยัง
+                                string duplicateCheckQuery = @"
+                            SELECT COUNT(*) 
+                            FROM CouponUsage 
+                            WHERE BQID = @BQID AND couponNum = @couponNum AND serialNum = @serialNum";
+
+                                using (SqlCommand duplicateCheckCmd = new SqlCommand(duplicateCheckQuery, conn))
+                                {
+                                    duplicateCheckCmd.Parameters.AddWithValue("@BQID", bqid);
+                                    duplicateCheckCmd.Parameters.AddWithValue("@couponNum", inputCouponNum);
+                                    duplicateCheckCmd.Parameters.AddWithValue("@serialNum", inputSerialNum);
+
+                                    int count = (int)duplicateCheckCmd.ExecuteScalar();
+                                    if (count > 0)
+                                    {
+                                        MessageBox.Show("มีการใช้งานคูปองนี้แล้ว ไม่สามารถใช้ซ้ำได้");
+                                        return;
+                                    }
+                                }
+
+                                // ➡️ ถ้าไม่ซ้ำ ให้ insert การใช้งานคูปอง
+                                string insertQuery = @"
+                            INSERT INTO CouponUsage (BQID, Username, useTime, canteenName, useID, couponNum, serialNum)
+                            VALUES (@BQID, @Username, @useTime, @canteenName, @useID, @couponNum, @serialNum)";
+
+                                using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+                                {
+                                    insertCmd.Parameters.AddWithValue("@BQID", bqid);
+                                    insertCmd.Parameters.AddWithValue("@Username", currentUsername);
+                                    insertCmd.Parameters.AddWithValue("@useTime", DateTime.Now);
+                                    insertCmd.Parameters.AddWithValue("@canteenName", cateringName);
+                                    insertCmd.Parameters.AddWithValue("@useID", useID);
+                                    insertCmd.Parameters.AddWithValue("@couponNum", inputCouponNum);
+                                    insertCmd.Parameters.AddWithValue("@serialNum", inputSerialNum);
+
+                                    int rowsAffected = insertCmd.ExecuteNonQuery();
+
+                                    if (rowsAffected > 0)
+                                    {
+                                        // อัปเดตสถานะคูปอง
+                                        string updateStatusQuery = @"
+                                    UPDATE Coupons
+                                    SET status = 'usage'
+                                    WHERE BQID = @BQID AND couponNum = @couponNum AND serialNum = @serialNum";
+
+                                        using (SqlCommand updateCmd = new SqlCommand(updateStatusQuery, conn))
+                                        {
+                                            updateCmd.Parameters.AddWithValue("@BQID", inputBQID);
+                                            updateCmd.Parameters.AddWithValue("@couponNum", inputCouponNum);
+                                            updateCmd.Parameters.AddWithValue("@serialNum", inputSerialNum);
+
+                                            updateCmd.ExecuteNonQuery();
+                                        }
+
+
+                                        ShowUsageCount();
+                                        MessageBox.Show("ใช้คูปองสำเร็จ และบันทึกสถานะแล้ว");
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("การบันทึกไม่สำเร็จ");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("ไม่พบคูปองที่ตรงกับเงื่อนไข");
+                            }
+                        }
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("เกิดข้อผิดพลาด: " + ex.Message);
+                }
+            }
+            clearData();
+        }
+
+        void ShowUsageCount()
+        {
+            string connectionString = connectDB();  // ฟังก์ชันเชื่อมต่อ DB ของคุณ
+            string inputBQID = bqTopic.Text.Trim(); // สมมติรับ BQID จาก TextBox
+
+            string query = @"
+        SELECT COUNT(*) 
+        FROM Coupons
+        WHERE BQID = @BQID AND status = 'usage'";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@BQID", inputBQID);
+
+                        int totalUsage = (int)cmd.ExecuteScalar(); // ดึงผลรวมมา
+
+                        label3.Text = totalUsage.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("เกิดข้อผิดพลาด: " + ex.Message);
+                }
+            }
+        }
+
+        void clearData()
+        {
+            txtQty.Text = "";
+            txtSerial.Text = "";
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            clearData();
+        }
     }
+
+
 }
+
