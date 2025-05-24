@@ -14,6 +14,10 @@ public class FontManager
     public Font FontSmallBold { get; private set; }
 
     public Font FontBarcode { get; private set; }
+    public Font FontSerial { get; private set; }
+
+    public Font FontTopic { get; private set; }
+    public Font FontShowDate { get; }
 
     public FontManager()
     {
@@ -30,6 +34,16 @@ public class FontManager
         privateFonts.AddFontFile(fontPath);
         FontFamily fontFamily = privateFonts.Families[0];
 
+        // โหลดฟอนต์อังกฤษ
+        string fontSenum = Path.Combine(Application.StartupPath, "fonts", "AsiaHotelBeta-Regular.otf");
+        if (!File.Exists(fontPath))
+        {
+            MessageBox.Show("ไม่พบไฟล์ฟอนต์: " + fontPath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+        privateFonts.AddFontFile(fontSenum);
+        FontFamily fontSerialNum = privateFonts.Families[0];
+
         // โหลดฟอนต์บาร์โค้ด
         string barcodeFontPath = Path.Combine(Application.StartupPath, "fonts", "Free3of9.ttf");  // เปลี่ยนชื่อไฟล์ตามฟอนต์จริง
         if (!File.Exists(barcodeFontPath))
@@ -45,9 +59,14 @@ public class FontManager
         FontRegular = new Font(fontFamily, 12, FontStyle.Regular);
         FontBold = new Font(fontFamily, 12, FontStyle.Bold);
         FontSmallBold = new Font(fontFamily, 9, FontStyle.Bold);
+        FontSmallBold = new Font(fontFamily, 9, FontStyle.Bold);
+        FontTopic = new Font(fontSenum, 16, FontStyle.Regular);
+        FontShowDate = new Font(fontFamily, 16, FontStyle.Regular);
 
-        // ฟอนต์บาร์โค้ด ขนาดตามต้องการ เช่น 48 pt
-        FontBarcode = new Font(barcodeFontFamily, 9, FontStyle.Regular);
+        // ฟอนต์บาร์โค้ด ขนาดตามต้องการ 
+        FontBarcode = new Font(barcodeFontFamily, 11, FontStyle.Regular);
+        //ฟอนต์เลข serialNum
+        FontSerial = new Font(fontSenum, 9, FontStyle.Regular);
     }
 }
 

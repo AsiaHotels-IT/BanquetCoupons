@@ -31,6 +31,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label11 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.seNum = new System.Windows.Forms.Label();
             this.lblSerialNumber = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.lblPreview = new System.Windows.Forms.Label();
@@ -61,13 +62,13 @@
             this.btnClearForm = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.btnReprint = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
             this.btnEditNprint = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.bqid = new System.Windows.Forms.Label();
             this.userLogin = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panelTopic.SuspendLayout();
@@ -79,9 +80,8 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView1.GridColor = System.Drawing.Color.White;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 470);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 428);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 30);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1178, 351);
@@ -103,6 +103,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.seNum);
             this.panel1.Controls.Add(this.lblSerialNumber);
             this.panel1.Controls.Add(this.label14);
             this.panel1.Controls.Add(this.lblPreview);
@@ -118,10 +119,20 @@
             this.panel1.Size = new System.Drawing.Size(382, 222);
             this.panel1.TabIndex = 14;
             // 
+            // seNum
+            // 
+            this.seNum.AutoSize = true;
+            this.seNum.BackColor = System.Drawing.Color.Transparent;
+            this.seNum.Location = new System.Drawing.Point(3, 203);
+            this.seNum.Name = "seNum";
+            this.seNum.Size = new System.Drawing.Size(53, 13);
+            this.seNum.TabIndex = 12;
+            this.seNum.Text = "serialNum";
+            // 
             // lblSerialNumber
             // 
             this.lblSerialNumber.AutoSize = true;
-            this.lblSerialNumber.Location = new System.Drawing.Point(4, 203);
+            this.lblSerialNumber.Location = new System.Drawing.Point(4, 189);
             this.lblSerialNumber.Name = "lblSerialNumber";
             this.lblSerialNumber.Size = new System.Drawing.Size(10, 13);
             this.lblSerialNumber.TabIndex = 11;
@@ -466,7 +477,6 @@
             // 
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel4.Controls.Add(this.btnReprint);
             this.panel4.Controls.Add(this.btnCancel);
             this.panel4.Controls.Add(this.btnDel);
             this.panel4.Controls.Add(this.btnEditNprint);
@@ -479,19 +489,6 @@
             this.panel4.Padding = new System.Windows.Forms.Padding(50, 0, 50, 0);
             this.panel4.Size = new System.Drawing.Size(1173, 98);
             this.panel4.TabIndex = 21;
-            // 
-            // btnReprint
-            // 
-            this.btnReprint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(179)))), ((int)(((byte)(66)))));
-            this.btnReprint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnReprint.Location = new System.Drawing.Point(255, 28);
-            this.btnReprint.Name = "btnReprint";
-            this.btnReprint.Size = new System.Drawing.Size(117, 51);
-            this.btnReprint.TabIndex = 25;
-            this.btnReprint.Text = "พิมพ์ซ้ำ";
-            this.btnReprint.UseVisualStyleBackColor = false;
-            this.btnReprint.Visible = false;
-            this.btnReprint.Click += new System.EventHandler(this.btnReprint_Click);
             // 
             // btnCancel
             // 
@@ -567,19 +564,29 @@
             this.userLogin.TabIndex = 23;
             this.userLogin.Text = "label12";
             // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel5.Location = new System.Drawing.Point(0, 779);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(1178, 42);
+            this.panel5.TabIndex = 24;
+            // 
             // Coupons
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Cornsilk;
+            this.Controls.Add(this.panel5);
             this.Controls.Add(this.userLogin);
             this.Controls.Add(this.bqid);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.panel3);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.dataGridView1);
             this.Name = "Coupons";
             this.Size = new System.Drawing.Size(1178, 821);
             this.Load += new System.EventHandler(this.Coupons_Load);
@@ -638,6 +645,7 @@
         private System.Windows.Forms.Label userLogin;
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnReprint;
+        private System.Windows.Forms.Label seNum;
+        private System.Windows.Forms.Panel panel5;
     }
 }
