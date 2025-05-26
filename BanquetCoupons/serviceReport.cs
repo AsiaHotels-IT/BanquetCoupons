@@ -311,7 +311,6 @@ namespace BanquetCoupons
 
             double yPoint = 40;
 
-            
             gfx.DrawString("รายงานคูปองการใช้บริการ", headerFont, XBrushes.Black, new XRect(20, yPoint, page.Width, page.Height), XStringFormats.TopCenter);
             yPoint += 35;
 
@@ -321,44 +320,64 @@ namespace BanquetCoupons
             gfx.DrawString("ห้องจัดเลี้ยง: " + CateringRoom, font, XBrushes.Black, new XRect(40, yPoint, page.Width, page.Height), XStringFormats.TopLeft);
             yPoint += 20;
 
+            double rowHeight = 25;
             double xStart = 40;
             yPoint += 25;
 
-            // วาดข้อมูลในตาราง
-            double rowHeight = 25;
-            double[] columnWidths = { 100, 200, 100, 100 }; // ปรับความกว้างของแต่ละคอลัมน์ตามลำดับ โดยช่อง "เวลาใช้คูปอง" ให้กว้าง 200
-            int columnCount = dgv.Columns.Count;
+            // ✅ เพิ่มคอลัมน์ลำดับ
+            int originalColumnCount = dgv.Columns.Count;
+            int columnCount = originalColumnCount + 1; // บวกคอลัมน์ลำดับ
 
-            // วาด Header
+            double[] columnWidths = new double[columnCount];
+            columnWidths[0] = 50; // ลำดับ
+            columnWidths[1] = 100; // BQID
+            columnWidths[2] = 150; // createAt
+            columnWidths[3] = 200; // หมายเลขคูปอง
+
+            // ✅ Header
             xStart = 40;
-            for (int i = 0; i < columnCount; i++)
+            gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[0], rowHeight);
+            gfx.DrawString("ลำดับ", font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[0], rowHeight), XStringFormats.TopLeft);
+            xStart += columnWidths[0];
+
+            for (int i = 0; i < originalColumnCount; i++)
             {
                 string headerText = dgv.Columns[i].HeaderText;
-                gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[i], rowHeight);
-                gfx.DrawString(headerText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[i], rowHeight), XStringFormats.TopLeft);
-                xStart += columnWidths[i];
+                gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[i + 1], rowHeight);
+                gfx.DrawString(headerText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[i + 1], rowHeight), XStringFormats.TopLeft);
+                xStart += columnWidths[i + 1];
             }
             yPoint += rowHeight;
 
-            // วาดข้อมูลแถว
+            // ✅ Rows
+            int index = 1;
             foreach (DataGridViewRow row in dgv.Rows)
             {
                 if (!row.IsNewRow)
                 {
                     xStart = 40;
-                    for (int i = 0; i < columnCount; i++)
+
+                    // ลำดับ
+                    gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[0], rowHeight);
+                    gfx.DrawString(index.ToString(), font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[0], rowHeight), XStringFormats.TopLeft);
+                    xStart += columnWidths[0];
+
+                    for (int i = 0; i < originalColumnCount; i++)
                     {
                         string cellText = row.Cells[i].Value?.ToString() ?? "";
-                        gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[i], rowHeight);
-                        gfx.DrawString(cellText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[i], rowHeight), XStringFormats.TopLeft);
-                        xStart += columnWidths[i];
+                        gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[i + 1], rowHeight);
+                        gfx.DrawString(cellText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[i + 1], rowHeight), XStringFormats.TopLeft);
+                        xStart += columnWidths[i + 1];
                     }
+
                     yPoint += rowHeight;
+                    index++;
                 }
             }
 
+            // ✅ Footer
             double footerMargin = 60;
-            double footerLineHeight = 20; // ระยะห่างของแต่ละบรรทัด
+            double footerLineHeight = 20;
 
             gfx.DrawString($"ผู้จัดทำรายงาน: {user}", font, XBrushes.Black,
                 new XRect(40, page.Height - footerMargin, page.Width, 20), XStringFormats.TopLeft);
@@ -369,16 +388,18 @@ namespace BanquetCoupons
             gfx.DrawString("หมายเหตุ: รายงานนี้สร้างจากระบบอัตโนมัติ", font, XBrushes.Gray,
                 new XRect(40, page.Height - footerMargin + (footerLineHeight * 2), page.Width, 20), XStringFormats.TopLeft);
 
-            // ✅ บันทึกไฟล์
+            // ✅ Save และเปิด PDF
             document.Save(filePath);
-
-            // ✅ เปิดไฟล์ PDF
             Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
         }
+
 
         private void btnExport_Click(object sender, EventArgs e)
         {
             ExportDataGridViewToPdf(dataGridReport, "Report.pdf");
         }
+
+
+       
     }
 }

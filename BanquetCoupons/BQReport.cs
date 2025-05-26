@@ -476,5 +476,10 @@ namespace BanquetCoupons
                 showCurrentPage();
             }
         }
+
+        private void lblPage_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

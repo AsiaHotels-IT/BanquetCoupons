@@ -232,6 +232,7 @@
             this.lblPage.Size = new System.Drawing.Size(14, 20);
             this.lblPage.TabIndex = 30;
             this.lblPage.Text = "-";
+            this.lblPage.Click += new System.EventHandler(this.lblPage_Click);
             // 
             // btnPrev
             // 

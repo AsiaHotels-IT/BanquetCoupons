@@ -50,7 +50,7 @@
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(210, 810);
+            this.panelMenu.Size = new System.Drawing.Size(210, 749);
             this.panelMenu.TabIndex = 5;
             // 
             // btnReport
@@ -106,7 +106,7 @@
             this.btnLogout.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnLogout.ForeColor = System.Drawing.Color.White;
-            this.btnLogout.Location = new System.Drawing.Point(0, 758);
+            this.btnLogout.Location = new System.Drawing.Point(0, 697);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(210, 52);
             this.btnLogout.TabIndex = 2;
@@ -120,7 +120,7 @@
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContent.Location = new System.Drawing.Point(210, 0);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(1087, 810);
+            this.panelContent.Size = new System.Drawing.Size(1087, 749);
             this.panelContent.TabIndex = 6;
             this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint);
             // 
@@ -128,7 +128,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1297, 810);
+            this.ClientSize = new System.Drawing.Size(1297, 749);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelMenu);
             this.Name = "service";

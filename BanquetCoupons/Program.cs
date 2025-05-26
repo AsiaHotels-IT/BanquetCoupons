@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 class Program
 {
+    [STAThread]
     static void Main()
     {
         string path = "config.ini";
