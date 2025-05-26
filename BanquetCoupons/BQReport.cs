@@ -1,8 +1,12 @@
-﻿using System;
+﻿using PdfSharp.Drawing;
+using PdfSharp.Fonts;
+using PdfSharp.Pdf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -10,27 +14,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PdfSharp.Drawing;
-using PdfSharp.Pdf;
-using PdfSharp.Fonts;
 using System.IO;
-using System.Diagnostics;
-using PdfSharp.UniversalAccessibility.Drawing;
 
 namespace BanquetCoupons
 {
-    public partial class serviceReport : UserControl
+    public partial class BQReport : UserControl
     {
-        public serviceReport(string user)
+        public BQReport(string user)
         {
             InitializeComponent();
             this.user = user;
-
-
         }
 
         private string user;
         private FontManager fontManager;
-        private void serviceReport_Load(object sender, EventArgs e)
+
+        private void BQReport_Load(object sender, EventArgs e)
         {
             userLogin.Text = user;
             fontManager = new FontManager();  // สร้างครั้งเดียวตอนโหลดฟอร์ม
@@ -49,30 +48,12 @@ namespace BanquetCoupons
 
             dataGridReport.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridReport.BackgroundColor = Color.White;
-            dataGridReport.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridReport.ClearSelection();
             dataGridReport.CurrentCell = null;
             dataGridReport.ReadOnly = true; // ปิดการแก้ไขข้อมูล 
             dataGridReport.ClearSelection();// ไม่ให้ผู้ใช้เลือกแถวหรือเซลล์
             dataGridReport.Enabled = false; // หรือหากต้องการปิดอินเทอร์แอคทั้งหมด
-        }
 
-        string connectDB()
-        {
-            string iniPath = "config.ini"; // ที่อยู่ไฟล์ .ini
-
-            // อ่าน config จาก section Database
-            var config = IniReader.ReadIni(iniPath, "Database");
-
-            // ดึงค่าตัวแปรออกมา
-            string server = config.ContainsKey("Server") ? config["Server"] : "";
-            string database = config.ContainsKey("Database") ? config["Database"] : "";
-            string user = config.ContainsKey("User") ? config["User"] : "";
-            string password = config.ContainsKey("Password") ? config["Password"] : "";
-
-            // สร้าง connection string (SQL Server Auth)
-            string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
-            return connectionString;
         }
 
         private void cateringDate_ValueChanged(object sender, EventArgs e)
@@ -98,9 +79,9 @@ namespace BanquetCoupons
                     agency,
                     SUM(quantity) AS totalQuantity
                 FROM Coupons
-                WHERE CAST(mealDate AS DATE) = @SelectedDate
-                GROUP BY BQID, cateringName, agency";
-
+                WHERE CAST(createAt AS DATE) = @SelectedDate
+                GROUP BY BQID, cateringName, agency
+                ORDER BY BQID";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -110,9 +91,10 @@ namespace BanquetCoupons
                         {
                             while (reader.Read())
                             {
-                                string bqid = reader["BQID"].ToString();
-                                string canteen = reader["cateringName"].ToString();
-                                string agency = reader["agency"].ToString();
+                                string bqid = reader["BQID"] != DBNull.Value ? reader["BQID"].ToString() : "-";
+                                string canteen = reader["cateringName"] != DBNull.Value ? reader["cateringName"].ToString() : "-";
+                                string agency = reader["agency"] != DBNull.Value ? reader["agency"].ToString() : "-";
+                                string totalQty = reader["totalQuantity"] != DBNull.Value ? reader["totalQuantity"].ToString() : "0";
 
                                 Panel card = new Panel
                                 {
@@ -120,8 +102,7 @@ namespace BanquetCoupons
                                     Height = 120,
                                     BorderStyle = BorderStyle.FixedSingle,
                                     Margin = new Padding(10),
-                                    BackColor = Color.White,
-                                    Cursor = Cursors.Hand // เปลี่ยนเมาส์เป็นรูปมือ
+                                    BackColor = Color.White
                                 };
 
                                 Label lblBQID = new Label
@@ -134,7 +115,7 @@ namespace BanquetCoupons
 
                                 Label lblCatering = new Label
                                 {
-                                    Text = "🍽️ " + reader["cateringName"].ToString(),
+                                    Text = "🍽️ " + canteen,
                                     Location = new Point(10, 30),
                                     Font = new Font("Segoe UI", 10, FontStyle.Bold),
                                     AutoSize = true
@@ -142,14 +123,14 @@ namespace BanquetCoupons
 
                                 Label lblAgency = new Label
                                 {
-                                    Text = "🏢 " + reader["agency"].ToString(),
+                                    Text = "🏢 " + agency,
                                     Location = new Point(10, 55),
                                     AutoSize = true
                                 };
 
                                 Label lblQty = new Label
                                 {
-                                    Text = "จำนวน: " + reader["totalQuantity"].ToString(),
+                                    Text = "จำนวน: " + totalQty,
                                     Location = new Point(10, 80),
                                     AutoSize = true
                                 };
@@ -159,28 +140,21 @@ namespace BanquetCoupons
                                 card.Controls.Add(lblAgency);
                                 card.Controls.Add(lblQty);
 
-                                // เพิ่ม event เมื่อคลิกการ์ด
-                                card.Click += (s, e) =>
+                                // Click event สำหรับ Panel และ Label ภายใน
+                                EventHandler clickEvent = (s, e) =>
                                 {
                                     bqTopic.Text = bqid;
                                     lblCanteen.Text = canteen;
                                     lblCus.Text = agency;
-
                                     ShowUsageCount();
                                 };
 
-                                // เพิ่ม event สำหรับ label ด้านใน เพื่อให้คลิกได้ผลเหมือนกัน
+                                card.Click += clickEvent;
                                 foreach (Control ctrl in card.Controls)
                                 {
-                                    ctrl.Click += (s, e) =>
-                                    {
-                                        bqTopic.Text = bqid;
-                                        lblCanteen.Text = canteen;
-                                        lblCus.Text = agency;
-
-                                        ShowUsageCount();
-                                    };
+                                    ctrl.Click += clickEvent;
                                 }
+
                                 flowLayoutPanel1.Controls.Add(card);
                             }
                         }
@@ -192,15 +166,33 @@ namespace BanquetCoupons
                 }
             }
         }
+
+        string connectDB()
+        {
+            string iniPath = "config.ini"; // ที่อยู่ไฟล์ .ini
+
+            // อ่าน config จาก section Database
+            var config = IniReader.ReadIni(iniPath, "Database");
+
+            // ดึงค่าตัวแปรออกมา
+            string server = config.ContainsKey("Server") ? config["Server"] : "";
+            string database = config.ContainsKey("Database") ? config["Database"] : "";
+            string user = config.ContainsKey("User") ? config["User"] : "";
+            string password = config.ContainsKey("Password") ? config["Password"] : "";
+
+            // สร้าง connection string (SQL Server Auth)
+            string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+            return connectionString;
+        }
         void ShowUsageCount()
         {
             string connectionString = connectDB();  // ฟังก์ชันเชื่อมต่อ DB ของคุณ
             string inputBQID = bqTopic.Text.Trim(); // สมมติรับ BQID จาก TextBox
 
             string query = @"
-        SELECT COUNT(*) 
-        FROM Coupons
-        WHERE BQID = @BQID AND status = 'usage'";
+                            SELECT COUNT(*) 
+                            FROM Coupons
+                            WHERE BQID = @BQID ";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -224,66 +216,114 @@ namespace BanquetCoupons
             }
         }
 
+        int currentPage = 1;
+        int pageSize = 10;
+        int totalRecords = 0;
+        int totalPages = 0;
+        DataTable fullDataTable = new DataTable(); // เก็บข้อมูลทั้งหมดไว้ตรงนี้
+
         void showReport()
         {
             string connection = connectDB();
             string selectBQID = bqTopic.Text.Trim();
             DateTime selectedDate = cateringDate.Value.Date;
 
-            string query = "SELECT BQID, useTime, couponNum, serialNum FROM CouponUsage " +
-                "WHERE BQID = @BQID AND CONVERT(DATE, useTime) = @SelectedDate  ORDER BY useTime";
+            string query = @"
+                    SELECT 
+                        BQID, 
+                        createAt, 
+                        couponNum, 
+                        serialNum 
+                    FROM Coupons
+                    WHERE BQID = @BQID 
+                      AND CONVERT(DATE, createAt) = @SelectedDate  
+                    ORDER BY createAt";
 
             using (SqlConnection conn = new SqlConnection(connection))
             {
                 try
                 {
                     conn.Open();
-                    using(SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@BQID", selectBQID);
                         cmd.Parameters.AddWithValue("@SelectedDate", selectedDate);
 
                         SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
+                        fullDataTable = new DataTable(); // โหลดข้อมูลทั้งหมดไว้ก่อน
+                        adapter.Fill(fullDataTable);
 
-                        // ✅ เพิ่มคอลัมน์ใหม่
-                        dt.Columns.Add("หมายเลขคูปอง", typeof(string));
-
-                        foreach (DataRow row in dt.Rows)
+                        // รวม couponNum กับ serialNum
+                        fullDataTable.Columns.Add("หมายเลขคูปอง", typeof(string));
+                        foreach (DataRow row in fullDataTable.Rows)
                         {
                             string coupon = row["couponNum"]?.ToString() ?? "";
                             string serial = row["serialNum"]?.ToString() ?? "";
                             row["หมายเลขคูปอง"] = $"{coupon} - {serial}";
                         }
 
-                        // ✅ ไม่ต้องแสดง 2 คอลัมน์เดิม
-                        dt.Columns.Remove("couponNum");
-                        dt.Columns.Remove("serialNum");
+                        // ลบคอลัมน์ที่ไม่ต้องแสดง
+                        fullDataTable.Columns.Remove("couponNum");
+                        fullDataTable.Columns.Remove("serialNum");
 
-                        dataGridReport.DataSource = dt;
-                        // ปรับหัวตารางให้อ่านง่าย
-                        dataGridReport.Columns["BQID"].HeaderText = "BQID";
-                        dataGridReport.Columns["useTime"].HeaderText = "เวลาใช้คูปอง";
-                        dataGridReport.Columns["หมายเลขคูปอง"].HeaderText = "หมายเลขคูปอง";
+                        // คำนวณจำนวนหน้า
+                        totalRecords = fullDataTable.Rows.Count;
+                        totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+                        currentPage = 1;
+
+                        showCurrentPage(); // แสดงหน้าปัจจุบัน
                     }
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Error : " + ex.Message);
+                    MessageBox.Show("เกิดข้อผิดพลาด: " + ex.Message);
                 }
             }
         }
+
+        void showCurrentPage()
+        {
+            // คำนวณ row เริ่มต้นและสิ้นสุด
+            int startRow = (currentPage - 1) * pageSize;
+            int endRow = Math.Min(startRow + pageSize, totalRecords);
+
+            DataTable currentPageTable = fullDataTable.Clone(); // โครงสร้างเหมือนเดิม
+
+            for (int i = startRow; i < endRow; i++)
+            {
+                currentPageTable.ImportRow(fullDataTable.Rows[i]);
+            }
+
+            dataGridReport.DataSource = currentPageTable;
+
+            // ปรับหัวตาราง
+            if (dataGridReport.Columns.Contains("BQID"))
+                dataGridReport.Columns["BQID"].HeaderText = "BQID";
+
+            if (dataGridReport.Columns.Contains("createAt"))
+                dataGridReport.Columns["createAt"].HeaderText = "วันที่สร้าง";
+
+            if (dataGridReport.Columns.Contains("หมายเลขคูปอง"))
+                dataGridReport.Columns["หมายเลขคูปอง"].HeaderText = "หมายเลขคูปอง";
+
+            // อัปเดตหน้า
+            lblPage.Text = $"หน้า {currentPage} / {totalPages}";
+            btnPrev.Enabled = currentPage > 1;
+            btnNext.Enabled = currentPage < totalPages;
+        }
+
+
 
         private void btnReport_Click(object sender, EventArgs e)
         {
             btnExport.Visible = true;
             if (bqTopic.Text == "BQID" || lblCanteen.Text == "ห้องจัดเลี้ยง" || label3.Text == "-")
-                {
+            {
                 btnExport.Visible = false;
                 MessageBox.Show("กรุณาเลือกงานจัดเลี้ยง");
-                
+
             }
-            
+
             showReport();
         }
 
@@ -311,7 +351,6 @@ namespace BanquetCoupons
 
             double yPoint = 40;
 
-            
             gfx.DrawString("รายงานคูปองการใช้บริการ", headerFont, XBrushes.Black, new XRect(20, yPoint, page.Width, page.Height), XStringFormats.TopCenter);
             yPoint += 35;
 
@@ -321,44 +360,64 @@ namespace BanquetCoupons
             gfx.DrawString("ห้องจัดเลี้ยง: " + CateringRoom, font, XBrushes.Black, new XRect(40, yPoint, page.Width, page.Height), XStringFormats.TopLeft);
             yPoint += 20;
 
+            double rowHeight = 25;
             double xStart = 40;
             yPoint += 25;
 
-            // วาดข้อมูลในตาราง
-            double rowHeight = 25;
-            double[] columnWidths = { 100, 200, 100, 100 }; // ปรับความกว้างของแต่ละคอลัมน์ตามลำดับ โดยช่อง "เวลาใช้คูปอง" ให้กว้าง 200
-            int columnCount = dgv.Columns.Count;
+            // ✅ เพิ่มคอลัมน์ลำดับ
+            int originalColumnCount = dgv.Columns.Count;
+            int columnCount = originalColumnCount + 1; // บวกคอลัมน์ลำดับ
 
-            // วาด Header
+            double[] columnWidths = new double[columnCount];
+            columnWidths[0] = 50; // ลำดับ
+            columnWidths[1] = 100; // BQID
+            columnWidths[2] = 150; // createAt
+            columnWidths[3] = 200; // หมายเลขคูปอง
+
+            // ✅ Header
             xStart = 40;
-            for (int i = 0; i < columnCount; i++)
+            gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[0], rowHeight);
+            gfx.DrawString("ลำดับ", font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[0], rowHeight), XStringFormats.TopLeft);
+            xStart += columnWidths[0];
+
+            for (int i = 0; i < originalColumnCount; i++)
             {
                 string headerText = dgv.Columns[i].HeaderText;
-                gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[i], rowHeight);
-                gfx.DrawString(headerText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[i], rowHeight), XStringFormats.TopLeft);
-                xStart += columnWidths[i];
+                gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[i + 1], rowHeight);
+                gfx.DrawString(headerText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[i + 1], rowHeight), XStringFormats.TopLeft);
+                xStart += columnWidths[i + 1];
             }
             yPoint += rowHeight;
 
-            // วาดข้อมูลแถว
+            // ✅ Rows
+            int index = 1;
             foreach (DataGridViewRow row in dgv.Rows)
             {
                 if (!row.IsNewRow)
                 {
                     xStart = 40;
-                    for (int i = 0; i < columnCount; i++)
+
+                    // ลำดับ
+                    gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[0], rowHeight);
+                    gfx.DrawString(index.ToString(), font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[0], rowHeight), XStringFormats.TopLeft);
+                    xStart += columnWidths[0];
+
+                    for (int i = 0; i < originalColumnCount; i++)
                     {
                         string cellText = row.Cells[i].Value?.ToString() ?? "";
-                        gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[i], rowHeight);
-                        gfx.DrawString(cellText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[i], rowHeight), XStringFormats.TopLeft);
-                        xStart += columnWidths[i];
+                        gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[i + 1], rowHeight);
+                        gfx.DrawString(cellText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[i + 1], rowHeight), XStringFormats.TopLeft);
+                        xStart += columnWidths[i + 1];
                     }
+
                     yPoint += rowHeight;
+                    index++;
                 }
             }
 
+            // ✅ Footer
             double footerMargin = 60;
-            double footerLineHeight = 20; // ระยะห่างของแต่ละบรรทัด
+            double footerLineHeight = 20;
 
             gfx.DrawString($"ผู้จัดทำรายงาน: {user}", font, XBrushes.Black,
                 new XRect(40, page.Height - footerMargin, page.Width, 20), XStringFormats.TopLeft);
@@ -369,16 +428,53 @@ namespace BanquetCoupons
             gfx.DrawString("หมายเหตุ: รายงานนี้สร้างจากระบบอัตโนมัติ", font, XBrushes.Gray,
                 new XRect(40, page.Height - footerMargin + (footerLineHeight * 2), page.Width, 20), XStringFormats.TopLeft);
 
-            // ✅ บันทึกไฟล์
+            // ✅ Save และเปิด PDF
             document.Save(filePath);
-
-            // ✅ เปิดไฟล์ PDF
             Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
         }
+
 
         private void btnExport_Click(object sender, EventArgs e)
         {
             ExportDataGridViewToPdf(dataGridReport, "Report.pdf");
+        }
+
+        private void btnReport_Click_1(object sender, EventArgs e)
+        {
+
+            btnExport.Visible = true;
+            if (bqTopic.Text == "BQID" || lblCanteen.Text == "ห้องจัดเลี้ยง" || label3.Text == "-")
+            {
+                btnExport.Visible = false;
+                MessageBox.Show("กรุณาเลือกงานจัดเลี้ยง");
+
+            }
+
+            showReport();
+        }
+
+        private void btnExport_Click_1(object sender, EventArgs e)
+        {
+            ExportDataGridViewToPdf(dataGridReport, "Report.pdf");
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                showCurrentPage();
+            }
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                showCurrentPage();
+            }
         }
     }
 }

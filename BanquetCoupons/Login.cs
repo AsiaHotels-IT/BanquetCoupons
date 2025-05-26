@@ -51,7 +51,7 @@ namespace BanquetCoupons
                         new AdminForm().Show();
                         break;
                     case "finance":
-                        new FinanceForm().Show();
+                        new FinanceForm(username).Show();
                         break;
                     case "banquet":
                         new BanquetDepartment(username).Show();

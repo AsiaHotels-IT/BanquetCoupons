@@ -226,7 +226,7 @@ namespace BanquetCoupons
             string inputBQID = bqTopic.Text.Trim();
             string inputCouponNum = txtQty.Text.Trim();
             string inputSerialNum = txtSerial.Text.Trim();
-            string currentUsername = Environment.UserName;
+            string currentUsername = userLogin.Text;
             string connectionString = connectDB();
 
             using (SqlConnection conn = new SqlConnection(connectionString))

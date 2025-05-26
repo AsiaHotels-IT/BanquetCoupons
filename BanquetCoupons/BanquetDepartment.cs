@@ -55,5 +55,13 @@ namespace BanquetCoupons
         {
 
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            panelContent.Controls.Clear();
+            BQReport BQR = new BQReport(user);
+            BQR.Dock = DockStyle.Fill;
+            panelContent.Controls.Add(BQR);
+        }
     }
 }

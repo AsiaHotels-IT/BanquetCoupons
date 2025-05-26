@@ -37,7 +37,7 @@ namespace BanquetCoupons
         private bool isDatePicked = false;
         private void Coupons_Load(object sender, EventArgs e)
         {
-            loadData();
+            loadData(currentPage);
             fontManager = new FontManager();  // สร้างครั้งเดียวตอนโหลดฟอร์ม
 
             // ตั้งค่าฟอนต์ให้ Label ใน panel1
@@ -93,20 +93,78 @@ namespace BanquetCoupons
         }
 
 
-        void loadData()
-        {
-            string iniPath = "config.ini"; // ที่อยู่ไฟล์ .ini
+        //void loadData()
+        //{
+        //    string iniPath = "config.ini"; // ที่อยู่ไฟล์ .ini
+        //
+        //    // อ่าน config จาก section Database
+        //    var config = IniReader.ReadIni(iniPath, "Database");
+        //
+        //    // ดึงค่าตัวแปรออกมา
+        //    string server = config.ContainsKey("Server") ? config["Server"] : "";
+        //    string database = config.ContainsKey("Database") ? config["Database"] : "";
+        //    string user = config.ContainsKey("User") ? config["User"] : "";
+        //    string password = config.ContainsKey("Password") ? config["Password"] : "";
+        //
+        //    // สร้าง connection string (SQL Server Auth)
+        //    string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+        //
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    {
+        //        try
+        //        {
+        //            conn.Open();
+        //
+        //            string sql = @"
+        //                            SELECT 
+        //                                COALESCE(BQID, oldBQID) AS BQID,
+        //                                agency,
+        //                                mealDate,
+        //                                mealType,
+        //                                cateringName,
+        //                                paperSize,
+        //                                COUNT(DISTINCT serialNum) AS quantity
+        //                            FROM Coupons
+        //                            GROUP BY 
+        //                                COALESCE(BQID, oldBQID),
+        //                                agency,
+        //                                mealDate,
+        //                                mealType,
+        //                                cateringName,
+        //                                paperSize
+        //                            ORDER BY 
+        //                                CAST(SUBSTRING(COALESCE(BQID, oldBQID), 5, LEN(COALESCE(BQID, oldBQID))) AS INT),
+        //                                paperSize;
+        //                           ";
+        //
+        //            SqlDataAdapter adapter = new SqlDataAdapter(sql, conn);
+        //            DataTable dt = new DataTable();
+        //            adapter.Fill(dt);
+        //
+        //            dataGridView1.DataSource = dt; // ต้องมี DataGridView ชื่อ dataGridView1 บนฟอร์ม
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show("เชื่อมต่อฐานข้อมูลไม่สำเร็จ: " + ex.Message);
+        //        }
+        //    }
+        //}
 
-            // อ่าน config จาก section Database
+        int currentPage = 1;
+        int pageSize = 20;
+        int totalRecords = 0;
+        int totalPages = 0;
+
+        void loadData(int page)
+        {
+            string iniPath = "config.ini";
             var config = IniReader.ReadIni(iniPath, "Database");
 
-            // ดึงค่าตัวแปรออกมา
             string server = config.ContainsKey("Server") ? config["Server"] : "";
             string database = config.ContainsKey("Database") ? config["Database"] : "";
             string user = config.ContainsKey("User") ? config["User"] : "";
             string password = config.ContainsKey("Password") ? config["Password"] : "";
 
-            // สร้าง connection string (SQL Server Auth)
             string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -115,33 +173,50 @@ namespace BanquetCoupons
                 {
                     conn.Open();
 
-                    string sql = @"
-                                    SELECT 
-                                        COALESCE(BQID, oldBQID) AS BQID,
-                                        agency,
-                                        mealDate,
-                                        mealType,
-                                        cateringName,
-                                        paperSize,
-                                        COUNT(DISTINCT serialNum) AS quantity
-                                    FROM Coupons
-                                    GROUP BY 
-                                        COALESCE(BQID, oldBQID),
-                                        agency,
-                                        mealDate,
-                                        mealType,
-                                        cateringName,
-                                        paperSize
-                                    ORDER BY 
-                                        CAST(SUBSTRING(COALESCE(BQID, oldBQID), 5, LEN(COALESCE(BQID, oldBQID))) AS INT),
-                                        paperSize;
-                                   ";
+                    // 1. นับจำนวนข้อมูลทั้งหมด
+                    string countSql = @"SELECT COUNT(DISTINCT serialNum) FROM Coupons";
+                    SqlCommand countCmd = new SqlCommand(countSql, conn);
+                    totalRecords = Convert.ToInt32(countCmd.ExecuteScalar());
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(sql, conn);
+                    totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+                    int offset = (page - 1) * pageSize;
+
+                    // 2. โหลดข้อมูลเฉพาะหน้าที่ต้องการ
+                    string sql = $@"
+                SELECT 
+                    COALESCE(BQID, oldBQID) AS BQID,
+                    agency,
+                    mealDate,
+                    mealType,
+                    cateringName,
+                    paperSize,
+                    COUNT(DISTINCT serialNum) AS quantity
+                FROM Coupons
+                GROUP BY 
+                    COALESCE(BQID, oldBQID),
+                    agency,
+                    mealDate,
+                    mealType,
+                    cateringName,
+                    paperSize
+                ORDER BY 
+                    CAST(SUBSTRING(COALESCE(BQID, oldBQID), 5, LEN(COALESCE(BQID, oldBQID))) AS INT),
+                    paperSize
+                OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@Offset", offset);
+                    cmd.Parameters.AddWithValue("@PageSize", pageSize);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
 
-                    dataGridView1.DataSource = dt; // ต้องมี DataGridView ชื่อ dataGridView1 บนฟอร์ม
+                    dataGridView1.DataSource = dt;
+
+                    // อัปเดต label หน้าปัจจุบัน เช่น: หน้า 1/5
+                    lblPage.Text = $"หน้า {currentPage}/{totalPages}";
                 }
                 catch (Exception ex)
                 {
@@ -304,7 +379,7 @@ namespace BanquetCoupons
 
                     MessageBox.Show("บันทึกคูปองสำเร็จทั้งหมด", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    loadData();          // โหลดข้อมูลใหม่                   
+                    loadData(currentPage);          // โหลดข้อมูลใหม่                   
                     SaveCouponAsPDF();   // สร้าง PDF
                     clearData();
                 }
@@ -424,7 +499,7 @@ namespace BanquetCoupons
             string password = config.ContainsKey("Password") ? config["Password"] : "";
 
             string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
-            string query = "SELECT TOP (@count) serialNum FROM Coupons ORDER BY createAt DESC"; // ✅ หรือเปลี่ยนเป็นเงื่อนไขอื่นที่เหมาะสม เช่น WHERE mealDate = @today
+            string query = "SELECT TOP (@count) serialNum FROM Coupons WHERE BQID = (SELECT MAX(BQID) FROM Coupons) ORDER BY couponNum ASC"; // ✅ หรือเปลี่ยนเป็นเงื่อนไขอื่นที่เหมาะสม เช่น WHERE mealDate = @today
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
@@ -443,26 +518,6 @@ namespace BanquetCoupons
 
             return serials;
         }
-
-
-        private List<string> GenerateRandomSerialNumbers(int count)
-        {
-            List<string> serials = new List<string>();
-            Random rnd = new Random();
-
-            while (serials.Count < count)
-            {
-                int serial = rnd.Next(10000, 99999);
-                string serialStr = serial.ToString(); // แปลงเป็น string
-                if (!serials.Contains(serialStr))
-                {
-                    serials.Add(serialStr);
-                }
-            }
-
-            return serials;
-        }
-
 
 
         private void UpdatePanelWithSerialNumber(string serial)
@@ -740,7 +795,7 @@ namespace BanquetCoupons
                             transaction.Commit();
 
                             MessageBox.Show("แก้ไขและสร้างคูปองใหม่เรียบร้อยแล้ว");
-                            loadData();
+                            loadData(currentPage);
                             SaveCouponAsPDF();
                             clearData();
                         }
@@ -899,7 +954,7 @@ namespace BanquetCoupons
 
                             MessageBox.Show("ลบคูปองทั้งชุดเรียบร้อยแล้ว", "สำเร็จ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                            loadData();
+                            loadData(currentPage);
                             clearData();
 
                         }
@@ -963,6 +1018,23 @@ namespace BanquetCoupons
             }
         }
 
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                loadData(currentPage);
+            }
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                loadData(currentPage);
+            }
+        }
     }
 }
 

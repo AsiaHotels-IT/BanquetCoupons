@@ -32,10 +32,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.userLogin = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.dateToday = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlAddData = new System.Windows.Forms.Panel();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.lblCanteen = new System.Windows.Forms.Label();
+            this.txtSerial = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.qty = new System.Windows.Forms.Label();
             this.note = new System.Windows.Forms.Label();
@@ -43,13 +46,11 @@
             this.txtQty = new System.Windows.Forms.TextBox();
             this.couTopic = new System.Windows.Forms.Label();
             this.bqTopic = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtSerial = new System.Windows.Forms.TextBox();
-            this.lblCanteen = new System.Windows.Forms.Label();
-            this.btnClear = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.pnlAddData.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -93,17 +94,6 @@
             this.panel1.Size = new System.Drawing.Size(1178, 43);
             this.panel1.TabIndex = 3;
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Black;
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.ForeColor = System.Drawing.Color.White;
-            this.panel2.Location = new System.Drawing.Point(22, 26);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 66);
-            this.panel2.TabIndex = 4;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
-            // 
             // dateToday
             // 
             this.dateToday.AutoSize = true;
@@ -139,6 +129,45 @@
             this.pnlAddData.Name = "pnlAddData";
             this.pnlAddData.Size = new System.Drawing.Size(461, 282);
             this.pnlAddData.TabIndex = 7;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.Location = new System.Drawing.Point(300, 157);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(93, 46);
+            this.btnClear.TabIndex = 10;
+            this.btnClear.Text = "ยกเลิก";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // lblCanteen
+            // 
+            this.lblCanteen.AutoSize = true;
+            this.lblCanteen.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCanteen.Location = new System.Drawing.Point(164, 25);
+            this.lblCanteen.Name = "lblCanteen";
+            this.lblCanteen.Size = new System.Drawing.Size(103, 25);
+            this.lblCanteen.TabIndex = 9;
+            this.lblCanteen.Text = "ห้องจัดเลี้ยง";
+            // 
+            // txtSerial
+            // 
+            this.txtSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSerial.Location = new System.Drawing.Point(300, 83);
+            this.txtSerial.Name = "txtSerial";
+            this.txtSerial.Size = new System.Drawing.Size(132, 26);
+            this.txtSerial.TabIndex = 8;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(275, 84);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(19, 25);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "-";
             // 
             // label3
             // 
@@ -210,50 +239,34 @@
             this.bqTopic.TabIndex = 0;
             this.bqTopic.Text = "BQID";
             // 
-            // label4
+            // label5
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(275, 84);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(19, 25);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "-";
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Maroon;
+            this.label5.Location = new System.Drawing.Point(514, 144);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(110, 16);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "***เลือกงานจัดเลี้ยง***";
             // 
-            // txtSerial
+            // panel2
             // 
-            this.txtSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSerial.Location = new System.Drawing.Point(300, 83);
-            this.txtSerial.Name = "txtSerial";
-            this.txtSerial.Size = new System.Drawing.Size(132, 26);
-            this.txtSerial.TabIndex = 8;
-            // 
-            // lblCanteen
-            // 
-            this.lblCanteen.AutoSize = true;
-            this.lblCanteen.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCanteen.Location = new System.Drawing.Point(164, 25);
-            this.lblCanteen.Name = "lblCanteen";
-            this.lblCanteen.Size = new System.Drawing.Size(62, 25);
-            this.lblCanteen.TabIndex = 9;
-            this.lblCanteen.Text = "BQID";
-            // 
-            // btnClear
-            // 
-            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(300, 157);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(93, 46);
-            this.btnClear.TabIndex = 10;
-            this.btnClear.Text = "ยกเลิก";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.panel2.BackColor = System.Drawing.Color.Black;
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.ForeColor = System.Drawing.Color.White;
+            this.panel2.Location = new System.Drawing.Point(22, 26);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 66);
+            this.panel2.TabIndex = 4;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // CouponsUsage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Cornsilk;
+            this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.pnlAddData);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.dateToday);
@@ -264,10 +277,10 @@
             this.Load += new System.EventHandler(this.CouponsUsage_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.pnlAddData.ResumeLayout(false);
             this.pnlAddData.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -279,7 +292,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label userLogin;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label dateToday;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel pnlAddData;
@@ -294,5 +306,7 @@
         private System.Windows.Forms.TextBox txtSerial;
         private System.Windows.Forms.Label lblCanteen;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel panel2;
     }
 }
