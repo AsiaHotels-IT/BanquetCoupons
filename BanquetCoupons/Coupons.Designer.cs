@@ -36,7 +36,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.lblPreview = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.panelCouponName = new System.Windows.Forms.Panel();
             this.mealDatePreview = new System.Windows.Forms.Label();
             this.canteenPreview = new System.Windows.Forms.Label();
             this.agencyPreview = new System.Windows.Forms.Label();
@@ -44,7 +43,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.comboBoxPaperSize = new System.Windows.Forms.ComboBox();
@@ -69,17 +67,23 @@
             this.bqid = new System.Windows.Forms.Label();
             this.userLogin = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.label15 = new System.Windows.Forms.Label();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnPrev = new System.Windows.Forms.Button();
-            this.lblPage = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.panelCouponName = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.picMQ = new System.Windows.Forms.PictureBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panelTopic.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quantity)).BeginInit();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panelCouponName.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMQ)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -108,8 +112,11 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.seNum);
+            this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.lblSerialNumber);
+            this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label14);
             this.panel1.Controls.Add(this.lblPreview);
             this.panel1.Controls.Add(this.label9);
@@ -121,14 +128,14 @@
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(703, 96);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(382, 222);
+            this.panel1.Size = new System.Drawing.Size(378, 188);
             this.panel1.TabIndex = 14;
             // 
             // seNum
             // 
             this.seNum.AutoSize = true;
             this.seNum.BackColor = System.Drawing.Color.Transparent;
-            this.seNum.Location = new System.Drawing.Point(3, 203);
+            this.seNum.Location = new System.Drawing.Point(3, 170);
             this.seNum.Name = "seNum";
             this.seNum.Size = new System.Drawing.Size(53, 13);
             this.seNum.TabIndex = 12;
@@ -137,7 +144,7 @@
             // lblSerialNumber
             // 
             this.lblSerialNumber.AutoSize = true;
-            this.lblSerialNumber.Location = new System.Drawing.Point(4, 189);
+            this.lblSerialNumber.Location = new System.Drawing.Point(4, 156);
             this.lblSerialNumber.Name = "lblSerialNumber";
             this.lblSerialNumber.Size = new System.Drawing.Size(10, 13);
             this.lblSerialNumber.TabIndex = 11;
@@ -168,74 +175,66 @@
             // 
             // label9
             // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(90, 194);
+            this.label9.Location = new System.Drawing.Point(99, 161);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(178, 20);
             this.label9.TabIndex = 9;
             this.label9.Text = "(โปรดแสดงบัตรก่อนเข้ารับบริการ)";
             this.label9.UseCompatibleTextRendering = true;
             // 
-            // panelCouponName
-            // 
-            this.panelCouponName.BackgroundImage = global::BanquetCoupons.Properties.Resources._222;
-            this.panelCouponName.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panelCouponName.Location = new System.Drawing.Point(287, 3);
-            this.panelCouponName.Name = "panelCouponName";
-            this.panelCouponName.Size = new System.Drawing.Size(89, 213);
-            this.panelCouponName.TabIndex = 8;
-            this.panelCouponName.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCouponName_Paint);
-            // 
             // mealDatePreview
             // 
             this.mealDatePreview.AutoSize = true;
             this.mealDatePreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mealDatePreview.Location = new System.Drawing.Point(89, 155);
+            this.mealDatePreview.Location = new System.Drawing.Point(117, 129);
             this.mealDatePreview.Name = "mealDatePreview";
-            this.mealDatePreview.Size = new System.Drawing.Size(233, 24);
+            this.mealDatePreview.Size = new System.Drawing.Size(170, 24);
             this.mealDatePreview.TabIndex = 7;
-            this.mealDatePreview.Text = "_________________________";
+            this.mealDatePreview.Text = "__________________";
             this.mealDatePreview.UseCompatibleTextRendering = true;
             // 
             // canteenPreview
             // 
             this.canteenPreview.AutoSize = true;
             this.canteenPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.canteenPreview.Location = new System.Drawing.Point(90, 117);
+            this.canteenPreview.Location = new System.Drawing.Point(118, 95);
             this.canteenPreview.Name = "canteenPreview";
-            this.canteenPreview.Size = new System.Drawing.Size(233, 24);
+            this.canteenPreview.Size = new System.Drawing.Size(170, 24);
             this.canteenPreview.TabIndex = 6;
-            this.canteenPreview.Text = "_________________________";
+            this.canteenPreview.Text = "__________________";
             this.canteenPreview.UseCompatibleTextRendering = true;
             // 
             // agencyPreview
             // 
             this.agencyPreview.AutoSize = true;
             this.agencyPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.agencyPreview.Location = new System.Drawing.Point(90, 77);
+            this.agencyPreview.Location = new System.Drawing.Point(118, 61);
             this.agencyPreview.Name = "agencyPreview";
-            this.agencyPreview.Size = new System.Drawing.Size(233, 24);
+            this.agencyPreview.Size = new System.Drawing.Size(170, 24);
             this.agencyPreview.TabIndex = 5;
-            this.agencyPreview.Text = "_________________________";
+            this.agencyPreview.Text = "__________________";
             this.agencyPreview.UseCompatibleTextRendering = true;
             // 
             // panelTopic
             // 
-            this.panelTopic.Controls.Add(this.label8);
-            this.panelTopic.Controls.Add(this.label7);
-            this.panelTopic.Controls.Add(this.label6);
-            this.panelTopic.Location = new System.Drawing.Point(3, 62);
+            this.panelTopic.Location = new System.Drawing.Point(88, 68);
             this.panelTopic.Name = "panelTopic";
-            this.panelTopic.Size = new System.Drawing.Size(85, 125);
+            this.panelTopic.Size = new System.Drawing.Size(16, 96);
             this.panelTopic.TabIndex = 4;
             this.panelTopic.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTopic_Paint);
             // 
             // label8
             // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(38, 95);
+            this.label8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label8.Location = new System.Drawing.Point(3, 129);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 24);
             this.label8.TabIndex = 3;
@@ -244,9 +243,12 @@
             // 
             // label7
             // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(38, 55);
+            this.label7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label7.Location = new System.Drawing.Point(3, 98);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(32, 24);
             this.label7.TabIndex = 2;
@@ -255,23 +257,17 @@
             // 
             // label6
             // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(5, 15);
+            this.label6.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.label6.Location = new System.Drawing.Point(3, 61);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 24);
             this.label6.TabIndex = 1;
             this.label6.Text = "หน่วยงาน";
             this.label6.UseCompatibleTextRendering = true;
-            // 
-            // panel2
-            // 
-            this.panel2.BackgroundImage = global::BanquetCoupons.Properties.Resources._1111;
-            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel2.Location = new System.Drawing.Point(123, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(82, 61);
-            this.panel2.TabIndex = 0;
             // 
             // label10
             // 
@@ -534,7 +530,6 @@
             this.btnEditNprint.TabIndex = 22;
             this.btnEditNprint.Text = "พิมพ์";
             this.btnEditNprint.UseVisualStyleBackColor = false;
-            this.btnEditNprint.Visible = false;
             this.btnEditNprint.Click += new System.EventHandler(this.btnEditNprint_Click);
             // 
             // btnEdit
@@ -584,36 +579,6 @@
             this.panel5.Size = new System.Drawing.Size(1178, 42);
             this.panel5.TabIndex = 24;
             // 
-            // btnNext
-            // 
-            this.btnNext.Location = new System.Drawing.Point(651, 750);
-            this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(62, 23);
-            this.btnNext.TabIndex = 25;
-            this.btnNext.Text = "Next";
-            this.btnNext.UseVisualStyleBackColor = true;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
-            // 
-            // btnPrev
-            // 
-            this.btnPrev.Location = new System.Drawing.Point(498, 750);
-            this.btnPrev.Name = "btnPrev";
-            this.btnPrev.Size = new System.Drawing.Size(62, 23);
-            this.btnPrev.TabIndex = 26;
-            this.btnPrev.Text = "Prev";
-            this.btnPrev.UseVisualStyleBackColor = true;
-            this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
-            // 
-            // lblPage
-            // 
-            this.lblPage.AutoSize = true;
-            this.lblPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblPage.Location = new System.Drawing.Point(583, 750);
-            this.lblPage.Name = "lblPage";
-            this.lblPage.Size = new System.Drawing.Size(14, 20);
-            this.lblPage.TabIndex = 27;
-            this.lblPage.Text = "-";
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -625,12 +590,87 @@
             this.label15.TabIndex = 24;
             this.label15.Text = "User";
             // 
+            // btnNext
+            // 
+            this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnNext.Location = new System.Drawing.Point(646, 749);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(62, 26);
+            this.btnNext.TabIndex = 25;
+            this.btnNext.Text = "ถัดไป";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // btnPrev
+            // 
+            this.btnPrev.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnPrev.Location = new System.Drawing.Point(578, 749);
+            this.btnPrev.Name = "btnPrev";
+            this.btnPrev.Size = new System.Drawing.Size(62, 26);
+            this.btnPrev.TabIndex = 26;
+            this.btnPrev.Text = "ก่อนหน้า";
+            this.btnPrev.UseVisualStyleBackColor = true;
+            this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Items.AddRange(new object[] {
+            "TH",
+            "EN"});
+            this.listBox1.Location = new System.Drawing.Point(1041, 49);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(120, 30);
+            this.listBox1.TabIndex = 27;
+            // 
+            // panelCouponName
+            // 
+            this.panelCouponName.BackColor = System.Drawing.Color.Transparent;
+            this.panelCouponName.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelCouponName.Controls.Add(this.pictureBox1);
+            this.panelCouponName.Controls.Add(this.picMQ);
+            this.panelCouponName.Location = new System.Drawing.Point(301, -1);
+            this.panelCouponName.Name = "panelCouponName";
+            this.panelCouponName.Size = new System.Drawing.Size(73, 188);
+            this.panelCouponName.TabIndex = 8;
+            this.panelCouponName.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCouponName_Paint);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::BanquetCoupons.Properties.Resources._2221;
+            this.pictureBox1.Location = new System.Drawing.Point(4, 51);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(65, 133);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            // 
+            // picMQ
+            // 
+            this.picMQ.Image = global::BanquetCoupons.Properties.Resources.marque;
+            this.picMQ.Location = new System.Drawing.Point(15, 7);
+            this.picMQ.Name = "picMQ";
+            this.picMQ.Size = new System.Drawing.Size(41, 49);
+            this.picMQ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picMQ.TabIndex = 0;
+            this.picMQ.TabStop = false;
+            // 
+            // panel2
+            // 
+            this.panel2.BackgroundImage = global::BanquetCoupons.Properties.Resources.hotelLogo1;
+            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel2.Location = new System.Drawing.Point(126, 11);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(58, 43);
+            this.panel2.TabIndex = 0;
+            // 
             // Coupons
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Cornsilk;
-            this.Controls.Add(this.lblPage);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.btnPrev);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.panel5);
@@ -647,14 +687,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panelTopic.ResumeLayout(false);
-            this.panelTopic.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quantity)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.panelCouponName.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMQ)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -676,7 +717,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ComboBox comboBoxPaperSize;
@@ -705,7 +745,10 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnPrev;
-        private System.Windows.Forms.Label lblPage;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.PictureBox picMQ;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

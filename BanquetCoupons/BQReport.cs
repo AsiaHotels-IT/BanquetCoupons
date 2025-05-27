@@ -41,11 +41,17 @@ namespace BanquetCoupons
             cateringDate.Format = DateTimePickerFormat.Custom;
             cateringDate.CustomFormat = "dd MMMM yyyy"; // เช่น 01 พฤษภาคม 2567
 
-            // Event เมื่อเลือกวันที่
-            cateringDate.ValueChanged += cateringDate_ValueChanged;
-            // โหลดข้อมูลเริ่มต้น
-            LoadEventsByDate(cateringDate.Value);
+            
+            cateringDate.ValueChanged += cateringDate_ValueChanged; // Event เมื่อเลือกวันที่
+            LoadEventsByDate(cateringDate.Value); 
+            dataGridReport.Font = new Font("Segoe UI", 10, FontStyle.Regular);  // ปรับขนาดตามต้องการ
+            dataGridReport.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dataGridReport.RowTemplate.Height = 25;  // ปรับให้สูงขึ้นตามฟอนต์
 
+            foreach (DataGridViewRow row in dataGridReport.Rows)
+            {
+                row.Height = 25;
+            }
             dataGridReport.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridReport.BackgroundColor = Color.White;
             dataGridReport.ClearSelection();
@@ -54,7 +60,32 @@ namespace BanquetCoupons
             dataGridReport.ClearSelection();// ไม่ให้ผู้ใช้เลือกแถวหรือเซลล์
             dataGridReport.Enabled = false; // หรือหากต้องการปิดอินเทอร์แอคทั้งหมด
 
+            SetFontForAllControls(this, fontManager.FontRegular, fontManager.FontBold);
+
         }
+
+        void SetFontForAllControls(Control parent, Font regularFont, Font boldFont)
+        {
+            foreach (Control ctl in parent.Controls)
+            {
+                if (ctl is Label label)
+                {
+                    if (label.Name == "bqTopic" || label.Name == "label4" || label.Name == "qty")
+                        label.Font = boldFont;
+                    else if (label.Name == "label2")
+                        label.Font = boldFont;
+                    else
+                        label.Font = regularFont;
+                }
+
+                // เรียกซ้ำหากเป็นคอนเทนเนอร์
+                if (ctl.HasChildren)
+                {
+                    SetFontForAllControls(ctl, regularFont, boldFont);
+                }
+            }
+        }
+
 
         private void cateringDate_ValueChanged(object sender, EventArgs e)
         {
@@ -109,14 +140,14 @@ namespace BanquetCoupons
                                 {
                                     Text = "🆔 BQID: " + bqid,
                                     Location = new Point(10, 10),
-                                    Font = new Font("Segoe UI", 9, FontStyle.Regular),
+                                    Font = new Font("Segoe UI", 10, FontStyle.Regular),
                                     AutoSize = true
                                 };
 
                                 Label lblCatering = new Label
                                 {
                                     Text = "🍽️ " + canteen,
-                                    Location = new Point(10, 30),
+                                    Location = new Point(10, 35),
                                     Font = new Font("Segoe UI", 10, FontStyle.Bold),
                                     AutoSize = true
                                 };
@@ -125,6 +156,7 @@ namespace BanquetCoupons
                                 {
                                     Text = "🏢 " + agency,
                                     Location = new Point(10, 55),
+                                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
                                     AutoSize = true
                                 };
 
@@ -132,6 +164,7 @@ namespace BanquetCoupons
                                 {
                                     Text = "จำนวน: " + totalQty,
                                     Location = new Point(10, 80),
+                                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
                                     AutoSize = true
                                 };
 
@@ -334,7 +367,7 @@ namespace BanquetCoupons
             label3.Text = "-";
         }
 
-        private void ExportDataGridViewToPdf(DataGridView dgv, string filePath)
+        private void ExportDataTableToPdf(DataTable dataTable, string filePath)
         {
             string fontPath = Path.Combine(Application.StartupPath, "Fonts", "NotoSansThai-Regular.ttf");
             string CateringRoom = lblCanteen.Text;
@@ -343,58 +376,64 @@ namespace BanquetCoupons
 
             PdfDocument document = new PdfDocument();
             document.Info.Title = "รายงานคูปอง";
-            PdfPage page = document.AddPage();
-            XGraphics gfx = XGraphics.FromPdfPage(page);
 
             XFont font = new XFont("NotoSansThai-Regular", 12);
             XFont headerFont = new XFont("NotoSansThai-Regular", 16);
 
-            double yPoint = 40;
-
-            gfx.DrawString("รายงานคูปองการใช้บริการ", headerFont, XBrushes.Black, new XRect(20, yPoint, page.Width, page.Height), XStringFormats.TopCenter);
-            yPoint += 35;
-
-            gfx.DrawString("ผู้ใช้บริการ: " + Customer, font, XBrushes.Black, new XRect(40, yPoint, page.Width, page.Height), XStringFormats.TopLeft);
-            yPoint += 20;
-
-            gfx.DrawString("ห้องจัดเลี้ยง: " + CateringRoom, font, XBrushes.Black, new XRect(40, yPoint, page.Width, page.Height), XStringFormats.TopLeft);
-            yPoint += 20;
-
             double rowHeight = 25;
-            double xStart = 40;
-            yPoint += 25;
+            int rowsPerPage = 23;
+            int totalRows = dataTable.Rows.Count;
+            int totalPages = (int)Math.Ceiling((double)totalRows / rowsPerPage);
 
-            // ✅ เพิ่มคอลัมน์ลำดับ
-            int originalColumnCount = dgv.Columns.Count;
-            int columnCount = originalColumnCount + 1; // บวกคอลัมน์ลำดับ
+            double[] columnWidths;
+            int columnCount = dataTable.Columns.Count + 1; // +1 for ลำดับ
 
-            double[] columnWidths = new double[columnCount];
+            // เตรียมความกว้างคอลัมน์ (คำนวณตามหน้าแรก)
+            columnWidths = new double[columnCount];
             columnWidths[0] = 50; // ลำดับ
-            columnWidths[1] = 100; // BQID
-            columnWidths[2] = 150; // createAt
-            columnWidths[3] = 200; // หมายเลขคูปอง
+            double remainingWidth = 595 - 80 - columnWidths[0]; // A4 width (595pt) ลบ margin ซ้าย-ขวา 40+40 และลำดับ
+            double widthPerColumn = remainingWidth / (columnCount - 1);
+            for (int i = 1; i < columnCount; i++)
+                columnWidths[i] = widthPerColumn;
 
-            // ✅ Header
-            xStart = 40;
-            gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[0], rowHeight);
-            gfx.DrawString("ลำดับ", font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[0], rowHeight), XStringFormats.TopLeft);
-            xStart += columnWidths[0];
-
-            for (int i = 0; i < originalColumnCount; i++)
-            {
-                string headerText = dgv.Columns[i].HeaderText;
-                gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[i + 1], rowHeight);
-                gfx.DrawString(headerText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[i + 1], rowHeight), XStringFormats.TopLeft);
-                xStart += columnWidths[i + 1];
-            }
-            yPoint += rowHeight;
-
-            // ✅ Rows
             int index = 1;
-            foreach (DataGridViewRow row in dgv.Rows)
+
+            for (int pageIndex = 0; pageIndex < totalPages; pageIndex++)
             {
-                if (!row.IsNewRow)
+                PdfPage page = document.AddPage();
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+                double yPoint = 40;
+
+                // Header รายงาน (ทุกหน้า)
+                gfx.DrawString("รายงานสร้างคูปอง", headerFont, XBrushes.Black, new XRect(20, yPoint, page.Width, page.Height), XStringFormats.TopCenter);
+                yPoint += 35;
+                gfx.DrawString("ผู้ใช้บริการ: " + Customer, font, XBrushes.Black, new XRect(40, yPoint, page.Width, page.Height), XStringFormats.TopLeft);
+                yPoint += 20;
+                gfx.DrawString("ห้องจัดเลี้ยง: " + CateringRoom, font, XBrushes.Black, new XRect(40, yPoint, page.Width, page.Height), XStringFormats.TopLeft);
+                yPoint += 25;
+
+                // วาด header ตาราง
+                double xStart = 40;
+                gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[0], rowHeight);
+                gfx.DrawString("ลำดับ", font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[0], rowHeight), XStringFormats.TopLeft);
+                xStart += columnWidths[0];
+
+                foreach (DataColumn col in dataTable.Columns)
                 {
+                    int colIndex = Array.IndexOf(dataTable.Columns.Cast<DataColumn>().ToArray(), col) + 1;
+                    gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[colIndex], rowHeight);
+                    gfx.DrawString(col.ColumnName, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[colIndex], rowHeight), XStringFormats.TopLeft);
+                    xStart += columnWidths[colIndex];
+                }
+                yPoint += rowHeight;
+
+                // วาดข้อมูลแถว (23 แถวต่อหน้า)
+                int startRow = pageIndex * rowsPerPage;
+                int endRow = Math.Min(startRow + rowsPerPage, totalRows);
+
+                for (int rowIndex = startRow; rowIndex < endRow; rowIndex++)
+                {
+                    DataRow row = dataTable.Rows[rowIndex];
                     xStart = 40;
 
                     // ลำดับ
@@ -402,41 +441,46 @@ namespace BanquetCoupons
                     gfx.DrawString(index.ToString(), font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[0], rowHeight), XStringFormats.TopLeft);
                     xStart += columnWidths[0];
 
-                    for (int i = 0; i < originalColumnCount; i++)
+                    // คอลัมน์อื่น ๆ
+                    for (int col = 0; col < dataTable.Columns.Count; col++)
                     {
-                        string cellText = row.Cells[i].Value?.ToString() ?? "";
-                        gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[i + 1], rowHeight);
-                        gfx.DrawString(cellText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[i + 1], rowHeight), XStringFormats.TopLeft);
-                        xStart += columnWidths[i + 1];
+                        string cellText = row[col]?.ToString() ?? "";
+                        gfx.DrawRectangle(XPens.Black, xStart, yPoint, columnWidths[col + 1], rowHeight);
+                        gfx.DrawString(cellText, font, XBrushes.Black, new XRect(xStart + 5, yPoint + 5, columnWidths[col + 1], rowHeight), XStringFormats.TopLeft);
+                        xStart += columnWidths[col + 1];
                     }
 
                     yPoint += rowHeight;
                     index++;
                 }
+
+                // Footer (แสดงเฉพาะหน้าสุดท้าย)
+                if (pageIndex == totalPages - 1)
+                {
+                    double footerMargin = 60;
+                    double footerLineHeight = 20;
+
+                    gfx.DrawString($"ผู้จัดทำรายงาน: {user}", font, XBrushes.Black,
+                        new XRect(40, page.Height - footerMargin, page.Width, 20), XStringFormats.TopLeft);
+
+                    gfx.DrawString("วันที่พิมพ์: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"), font, XBrushes.Black,
+                        new XRect(40, page.Height - footerMargin + footerLineHeight, page.Width, 20), XStringFormats.TopLeft);
+
+                    gfx.DrawString("หมายเหตุ: รายงานนี้สร้างจากระบบอัตโนมัติ", font, XBrushes.Gray,
+                        new XRect(40, page.Height - footerMargin + (footerLineHeight * 2), page.Width, 20), XStringFormats.TopLeft);
+                }
             }
 
-            // ✅ Footer
-            double footerMargin = 60;
-            double footerLineHeight = 20;
-
-            gfx.DrawString($"ผู้จัดทำรายงาน: {user}", font, XBrushes.Black,
-                new XRect(40, page.Height - footerMargin, page.Width, 20), XStringFormats.TopLeft);
-
-            gfx.DrawString("วันที่พิมพ์: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"), font, XBrushes.Black,
-                new XRect(40, page.Height - footerMargin + footerLineHeight, page.Width, 20), XStringFormats.TopLeft);
-
-            gfx.DrawString("หมายเหตุ: รายงานนี้สร้างจากระบบอัตโนมัติ", font, XBrushes.Gray,
-                new XRect(40, page.Height - footerMargin + (footerLineHeight * 2), page.Width, 20), XStringFormats.TopLeft);
-
-            // ✅ Save และเปิด PDF
             document.Save(filePath);
             Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
         }
 
 
+
+
         private void btnExport_Click(object sender, EventArgs e)
         {
-            ExportDataGridViewToPdf(dataGridReport, "Report.pdf");
+            ExportDataTableToPdf(fullDataTable, "Report.pdf");
         }
 
         private void btnReport_Click_1(object sender, EventArgs e)
@@ -455,7 +499,7 @@ namespace BanquetCoupons
 
         private void btnExport_Click_1(object sender, EventArgs e)
         {
-            ExportDataGridViewToPdf(dataGridReport, "Report.pdf");
+            ExportDataTableToPdf(fullDataTable, "Report.pdf");
         }
 
         private void btnNext_Click(object sender, EventArgs e)

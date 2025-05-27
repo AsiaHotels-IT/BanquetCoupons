@@ -58,8 +58,7 @@ public class FontManager
         FontSmall = new Font(fontFamily, 10, FontStyle.Regular);
         FontRegular = new Font(fontFamily, 12, FontStyle.Regular);
         FontBold = new Font(fontFamily, 12, FontStyle.Bold);
-        FontSmallBold = new Font(fontFamily, 9, FontStyle.Bold);
-        FontSmallBold = new Font(fontFamily, 9, FontStyle.Bold);
+        FontSmallBold = new Font(fontFamily, 8, FontStyle.Bold);
         FontTopic = new Font(fontSenum, 16, FontStyle.Regular);
         FontShowDate = new Font(fontFamily, 16, FontStyle.Regular);
 

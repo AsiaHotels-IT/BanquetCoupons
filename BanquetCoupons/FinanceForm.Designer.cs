@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnLogout = new System.Windows.Forms.Button();
             this.panelContent = new System.Windows.Forms.Panel();
+            this.btnServiceReport = new System.Windows.Forms.Button();
             this.panelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -42,6 +43,7 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
+            this.panelMenu.Controls.Add(this.btnServiceReport);
             this.panelMenu.Controls.Add(this.btnReport);
             this.panelMenu.Controls.Add(this.btnHome);
             this.panelMenu.Controls.Add(this.pictureBox1);
@@ -62,7 +64,7 @@
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(205, 61);
             this.btnReport.TabIndex = 6;
-            this.btnReport.Text = "Report";
+            this.btnReport.Text = "Banquet Report";
             this.btnReport.UseVisualStyleBackColor = false;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
@@ -124,6 +126,19 @@
             this.panelContent.TabIndex = 7;
             this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint_1);
             // 
+            // btnServiceReport
+            // 
+            this.btnServiceReport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
+            this.btnServiceReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnServiceReport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
+            this.btnServiceReport.Location = new System.Drawing.Point(0, 425);
+            this.btnServiceReport.Name = "btnServiceReport";
+            this.btnServiceReport.Size = new System.Drawing.Size(205, 61);
+            this.btnServiceReport.TabIndex = 7;
+            this.btnServiceReport.Text = "Service Report";
+            this.btnServiceReport.UseVisualStyleBackColor = false;
+            this.btnServiceReport.Click += new System.EventHandler(this.btnServiceReport_Click);
+            // 
             // FinanceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -150,5 +165,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Panel panelContent;
+        private System.Windows.Forms.Button btnServiceReport;
     }
 }

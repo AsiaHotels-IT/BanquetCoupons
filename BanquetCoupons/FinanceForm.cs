@@ -61,5 +61,13 @@ namespace BanquetCoupons
             FH.Dock = DockStyle.Fill;
             panelContent.Controls.Add(FH);
         }
+
+        private void btnServiceReport_Click(object sender, EventArgs e)
+        {
+            panelContent.Controls.Clear();
+            financeCouponUsageReport FCU = new financeCouponUsageReport(user);
+            FCU.Dock = DockStyle.Fill;
+            panelContent.Controls.Add(FCU);
+        }
     }
 }

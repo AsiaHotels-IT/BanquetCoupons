@@ -40,6 +40,7 @@ namespace BanquetCoupons
             loadData(currentPage);
             fontManager = new FontManager();  // สร้างครั้งเดียวตอนโหลดฟอร์ม
 
+
             // ตั้งค่าฟอนต์ให้ Label ใน panel1
             foreach (Control ctl in panel1.Controls)
             {
@@ -87,9 +88,29 @@ namespace BanquetCoupons
             comboBoxPaperSize.Items.Add("20.5x48");
             comboBoxPaperSize.SelectedIndex = 0; // ค่าเริ่มต้น
 
-            
+            dataGridView1.Font = new Font("Segoe UI", 10, FontStyle.Regular);  // ปรับขนาดตามต้องการ
+            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dataGridView1.RowTemplate.Height = 25;  // ปรับให้สูงขึ้นตามฟอนต์
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                row.Height = 25;
+            }
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
+
+
+            // หมุนขวา 90 องศา (Rotate90FlipNone)
+            picMQ.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+
+            // แปลง cm เป็น pixel (สมมุติ DPI 96)
+            int widthPx = (int)(1.3 * 96 / 2.54);  // 1.3 cm เป็น pixel
+            int heightPx = (int)(1.1 * 96 / 2.54); // 1.1 cm เป็น pixel
+
+            // ตั้งขนาด PictureBox
+            picMQ.Size = new Size(widthPx, heightPx);
+
+            //lblPage.Font = fontManager.FontSerial;
         }
 
 
@@ -184,26 +205,26 @@ namespace BanquetCoupons
 
                     // 2. โหลดข้อมูลเฉพาะหน้าที่ต้องการ
                     string sql = $@"
-                SELECT 
-                    COALESCE(BQID, oldBQID) AS BQID,
-                    agency,
-                    mealDate,
-                    mealType,
-                    cateringName,
-                    paperSize,
-                    COUNT(DISTINCT serialNum) AS quantity
-                FROM Coupons
-                GROUP BY 
-                    COALESCE(BQID, oldBQID),
-                    agency,
-                    mealDate,
-                    mealType,
-                    cateringName,
-                    paperSize
-                ORDER BY 
-                    CAST(SUBSTRING(COALESCE(BQID, oldBQID), 5, LEN(COALESCE(BQID, oldBQID))) AS INT),
-                    paperSize
-                OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;";
+                                    SELECT 
+                                        COALESCE(BQID, oldBQID) AS BQID,
+                                        agency,
+                                        mealDate,
+                                        mealType,
+                                        cateringName,
+                                        paperSize,
+                                        COUNT(DISTINCT serialNum) AS quantity
+                                    FROM Coupons
+                                    GROUP BY 
+                                        COALESCE(BQID, oldBQID),
+                                        agency,
+                                        mealDate,
+                                        mealType,
+                                        cateringName,
+                                        paperSize
+                                    ORDER BY 
+                                        CAST(SUBSTRING(COALESCE(BQID, oldBQID), 5, LEN(COALESCE(BQID, oldBQID))) AS INT),
+                                        paperSize;
+                                   ";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@Offset", offset);
@@ -216,7 +237,8 @@ namespace BanquetCoupons
                     dataGridView1.DataSource = dt;
 
                     // อัปเดต label หน้าปัจจุบัน เช่น: หน้า 1/5
-                    lblPage.Text = $"หน้า {currentPage}/{totalPages}";
+                    //lblPage.Text = $"หน้า {currentPage}/{totalPages}";
+                    
                 }
                 catch (Exception ex)
                 {
@@ -313,6 +335,7 @@ namespace BanquetCoupons
             quantity.Text = "";
             comboBoxPaperSize.Text = "";
             lblSerialNumber.Text = "";
+            seNum.Text = "";
 
             // ล้างวันที่
             mealDate.Format = DateTimePickerFormat.Custom;
@@ -390,12 +413,12 @@ namespace BanquetCoupons
             }
         }
 
-            string GenerateNewBQID(SqlConnection conn)
+        string GenerateNewBQID(SqlConnection conn)
         {
-            SqlCommand cmd = new SqlCommand("SELECT ISNULL(MAX(CAST(SUBSTRING(BQID, 5, LEN(BQID)) AS INT)), 0) FROM Coupons", conn);
-            int maxId = (int)cmd.ExecuteScalar();
-            int newId = maxId + 1;
-            return "BQID" + newId.ToString("D3");
+          SqlCommand cmd = new SqlCommand("SELECT ISNULL(MAX(CAST(SUBSTRING(BQID, 5, LEN(BQID)) AS INT)), 0) FROM Coupons", conn);
+          int maxId = (int)cmd.ExecuteScalar();
+          int newId = maxId + 1;
+          return "BQID" + newId.ToString("D3");
         }
 
 
@@ -589,13 +612,13 @@ namespace BanquetCoupons
         private void panelTopic_Paint(object sender, PaintEventArgs e)
         {
             Panel pnl = (Panel)sender;
-            int thickness = 8;
+            int thickness = 12;
 
             using (Pen pen = new Pen(Color.Black, thickness))
             {
 
                 // วาดเส้นขวา
-                e.Graphics.DrawLine(pen, pnl.Width - 1, 0, pnl.Width - 1, pnl.Height);
+                e.Graphics.DrawLine(pen, pnl.Width - 1, 0, pnl.Width - 1, 80);
             }
         }
 
@@ -925,10 +948,10 @@ namespace BanquetCoupons
                             foreach (var c in couponsToDelete)
                             {
                                 string insertSql = @"
-        INSERT INTO RemoveCoupons 
-        (BQID, deleteAt, Username, mealDate, mealType, agency, cateringName, quantity, paperSize, serialNum)
-        VALUES 
-        (@BQID, GETDATE(), @Username, @mealDate, @mealType, @agency, @cateringName, @quantity, @paperSize, @serialNum)";
+                                            INSERT INTO RemoveCoupons 
+                                            (BQID, deleteAt, Username, mealDate, mealType, agency, cateringName, quantity, paperSize, serialNum)
+                                            VALUES 
+                                            (@BQID, GETDATE(), @Username, @mealDate, @mealType, @agency, @cateringName, @quantity, @paperSize, @serialNum)";
 
                                 SqlCommand cmdInsert = new SqlCommand(insertSql, conn, transaction);
                                 cmdInsert.Parameters.AddWithValue("@BQID", selectedBQID);
@@ -982,6 +1005,13 @@ namespace BanquetCoupons
             btnSave.Visible= true;
             btnClearForm.Visible= true;
             clearData();
+            mealDate.Enabled = true;
+            mealType.Enabled = true;
+            agency.Enabled = true;
+            canteenName.Enabled = true;
+            comboBoxPaperSize.Enabled = true;
+            quantity.Value = 1;
+            quantity.Enabled = true;
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)

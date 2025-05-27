@@ -177,6 +177,12 @@
     <Compile Include="Coupons.Designer.cs">
       <DependentUpon>Coupons.cs</DependentUpon>
     </Compile>
+    <Compile Include="financeCouponUsageReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="financeCouponUsageReport.Designer.cs">
+      <DependentUpon>financeCouponUsageReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="FinanceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -255,6 +261,9 @@
     <EmbeddedResource Include="CouponsUsage.resx">
       <DependentUpon>CouponsUsage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="financeCouponUsageReport.resx">
+      <DependentUpon>financeCouponUsageReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FinanceForm.resx">
       <DependentUpon>FinanceForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -329,6 +338,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\userWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Banquet Coupon %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hotelLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hotelLogo1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\marque.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2221.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

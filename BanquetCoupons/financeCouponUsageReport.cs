@@ -1,35 +1,36 @@
-﻿using System;
+﻿using PdfSharp.Drawing.Layout;
+using PdfSharp.Drawing;
+using PdfSharp.Fonts;
+using PdfSharp.Pdf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PdfSharp;
-using PdfSharp.Drawing;
-using PdfSharp.Fonts;
-using PdfSharp.Pdf;
 using System.IO;
-using System.Diagnostics;
-using PdfSharp.Drawing.Layout;
-
+using System.Data.SqlClient;
 
 namespace BanquetCoupons
 {
-    public partial class financeReport : UserControl
+    public partial class financeCouponUsageReport : UserControl
     {
-        public financeReport(string user)
+        public financeCouponUsageReport(string user)
         {
             InitializeComponent();
-            this.user = user;   
+            this.user = user;
         }
 
         private string user;
-        private void financeReport_Load(object sender, EventArgs e)
+        private FontManager fontManager;
+
+        private void financeCouponUsageReport_Load_1(object sender, EventArgs e)
         {
+            fontManager = new FontManager();
             // เติมปี (สมมติปี 2020-2030)
             for (int y = 2020; y <= 2030; y++)
             {
@@ -49,6 +50,7 @@ namespace BanquetCoupons
             }
 
         }
+
         string connectDB()
         {
             string iniPath = "config.ini"; // ที่อยู่ไฟล์ .ini
@@ -70,68 +72,39 @@ namespace BanquetCoupons
         private void LoadReportData()
         {
             string connStr = connectDB();
-            string topic = cbTopic.SelectedItem?.ToString();
             string whereClause = "";
 
-            // ตรวจสอบวันที่
+            // ตรวจสอบวันที่จาก cbYear, cbMonth, cbDay
             if (cbYear.SelectedIndex != -1)
             {
                 string year = cbYear.SelectedItem.ToString();
-                whereClause += $"YEAR({GetDateColumn(topic)}) = {year}";
+                whereClause += $"YEAR(useTime) = {year}";
             }
 
             if (cbMonth.SelectedIndex != -1)
             {
                 string month = (cbMonth.SelectedIndex + 1).ToString();
                 if (whereClause != "") whereClause += " AND ";
-                whereClause += $"MONTH({GetDateColumn(topic)}) = {month}";
+                whereClause += $"MONTH(useTime) = {month}";
             }
 
             if (cbDay.SelectedIndex != -1)
             {
                 string day = cbDay.SelectedItem.ToString();
                 if (whereClause != "") whereClause += " AND ";
-                whereClause += $"DAY({GetDateColumn(topic)}) = {day}";
+                whereClause += $"DAY(useTime) = {day}";
             }
 
-            string sql = null;
-
-            switch (topic)
-            {
-                case "รายงานการสร้างคูปอง":
-                    sql = $@"
+            // คำสั่ง SQL ดึงข้อมูลจาก CouponUsage
+            string sql = $@"
                             SELECT 
-                                BQID, agency, CONVERT(VARCHAR(10), mealDate, 103) AS mealDate, mealType, cateringName,  
-                                CONCAT(couponNum, ' - ', serialNum) AS couponNum,  CONVERT(VARCHAR(10), createAt, 103) AS createAt
-                                FROM Coupons {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
-                                ORDER BY createAt DESC
-                            ";
-                    break;
-
-                case "รายงานการลบคูปอง":
-                    sql = $@"
-                            SELECT BQID, deleteAt, Username, mealDate, agency, cateringName, quantity, serialNum
-                            FROM RemoveCoupons
+                                BQID, Username, 
+                                CONVERT(VARCHAR(20), useTime, 120) AS useTime,
+                                CONCAT(couponNum, ' - ', serialNum) AS couponNum, canteenName
+                            FROM CouponUsage
                             {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
-                            ORDER BY deleteAt DESC
-                            ";
-                    break;
-
-                case "รายงานการแก้ไขคูปอง":
-                    sql = $@"
-                            SELECT EID, BQID, Username, quantity, editAt
-                            FROM UpdateCoupons
-                            {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
-                            ORDER BY editAt DESC
-                            ";
-                    break;
-
-                default:
-                    sql = null;
-                    break;
-            }
-
-            if (sql == null) return;
+                            ORDER BY useTime DESC
+                           ";
 
             using (SqlConnection conn = new SqlConnection(connStr))
             {
@@ -143,42 +116,19 @@ namespace BanquetCoupons
             }
         }
 
-        private string GetDateColumn(string topic)
-        {
-            switch (topic)
-            {
-                case "รายงานการสร้างคูปอง":
-                    return "createAt";
-                case "รายงานการลบคูปอง":
-                    return "deleteAt";
-                case "รายงานการแก้ไขคูปอง":
-                    return "editAt";
-                default:
-                    return "createAt";
-            }
-        }
-
         private void btnLoadReport_Click(object sender, EventArgs e)
         {
             LoadReportData();
         }
 
-        private void cbTopic_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LoadReportData();
-        }
-
-
         private void btnExportPdf_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count == 0)
+            if(dataGridView1.Rows.Count == 0)
             {
                 MessageBox.Show("ไม่มีข้อมูลในตารางให้ส่งออก");
                 return;
             }
             exportFilePDF();
-
-
         }
 
         private void exportFilePDF()
@@ -188,31 +138,14 @@ namespace BanquetCoupons
                 string fontPath = Path.Combine(Application.StartupPath, "Fonts", "NotoSansThai-Regular.ttf");
                 GlobalFontSettings.FontResolver = new CustomFontResolver(fontPath);
 
-                // สร้างไฟล์ชั่วคราวชื่อ ExportData.pdf ในโฟลเดอร์ Temp
                 string filePath = Path.Combine(Path.GetTempPath(), "ExportData.pdf");
-
 
                 PdfDocument document = new PdfDocument();
                 document.Info.Title = "รายงานข้อมูลจาก DataGridView";
 
-                // กำหนด orientation ตาม topic
-                PdfPage page;
-                XGraphics gfx;
-
-                string topic = cbTopic.SelectedItem?.ToString() ?? "";
-
-                if (topic == "รายงานการสร้างคูปอง")
-                {
-                    page = document.AddPage();
-                    page.Orientation = PdfSharp.PageOrientation.Landscape;
-                    gfx = XGraphics.FromPdfPage(page);
-                }
-                else
-                {
-                    page = document.AddPage();
-                    page.Orientation = PdfSharp.PageOrientation.Portrait;
-                    gfx = XGraphics.FromPdfPage(page);
-                }
+                PdfPage page = document.AddPage();
+                page.Orientation = PdfSharp.PageOrientation.Landscape; // ใช้แนวนอนเพื่อรองรับข้อมูลกว้าง
+                XGraphics gfx = XGraphics.FromPdfPage(page);
 
                 XFont titleFont = new XFont("NotoSansThai-Regular", 16);
                 XFont font = new XFont("NotoSansThai-Regular", 10);
@@ -220,27 +153,15 @@ namespace BanquetCoupons
                 double margin = 40;
                 double yPoint = margin;
 
-                gfx.DrawString($"รายงานข้อมูลจาก {topic}", titleFont, XBrushes.Black,
+                gfx.DrawString("รายงานข้อมูลการใช้คูปอง", titleFont, XBrushes.Black,
                     new XRect(0, yPoint, page.Width, 40), XStringFormats.TopCenter);
                 yPoint += 50;
 
-                // ... (โค้ดวาดตารางเหมือนเดิม)
-
-                // กรองคอลัมน์ oldBQID กับ status ออก ถ้าเป็นรายงานสร้างคูปอง
+                // แสดงทุกคอลัมน์
                 List<int> colsToShow = new List<int>();
                 for (int i = 0; i < dataGridView1.Columns.Count; i++)
                 {
-                    string colName = dataGridView1.Columns[i].Name.ToLower();
-                    if (topic == "รายงานการสร้างคูปอง")
-                    {
-                        if (colName != "oldbqid" && colName != "status")
-                            colsToShow.Add(i);
-                    }
-                    else
-                    {
-                        // รายงานอื่นแสดงทุกคอลัมน์
-                        colsToShow.Add(i);
-                    }
+                    colsToShow.Add(i);
                 }
 
                 int colCount = colsToShow.Count;
@@ -259,7 +180,7 @@ namespace BanquetCoupons
                 }
                 yPoint += rowHeight;
 
-                // วาดข้อมูลแถว
+                // วาดข้อมูลแต่ละแถว
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
                     if (row.IsNewRow) continue;
@@ -272,7 +193,6 @@ namespace BanquetCoupons
 
                         gfx.DrawRectangle(XPens.Black, rect);
 
-                        // เพิ่ม padding ซ้าย-ขวา
                         var paddedRect = new XRect(rect.X + 5, rect.Y, rect.Width - 10, rect.Height);
                         XTextFormatter tf = new XTextFormatter(gfx);
                         tf.Alignment = XParagraphAlignment.Left;
@@ -284,17 +204,13 @@ namespace BanquetCoupons
                     if (yPoint + rowHeight > page.Height.Point - margin)
                     {
                         page = document.AddPage();
-                        if (topic == "รายงานการสร้างคูปอง")
-                            page.Orientation = PdfSharp.PageOrientation.Landscape;
-                        else
-                            page.Orientation = PdfSharp.PageOrientation.Portrait;
-
+                        page.Orientation = PdfSharp.PageOrientation.Landscape;
                         gfx = XGraphics.FromPdfPage(page);
                         yPoint = margin;
                     }
                 }
 
-                // footer รายงาน (เหมือนเดิม)
+                // footer
                 string footerUser = "ชื่อผู้จัดทำรายงาน";
                 gfx.DrawString($"ผู้จัดทำรายงาน: {footerUser}", font, XBrushes.Black,
                     new XRect(margin, page.Height - 80, page.Width, 20), XStringFormats.TopLeft);
@@ -306,7 +222,6 @@ namespace BanquetCoupons
                     new XRect(margin, page.Height - 40, page.Width, 20), XStringFormats.TopLeft);
 
                 document.Save(filePath);
-
                 Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
             }
             catch (Exception ex)

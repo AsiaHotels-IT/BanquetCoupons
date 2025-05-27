@@ -44,6 +44,9 @@ namespace BanquetCoupons
 
             // โหลดข้อมูลเริ่มต้น
             LoadEventsByDate(cateringDate.Value);
+            userLogin.Text = user;
+
+            label1.Font= fontManager.FontRegular;
         }
 
         string connectDB()
@@ -112,14 +115,14 @@ namespace BanquetCoupons
                                 {
                                     Text = "🆔 BQID: " + reader["BQID"].ToString(),
                                     Location = new Point(10, 10),
-                                    Font = new Font("Segoe UI", 9, FontStyle.Regular),
+                                    Font = new Font("Segoe UI", 10, FontStyle.Regular),
                                     AutoSize = true
                                 };
 
                                 Label lblCatering = new Label
                                 {
                                     Text = "🍽️ " + reader["cateringName"].ToString(),
-                                    Location = new Point(10, 30),
+                                    Location = new Point(10, 35),
                                     Font = new Font("Segoe UI", 10, FontStyle.Bold),
                                     AutoSize = true
                                 };
@@ -128,6 +131,7 @@ namespace BanquetCoupons
                                 {
                                     Text = "🏢 " + reader["agency"].ToString(),
                                     Location = new Point(10, 55),
+                                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
                                     AutoSize = true
                                 };
 
@@ -135,6 +139,7 @@ namespace BanquetCoupons
                                 {
                                     Text = "จำนวน: " + reader["totalQuantity"].ToString(),
                                     Location = new Point(10, 80),
+                                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
                                     AutoSize = true
                                 };
 

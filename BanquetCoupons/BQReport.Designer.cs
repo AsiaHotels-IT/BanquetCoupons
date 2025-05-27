@@ -56,6 +56,7 @@
             // 
             // btnExport
             // 
+            this.btnExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnExport.Location = new System.Drawing.Point(701, 322);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(147, 45);
@@ -75,6 +76,7 @@
             // 
             // btnReport
             // 
+            this.btnReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnReport.Location = new System.Drawing.Point(869, 322);
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(147, 45);
@@ -130,7 +132,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(215, 123);
+            this.label3.Location = new System.Drawing.Point(215, 111);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(67, 25);
             this.label3.TabIndex = 6;
@@ -140,7 +142,7 @@
             // 
             this.qty.AutoSize = true;
             this.qty.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.qty.Location = new System.Drawing.Point(25, 123);
+            this.qty.Location = new System.Drawing.Point(25, 111);
             this.qty.Name = "qty";
             this.qty.Size = new System.Drawing.Size(162, 25);
             this.qty.TabIndex = 5;
@@ -158,7 +160,7 @@
             // 
             // cateringDate
             // 
-            this.cateringDate.Location = new System.Drawing.Point(22, 118);
+            this.cateringDate.Location = new System.Drawing.Point(22, 99);
             this.cateringDate.Name = "cateringDate";
             this.cateringDate.Size = new System.Drawing.Size(308, 20);
             this.cateringDate.TabIndex = 15;
@@ -174,12 +176,13 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Black;
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
             this.panel2.Controls.Add(this.label2);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.ForeColor = System.Drawing.Color.White;
-            this.panel2.Location = new System.Drawing.Point(22, 24);
+            this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 66);
+            this.panel2.Size = new System.Drawing.Size(1178, 66);
             this.panel2.TabIndex = 13;
             // 
             // label2
@@ -188,9 +191,9 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label2.Location = new System.Drawing.Point(35, 24);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 20);
+            this.label2.Size = new System.Drawing.Size(139, 20);
             this.label2.TabIndex = 0;
-            this.label2.Text = "รายงานการใช้คูปอง";
+            this.label2.Text = "รายงานการสร้างคูปอง";
             // 
             // label1
             // 
@@ -227,7 +230,7 @@
             // 
             this.lblPage.AutoSize = true;
             this.lblPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.lblPage.Location = new System.Drawing.Point(849, 738);
+            this.lblPage.Location = new System.Drawing.Point(838, 738);
             this.lblPage.Name = "lblPage";
             this.lblPage.Size = new System.Drawing.Size(14, 20);
             this.lblPage.TabIndex = 30;
@@ -240,7 +243,7 @@
             this.btnPrev.Name = "btnPrev";
             this.btnPrev.Size = new System.Drawing.Size(62, 23);
             this.btnPrev.TabIndex = 29;
-            this.btnPrev.Text = "Prev";
+            this.btnPrev.Text = "ก่อนหน้า";
             this.btnPrev.UseVisualStyleBackColor = true;
             this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
             // 
@@ -250,7 +253,7 @@
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(62, 23);
             this.btnNext.TabIndex = 28;
-            this.btnNext.Text = "Next";
+            this.btnNext.Text = "ถัดไป";
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
@@ -258,6 +261,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Cornsilk;
             this.Controls.Add(this.lblPage);
             this.Controls.Add(this.btnPrev);
             this.Controls.Add(this.btnNext);
