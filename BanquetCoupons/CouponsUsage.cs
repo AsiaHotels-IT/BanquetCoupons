@@ -137,6 +137,7 @@ namespace BanquetCoupons
                             {
                                 string bqid = reader["BQID"].ToString();
                                 string canteen = reader["cateringName"].ToString();
+                                string qty = reader["totalQuantity"].ToString();
 
                                 Panel card = new Panel
                                 {
@@ -188,7 +189,7 @@ namespace BanquetCoupons
                                 {
                                     bqTopic.Text = bqid;
                                     lblCanteen.Text = canteen;
-
+                                    lblSumqty.Text = qty;
                                     ShowUsageCount();
                                 };
 
@@ -199,7 +200,7 @@ namespace BanquetCoupons
                                     {
                                         bqTopic.Text = bqid;
                                         lblCanteen.Text = canteen;
-
+                                        lblSumqty.Text = qty;
                                         ShowUsageCount();
                                     };
                                 }
@@ -224,10 +225,16 @@ namespace BanquetCoupons
         void saveData()
         {
             string inputBQID = bqTopic.Text.Trim();
-            string inputCouponNum = txtQty.Text.Trim();
-            string inputSerialNum = txtSerial.Text.Trim();
+            string inputQty = txtQty.Text.Trim(); // จำนวนคูปอง
+            string sumFromQty = lblSumqty.Text;
             string currentUsername = userLogin.Text;
             string connectionString = connectDB();
+
+            if (!int.TryParse(inputQty, out int quantity) || quantity <= 0)
+            {
+                MessageBox.Show("กรุณากรอกจำนวนคูปองที่ใช้งานเป็นตัวเลขที่มากกว่า 0");
+                return;
+            }
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -235,17 +242,15 @@ namespace BanquetCoupons
                 {
                     conn.Open();
 
-                    // ตรวจสอบว่าคูปองนี้มีอยู่จริงหรือไม่
+                    // ตรวจสอบว่ามี BQID อยู่ใน Coupons หรือไม่
                     string checkQuery = @"
-                SELECT BQID, cateringName
-                FROM Coupons
-                WHERE BQID = @BQID AND couponNum = @couponNum AND serialNum = @serialNum";
+                SELECT BQID, cateringName 
+                FROM Coupons 
+                WHERE BQID = @BQID";
 
                     using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
                     {
                         checkCmd.Parameters.AddWithValue("@BQID", inputBQID);
-                        checkCmd.Parameters.AddWithValue("@couponNum", inputCouponNum);
-                        checkCmd.Parameters.AddWithValue("@serialNum", inputSerialNum);
 
                         using (SqlDataReader reader = checkCmd.ExecuteReader())
                         {
@@ -255,32 +260,9 @@ namespace BanquetCoupons
                                 string cateringName = reader["cateringName"].ToString();
                                 reader.Close();
 
-                                string useID = userLogin.Text;
-
-                                // 🔒 ตรวจสอบว่ามีการใช้งานคูปองนี้แล้วหรือยัง
-                                string duplicateCheckQuery = @"
-                            SELECT COUNT(*) 
-                            FROM CouponUsage 
-                            WHERE BQID = @BQID AND couponNum = @couponNum AND serialNum = @serialNum";
-
-                                using (SqlCommand duplicateCheckCmd = new SqlCommand(duplicateCheckQuery, conn))
-                                {
-                                    duplicateCheckCmd.Parameters.AddWithValue("@BQID", bqid);
-                                    duplicateCheckCmd.Parameters.AddWithValue("@couponNum", inputCouponNum);
-                                    duplicateCheckCmd.Parameters.AddWithValue("@serialNum", inputSerialNum);
-
-                                    int count = (int)duplicateCheckCmd.ExecuteScalar();
-                                    if (count > 0)
-                                    {
-                                        MessageBox.Show("มีการใช้งานคูปองนี้แล้ว ไม่สามารถใช้ซ้ำได้");
-                                        return;
-                                    }
-                                }
-
-                                // ➡️ ถ้าไม่ซ้ำ ให้ insert การใช้งานคูปอง
                                 string insertQuery = @"
-                            INSERT INTO CouponUsage (BQID, Username, useTime, canteenName, useID, couponNum, serialNum)
-                            VALUES (@BQID, @Username, @useTime, @canteenName, @useID, @couponNum, @serialNum)";
+                            INSERT INTO CouponUsage (BQID, Username, useTime, canteenName, useID, quantity ,fromQty)
+                            VALUES (@BQID, @Username, @useTime, @canteenName, @useID, @quantity ,@fromQty)";
 
                                 using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
                                 {
@@ -288,32 +270,16 @@ namespace BanquetCoupons
                                     insertCmd.Parameters.AddWithValue("@Username", currentUsername);
                                     insertCmd.Parameters.AddWithValue("@useTime", DateTime.Now);
                                     insertCmd.Parameters.AddWithValue("@canteenName", cateringName);
-                                    insertCmd.Parameters.AddWithValue("@useID", useID);
-                                    insertCmd.Parameters.AddWithValue("@couponNum", inputCouponNum);
-                                    insertCmd.Parameters.AddWithValue("@serialNum", inputSerialNum);
+                                    insertCmd.Parameters.AddWithValue("@useID", currentUsername);
+                                    insertCmd.Parameters.AddWithValue("@quantity", quantity);
+                                    insertCmd.Parameters.AddWithValue("@fromQty", sumFromQty);
 
                                     int rowsAffected = insertCmd.ExecuteNonQuery();
 
                                     if (rowsAffected > 0)
                                     {
-                                        // อัปเดตสถานะคูปอง
-                                        string updateStatusQuery = @"
-                                    UPDATE Coupons
-                                    SET status = 'usage'
-                                    WHERE BQID = @BQID AND couponNum = @couponNum AND serialNum = @serialNum";
-
-                                        using (SqlCommand updateCmd = new SqlCommand(updateStatusQuery, conn))
-                                        {
-                                            updateCmd.Parameters.AddWithValue("@BQID", inputBQID);
-                                            updateCmd.Parameters.AddWithValue("@couponNum", inputCouponNum);
-                                            updateCmd.Parameters.AddWithValue("@serialNum", inputSerialNum);
-
-                                            updateCmd.ExecuteNonQuery();
-                                        }
-
-
                                         ShowUsageCount();
-                                        MessageBox.Show("ใช้คูปองสำเร็จ และบันทึกสถานะแล้ว");
+                                        MessageBox.Show("บันทึกจำนวนคูปองที่ใช้งานสำเร็จ");
                                     }
                                     else
                                     {
@@ -323,19 +289,20 @@ namespace BanquetCoupons
                             }
                             else
                             {
-                                MessageBox.Show("ไม่พบคูปองที่ตรงกับเงื่อนไข");
+                                MessageBox.Show("ไม่พบข้อมูล BQID นี้ในระบบ");
                             }
                         }
                     }
-                    
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("เกิดข้อผิดพลาด: " + ex.Message);
                 }
             }
+
             clearData();
         }
+
 
         void ShowUsageCount()
         {
@@ -359,7 +326,7 @@ namespace BanquetCoupons
 
                         int totalUsage = (int)cmd.ExecuteScalar(); // ดึงผลรวมมา
 
-                        label3.Text = totalUsage.ToString();
+                        //label3.Text = totalUsage.ToString();
                     }
                 }
                 catch (Exception ex)
@@ -372,7 +339,6 @@ namespace BanquetCoupons
         void clearData()
         {
             txtQty.Text = "";
-            txtSerial.Text = "";
         }
 
         private void btnClear_Click(object sender, EventArgs e)

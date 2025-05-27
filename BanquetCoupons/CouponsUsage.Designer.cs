@@ -37,17 +37,15 @@
             this.pnlAddData = new System.Windows.Forms.Panel();
             this.btnClear = new System.Windows.Forms.Button();
             this.lblCanteen = new System.Windows.Forms.Label();
-            this.txtSerial = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.qty = new System.Windows.Forms.Label();
             this.note = new System.Windows.Forms.Label();
             this.btAdd = new System.Windows.Forms.Button();
             this.txtQty = new System.Windows.Forms.TextBox();
-            this.couTopic = new System.Windows.Forms.Label();
             this.bqTopic = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblSumqty = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.pnlAddData.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -114,16 +112,14 @@
             // 
             // pnlAddData
             // 
+            this.pnlAddData.Controls.Add(this.lblSumqty);
+            this.pnlAddData.Controls.Add(this.label3);
             this.pnlAddData.Controls.Add(this.btnClear);
             this.pnlAddData.Controls.Add(this.lblCanteen);
-            this.pnlAddData.Controls.Add(this.txtSerial);
-            this.pnlAddData.Controls.Add(this.label4);
-            this.pnlAddData.Controls.Add(this.label3);
             this.pnlAddData.Controls.Add(this.qty);
             this.pnlAddData.Controls.Add(this.note);
             this.pnlAddData.Controls.Add(this.btAdd);
             this.pnlAddData.Controls.Add(this.txtQty);
-            this.pnlAddData.Controls.Add(this.couTopic);
             this.pnlAddData.Controls.Add(this.bqTopic);
             this.pnlAddData.Location = new System.Drawing.Point(674, 163);
             this.pnlAddData.Name = "pnlAddData";
@@ -133,7 +129,7 @@
             // btnClear
             // 
             this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(300, 157);
+            this.btnClear.Location = new System.Drawing.Point(300, 175);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(93, 46);
             this.btnClear.TabIndex = 10;
@@ -151,39 +147,11 @@
             this.lblCanteen.TabIndex = 9;
             this.lblCanteen.Text = "ห้องจัดเลี้ยง";
             // 
-            // txtSerial
-            // 
-            this.txtSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSerial.Location = new System.Drawing.Point(300, 83);
-            this.txtSerial.Name = "txtSerial";
-            this.txtSerial.Size = new System.Drawing.Size(132, 26);
-            this.txtSerial.TabIndex = 8;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(275, 84);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(19, 25);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "-";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(189, 233);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 25);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "จำนวน";
-            // 
             // qty
             // 
             this.qty.AutoSize = true;
             this.qty.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.qty.Location = new System.Drawing.Point(25, 234);
+            this.qty.Location = new System.Drawing.Point(19, 86);
             this.qty.Name = "qty";
             this.qty.Size = new System.Drawing.Size(144, 25);
             this.qty.TabIndex = 5;
@@ -194,7 +162,7 @@
             this.note.AutoSize = true;
             this.note.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.note.ForeColor = System.Drawing.Color.Maroon;
-            this.note.Location = new System.Drawing.Point(170, 119);
+            this.note.Location = new System.Drawing.Point(166, 128);
             this.note.Name = "note";
             this.note.Size = new System.Drawing.Size(143, 16);
             this.note.TabIndex = 4;
@@ -203,7 +171,7 @@
             // btAdd
             // 
             this.btAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btAdd.Location = new System.Drawing.Point(169, 157);
+            this.btAdd.Location = new System.Drawing.Point(169, 175);
             this.btAdd.Name = "btAdd";
             this.btAdd.Size = new System.Drawing.Size(93, 46);
             this.btAdd.TabIndex = 3;
@@ -218,16 +186,6 @@
             this.txtQty.Name = "txtQty";
             this.txtQty.Size = new System.Drawing.Size(100, 26);
             this.txtQty.TabIndex = 2;
-            // 
-            // couTopic
-            // 
-            this.couTopic.AutoSize = true;
-            this.couTopic.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.couTopic.Location = new System.Drawing.Point(25, 84);
-            this.couTopic.Name = "couTopic";
-            this.couTopic.Size = new System.Drawing.Size(129, 25);
-            this.couTopic.TabIndex = 1;
-            this.couTopic.Text = "หมายเลขคูปอง";
             // 
             // bqTopic
             // 
@@ -260,6 +218,26 @@
             this.panel2.Size = new System.Drawing.Size(200, 66);
             this.panel2.TabIndex = 4;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(275, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 25);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "จาก";
+            // 
+            // lblSumqty
+            // 
+            this.lblSumqty.AutoSize = true;
+            this.lblSumqty.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSumqty.Location = new System.Drawing.Point(323, 86);
+            this.lblSumqty.Name = "lblSumqty";
+            this.lblSumqty.Size = new System.Drawing.Size(24, 25);
+            this.lblSumqty.TabIndex = 12;
+            this.lblSumqty.Text = "0";
             // 
             // CouponsUsage
             // 
@@ -299,14 +277,12 @@
         private System.Windows.Forms.Label note;
         private System.Windows.Forms.Button btAdd;
         private System.Windows.Forms.TextBox txtQty;
-        private System.Windows.Forms.Label couTopic;
         private System.Windows.Forms.Label qty;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtSerial;
         private System.Windows.Forms.Label lblCanteen;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lblSumqty;
+        private System.Windows.Forms.Label label3;
     }
 }

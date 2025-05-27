@@ -9,6 +9,8 @@ public class FontManager
     private PrivateFontCollection barcodeFonts; // เพิ่ม collection สำหรับฟอนต์บาร์โค้ด
 
     public Font FontSmall { get; private set; }
+
+    public Font FontTooltip { get; private set; }
     public Font FontRegular { get; private set; }
     public Font FontBold { get; private set; }
     public Font FontSmallBold { get; private set; }
@@ -18,6 +20,7 @@ public class FontManager
 
     public Font FontTopic { get; private set; }
     public Font FontShowDate { get; }
+    public Font FontShowTopic { get; }
 
     public FontManager()
     {
@@ -54,13 +57,16 @@ public class FontManager
         barcodeFonts.AddFontFile(barcodeFontPath);
         FontFamily barcodeFontFamily = barcodeFonts.Families[0];
 
+        //NotoSansThai-Bold.ttf
         // สร้างฟอนต์ด้วยขนาดต่าง ๆ
+        FontTooltip = new Font(fontFamily,9,FontStyle.Regular);
         FontSmall = new Font(fontFamily, 10, FontStyle.Regular);
         FontRegular = new Font(fontFamily, 12, FontStyle.Regular);
         FontBold = new Font(fontFamily, 12, FontStyle.Bold);
         FontSmallBold = new Font(fontFamily, 8, FontStyle.Bold);
         FontTopic = new Font(fontSenum, 16, FontStyle.Regular);
         FontShowDate = new Font(fontFamily, 16, FontStyle.Regular);
+
 
         // ฟอนต์บาร์โค้ด ขนาดตามต้องการ 
         FontBarcode = new Font(barcodeFontFamily, 11, FontStyle.Regular);

@@ -304,6 +304,7 @@
     <None Include="fonts\FREE3OF9.TTF">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="fonts\NotoSansThai-Bold.ttf" />
     <None Include="fonts\NotoSansThai-Regular.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -356,6 +357,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\2221.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2222.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

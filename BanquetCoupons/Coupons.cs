@@ -50,7 +50,7 @@ namespace BanquetCoupons
                     if (label.Name == "lblPreview" )
                         label.Font = fontManager.FontSmall;
                     else if (label.Name == "label9")
-                        label.Font = fontManager.FontSmall;
+                        label.Font = fontManager.FontTooltip;
                     else if (label.Name == "lblSerialNumber")
                         label.Font = fontManager.FontSmall;
                     else if (label.Name == "seNum")
@@ -81,6 +81,10 @@ namespace BanquetCoupons
             lblPreview.Paint += lblPreview_Paint;
             panelTopic.Paint += panelTopic_Paint;
             panelCouponName.Paint += panelCouponName_Paint;
+            label6.Font = fontManager.FontBold;
+            label6.Height = 40;
+            label7.Font = fontManager.FontBold;
+            label8.Font = fontManager.FontBold;
 
             comboBoxPaperSize.Items.Add("A4");
             comboBoxPaperSize.Items.Add("22.5x35.5");
@@ -203,28 +207,30 @@ namespace BanquetCoupons
 
                     int offset = (page - 1) * pageSize;
 
-                    // 2. โหลดข้อมูลเฉพาะหน้าที่ต้องการ
+                    // 2. โหลดข้อมูลเฉพาะหน้าที่ต้องการ พร้อม serialNum
                     string sql = $@"
-                                    SELECT 
-                                        COALESCE(BQID, oldBQID) AS BQID,
-                                        agency,
-                                        mealDate,
-                                        mealType,
-                                        cateringName,
-                                        paperSize,
-                                        COUNT(DISTINCT serialNum) AS quantity
-                                    FROM Coupons
-                                    GROUP BY 
-                                        COALESCE(BQID, oldBQID),
-                                        agency,
-                                        mealDate,
-                                        mealType,
-                                        cateringName,
-                                        paperSize
-                                    ORDER BY 
-                                        CAST(SUBSTRING(COALESCE(BQID, oldBQID), 5, LEN(COALESCE(BQID, oldBQID))) AS INT),
-                                        paperSize;
-                                   ";
+            SELECT 
+                COALESCE(BQID, oldBQID) AS BQID,
+                agency,
+                mealDate,
+                mealType,
+                cateringName,
+                paperSize,
+                COUNT(DISTINCT serialNum) AS quantity,
+                MIN(serialNum) AS serialNum
+            FROM Coupons
+            GROUP BY 
+                COALESCE(BQID, oldBQID),
+                agency,
+                mealDate,
+                mealType,
+                cateringName,
+                paperSize
+            ORDER BY 
+                CAST(SUBSTRING(COALESCE(BQID, oldBQID), 5, LEN(COALESCE(BQID, oldBQID))) AS INT),
+                paperSize
+            OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
+        ";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@Offset", offset);
@@ -236,15 +242,14 @@ namespace BanquetCoupons
 
                     dataGridView1.DataSource = dt;
 
-                    // อัปเดต label หน้าปัจจุบัน เช่น: หน้า 1/5
                     //lblPage.Text = $"หน้า {currentPage}/{totalPages}";
-                    
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("เชื่อมต่อฐานข้อมูลไม่สำเร็จ: " + ex.Message);
                 }
             }
+
         }
 
 
@@ -1031,6 +1036,7 @@ namespace BanquetCoupons
                 bqid.Visible = true;
                 btnDel.Visible = true;
                 btnCancel.Visible = true;
+                btnEditNprint.Visible = true;
 
 
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
@@ -1042,7 +1048,7 @@ namespace BanquetCoupons
                 quantity.Text = row.Cells["quantity"].Value.ToString();
                 comboBoxPaperSize.Text = row.Cells["paperSize"].Value.ToString();
                 bqid.Text = row.Cells["bqid"].Value.ToString();
-
+                seNum.Text = row.Cells["serialNum"].Value.ToString();
                 // หากมี form หรือ panel ซ่อนอยู่ให้แสดง
                 // this.panelAddData.Visible = true; หรือ เปิด Form ใหม่ก็ได้
             }
