@@ -339,11 +339,40 @@ namespace BanquetCoupons
         void clearData()
         {
             txtQty.Text = "";
+            bqTopic.Text = "BQID";
+            lblCanteen.Text = "ห้องจัดเลี้ยง";
+            lblSumqty.Text = "0";
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             clearData();
+        }
+
+        private void txtQty_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtQty_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(lblSumqty.Text, out int sumQty) && int.TryParse(txtQty.Text, out int value))
+            {
+                if (value > sumQty)
+                {
+                    MessageBox.Show($"กรอกตัวเลขได้ไม่เกิน {sumQty}", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtQty.BackColor = Color.Red;
+                    txtQty.Text = 0.ToString();
+                    txtQty.SelectionStart = txtQty.Text.Length; // เลื่อน cursor ไปท้าย
+                }
+                else
+                {
+                    txtQty.BackColor = Color.White;
+                }
+            }
         }
     }
 

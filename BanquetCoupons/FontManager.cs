@@ -59,7 +59,7 @@ public class FontManager
 
         //NotoSansThai-Bold.ttf
         // สร้างฟอนต์ด้วยขนาดต่าง ๆ
-        FontTooltip = new Font(fontFamily,9,FontStyle.Regular);
+        FontTooltip = new Font(fontFamily,8,FontStyle.Regular);
         FontSmall = new Font(fontFamily, 10, FontStyle.Regular);
         FontRegular = new Font(fontFamily, 12, FontStyle.Regular);
         FontBold = new Font(fontFamily, 12, FontStyle.Bold);

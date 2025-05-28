@@ -35,6 +35,8 @@
             this.dateToday = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlAddData = new System.Windows.Forms.Panel();
+            this.lblSumqty = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.lblCanteen = new System.Windows.Forms.Label();
             this.qty = new System.Windows.Forms.Label();
@@ -44,8 +46,6 @@
             this.bqTopic = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblSumqty = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.pnlAddData.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -96,7 +96,7 @@
             // 
             this.dateToday.AutoSize = true;
             this.dateToday.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.dateToday.Location = new System.Drawing.Point(42, 129);
+            this.dateToday.Location = new System.Drawing.Point(41, 106);
             this.dateToday.Name = "dateToday";
             this.dateToday.Size = new System.Drawing.Size(51, 20);
             this.dateToday.TabIndex = 5;
@@ -105,9 +105,9 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(23, 163);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(22, 140);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(634, 609);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(634, 567);
             this.flowLayoutPanel1.TabIndex = 6;
             // 
             // pnlAddData
@@ -121,10 +121,30 @@
             this.pnlAddData.Controls.Add(this.btAdd);
             this.pnlAddData.Controls.Add(this.txtQty);
             this.pnlAddData.Controls.Add(this.bqTopic);
-            this.pnlAddData.Location = new System.Drawing.Point(674, 163);
+            this.pnlAddData.Location = new System.Drawing.Point(673, 140);
             this.pnlAddData.Name = "pnlAddData";
             this.pnlAddData.Size = new System.Drawing.Size(461, 282);
             this.pnlAddData.TabIndex = 7;
+            // 
+            // lblSumqty
+            // 
+            this.lblSumqty.AutoSize = true;
+            this.lblSumqty.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSumqty.Location = new System.Drawing.Point(323, 86);
+            this.lblSumqty.Name = "lblSumqty";
+            this.lblSumqty.Size = new System.Drawing.Size(24, 25);
+            this.lblSumqty.TabIndex = 12;
+            this.lblSumqty.Text = "0";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(275, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 25);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "จาก";
             // 
             // btnClear
             // 
@@ -186,6 +206,8 @@
             this.txtQty.Name = "txtQty";
             this.txtQty.Size = new System.Drawing.Size(100, 26);
             this.txtQty.TabIndex = 2;
+            this.txtQty.TextChanged += new System.EventHandler(this.txtQty_TextChanged);
+            this.txtQty.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQty_KeyPress);
             // 
             // bqTopic
             // 
@@ -202,7 +224,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Maroon;
-            this.label5.Location = new System.Drawing.Point(514, 144);
+            this.label5.Location = new System.Drawing.Point(513, 121);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(110, 16);
             this.label5.TabIndex = 8;
@@ -218,26 +240,6 @@
             this.panel2.Size = new System.Drawing.Size(200, 66);
             this.panel2.TabIndex = 4;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(275, 86);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 25);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "จาก";
-            // 
-            // lblSumqty
-            // 
-            this.lblSumqty.AutoSize = true;
-            this.lblSumqty.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSumqty.Location = new System.Drawing.Point(323, 86);
-            this.lblSumqty.Name = "lblSumqty";
-            this.lblSumqty.Size = new System.Drawing.Size(24, 25);
-            this.lblSumqty.TabIndex = 12;
-            this.lblSumqty.Text = "0";
             // 
             // CouponsUsage
             // 

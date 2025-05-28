@@ -96,24 +96,6 @@ namespace BanquetCoupons
                     }
                 }
             }
-
-            // เคลียร์ข้อมูลเดิมใน chart
-            chart1.Series.Clear();
-            chart1.ChartAreas.Clear();
-            chart1.Titles.Clear();
-
-            ChartArea area = new ChartArea("MainArea");
-            chart1.ChartAreas.Add(area);
-
-            Series series = new Series("คูปอง");
-            // Tooltips
-            series.ToolTip = "#VAL คูปอง";
-            series.ChartType = SeriesChartType.Column;
-            series.Points.AddXY("ใช้แล้ว", usedCoupons);
-            series.Points.AddXY("ยังไม่ใช้", unusedCoupons);
-            chart1.Series.Add(series);
-
-            chart1.Titles.Add($"สรุปคูปอง เดือน {cbMonth.Text} {selectedYear}");
         }
 
 
@@ -337,13 +319,7 @@ namespace BanquetCoupons
                 }
             }
 
-            // เคลียร์และสร้างกราฟใหม่
-            chart1.Series.Clear();
-            chart1.ChartAreas.Clear();
-            chart1.Titles.Clear();
-
-            ChartArea area = new ChartArea("MainArea");
-            chart1.ChartAreas.Add(area);
+           
 
 
             Series series = new Series("คูปอง");
@@ -352,9 +328,6 @@ namespace BanquetCoupons
             series.ChartType = SeriesChartType.Column;
             series.Points.AddXY("ใช้แล้ว", usedCoupons);
             series.Points.AddXY("ยังไม่ใช้", unusedCoupons);
-            chart1.Series.Add(series);
-
-            chart1.Titles.Add($"สรุปคูปอง {bqid}");
         }
 
         private void cbMonth_SelectionChangeCommitted(object sender, EventArgs e)

@@ -40,13 +40,10 @@
             this.lblPreview = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panelCouponName = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.picMQ = new System.Windows.Forms.PictureBox();
             this.mealDatePreview = new System.Windows.Forms.Label();
             this.canteenPreview = new System.Windows.Forms.Label();
             this.agencyPreview = new System.Windows.Forms.Label();
             this.panelTopic = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.comboBoxPaperSize = new System.Windows.Forms.ComboBox();
@@ -75,15 +72,18 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnPrev = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.picMQ = new System.Windows.Forms.PictureBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panelCouponName.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picMQ)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quantity)).BeginInit();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMQ)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -128,7 +128,7 @@
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(703, 96);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(378, 188);
+            this.panel1.Size = new System.Drawing.Size(384, 223);
             this.panel1.TabIndex = 14;
             // 
             // label8
@@ -138,7 +138,7 @@
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label8.Location = new System.Drawing.Point(3, 131);
+            this.label8.Location = new System.Drawing.Point(3, 142);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 24);
             this.label8.TabIndex = 3;
@@ -149,7 +149,7 @@
             // 
             this.seNum.AutoSize = true;
             this.seNum.BackColor = System.Drawing.Color.Transparent;
-            this.seNum.Location = new System.Drawing.Point(3, 170);
+            this.seNum.Location = new System.Drawing.Point(3, 203);
             this.seNum.Name = "seNum";
             this.seNum.Size = new System.Drawing.Size(53, 13);
             this.seNum.TabIndex = 12;
@@ -162,7 +162,7 @@
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label7.Location = new System.Drawing.Point(3, 96);
+            this.label7.Location = new System.Drawing.Point(3, 109);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(32, 24);
             this.label7.TabIndex = 2;
@@ -172,7 +172,7 @@
             // lblSerialNumber
             // 
             this.lblSerialNumber.AutoSize = true;
-            this.lblSerialNumber.Location = new System.Drawing.Point(4, 158);
+            this.lblSerialNumber.Location = new System.Drawing.Point(3, 190);
             this.lblSerialNumber.Name = "lblSerialNumber";
             this.lblSerialNumber.Size = new System.Drawing.Size(10, 13);
             this.lblSerialNumber.TabIndex = 11;
@@ -185,7 +185,7 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label6.Location = new System.Drawing.Point(3, 61);
+            this.label6.Location = new System.Drawing.Point(3, 68);
             this.label6.Name = "label6";
             this.label6.Padding = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.label6.Size = new System.Drawing.Size(77, 28);
@@ -222,7 +222,7 @@
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(79, 167);
+            this.label9.Location = new System.Drawing.Point(86, 201);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(165, 19);
             this.label9.TabIndex = 9;
@@ -237,36 +237,15 @@
             this.panelCouponName.Controls.Add(this.picMQ);
             this.panelCouponName.Location = new System.Drawing.Point(293, -1);
             this.panelCouponName.Name = "panelCouponName";
-            this.panelCouponName.Size = new System.Drawing.Size(81, 188);
+            this.panelCouponName.Size = new System.Drawing.Size(86, 219);
             this.panelCouponName.TabIndex = 8;
             this.panelCouponName.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCouponName_Paint);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::BanquetCoupons.Properties.Resources._2222;
-            this.pictureBox1.Location = new System.Drawing.Point(13, 51);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(65, 133);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            // 
-            // picMQ
-            // 
-            this.picMQ.Image = global::BanquetCoupons.Properties.Resources.marque;
-            this.picMQ.Location = new System.Drawing.Point(20, 7);
-            this.picMQ.Name = "picMQ";
-            this.picMQ.Size = new System.Drawing.Size(41, 49);
-            this.picMQ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picMQ.TabIndex = 0;
-            this.picMQ.TabStop = false;
             // 
             // mealDatePreview
             // 
             this.mealDatePreview.AutoSize = true;
             this.mealDatePreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mealDatePreview.Location = new System.Drawing.Point(117, 129);
+            this.mealDatePreview.Location = new System.Drawing.Point(117, 143);
             this.mealDatePreview.Name = "mealDatePreview";
             this.mealDatePreview.Size = new System.Drawing.Size(170, 24);
             this.mealDatePreview.TabIndex = 7;
@@ -277,7 +256,7 @@
             // 
             this.canteenPreview.AutoSize = true;
             this.canteenPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.canteenPreview.Location = new System.Drawing.Point(118, 95);
+            this.canteenPreview.Location = new System.Drawing.Point(118, 106);
             this.canteenPreview.Name = "canteenPreview";
             this.canteenPreview.Size = new System.Drawing.Size(170, 24);
             this.canteenPreview.TabIndex = 6;
@@ -288,7 +267,7 @@
             // 
             this.agencyPreview.AutoSize = true;
             this.agencyPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.agencyPreview.Location = new System.Drawing.Point(118, 61);
+            this.agencyPreview.Location = new System.Drawing.Point(118, 65);
             this.agencyPreview.Name = "agencyPreview";
             this.agencyPreview.Size = new System.Drawing.Size(170, 24);
             this.agencyPreview.TabIndex = 5;
@@ -303,15 +282,6 @@
             this.panelTopic.Size = new System.Drawing.Size(16, 96);
             this.panelTopic.TabIndex = 4;
             this.panelTopic.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTopic_Paint);
-            // 
-            // panel2
-            // 
-            this.panel2.BackgroundImage = global::BanquetCoupons.Properties.Resources.hotelLogo1;
-            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel2.Location = new System.Drawing.Point(120, 11);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(58, 43);
-            this.panel2.TabIndex = 0;
             // 
             // label10
             // 
@@ -372,6 +342,7 @@
             this.quantity.Name = "quantity";
             this.quantity.Size = new System.Drawing.Size(70, 26);
             this.quantity.TabIndex = 9;
+            this.quantity.ValueChanged += new System.EventHandler(this.quantity_ValueChanged);
             // 
             // mealDate
             // 
@@ -387,22 +358,6 @@
             // 
             this.canteenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.canteenName.FormattingEnabled = true;
-            this.canteenName.Items.AddRange(new object[] {
-            "เดอะ บุฟเฟต์",
-            "กิ่งเพชร",
-            "ราชเทวี แกรนด์ บอลรูม",
-            "ราชเทวี 1",
-            "ราชเทวี 2",
-            "วีไอพี 1",
-            "วีไอพี 2",
-            "กิ่งทอง",
-            "ประกายเพชร",
-            "ปทุมวัน",
-            "พิกุลแก้ว",
-            "เอเชียน่า",
-            "แอมเบอร์",
-            "ริโอ",
-            "เพชรบุรี"});
             this.canteenName.Location = new System.Drawing.Point(409, 90);
             this.canteenName.Name = "canteenName";
             this.canteenName.Size = new System.Drawing.Size(195, 28);
@@ -665,8 +620,38 @@
             "EN"});
             this.listBox1.Location = new System.Drawing.Point(1041, 49);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 30);
+            this.listBox1.Size = new System.Drawing.Size(34, 30);
             this.listBox1.TabIndex = 27;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::BanquetCoupons.Properties.Resources._2222;
+            this.pictureBox1.Location = new System.Drawing.Point(10, 54);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(70, 165);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            // 
+            // picMQ
+            // 
+            this.picMQ.Image = global::BanquetCoupons.Properties.Resources.marque1;
+            this.picMQ.Location = new System.Drawing.Point(15, 4);
+            this.picMQ.Name = "picMQ";
+            this.picMQ.Size = new System.Drawing.Size(58, 49);
+            this.picMQ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picMQ.TabIndex = 0;
+            this.picMQ.TabStop = false;
+            // 
+            // panel2
+            // 
+            this.panel2.BackgroundImage = global::BanquetCoupons.Properties.Resources.hotelLogo1;
+            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel2.Location = new System.Drawing.Point(120, 11);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(58, 43);
+            this.panel2.TabIndex = 0;
             // 
             // Coupons
             // 
@@ -691,14 +676,14 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panelCouponName.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picMQ)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quantity)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMQ)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

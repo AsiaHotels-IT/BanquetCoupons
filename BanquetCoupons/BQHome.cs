@@ -47,8 +47,10 @@ namespace BanquetCoupons
             userLogin.Text = user;
 
             label1.Font= fontManager.FontRegular;
+            cateringDate.Font= fontManager.FontRegular;
         }
 
+        
         string connectDB()
         {
             string iniPath = "config.ini"; // ที่อยู่ไฟล์ .ini
