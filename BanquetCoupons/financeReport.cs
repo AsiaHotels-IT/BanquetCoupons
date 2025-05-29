@@ -15,6 +15,7 @@ using PdfSharp.Pdf;
 using System.IO;
 using System.Diagnostics;
 using PdfSharp.Drawing.Layout;
+using System.Windows.Documents;
 
 
 namespace BanquetCoupons
@@ -30,11 +31,15 @@ namespace BanquetCoupons
         private string user;
         private void financeReport_Load(object sender, EventArgs e)
         {
-            // เติมปี (สมมติปี 2020-2030)
-            for (int y = 2020; y <= 2030; y++)
+           
+            int currentYear = DateTime.Now.Year;
+            int futureYear = currentYear + 10; // เพิ่มล่วงหน้าอีก 10 ปี
+
+            for (int y = 2025; y <= futureYear; y++)
             {
                 cbYear.Items.Add(y.ToString());
             }
+
 
             // เติมเดือน 1-12
             for (int m = 1; m <= 12; m++)
@@ -48,6 +53,9 @@ namespace BanquetCoupons
                 cbDay.Items.Add(d.ToString());
             }
 
+            userLogin.Text = user;
+
+           
         }
         string connectDB()
         {
@@ -101,11 +109,21 @@ namespace BanquetCoupons
                 case "รายงานการสร้างคูปอง":
                     sql = $@"
                             SELECT 
-                                BQID, agency, CONVERT(VARCHAR(10), mealDate, 103) AS mealDate, mealType, cateringName,  
-                                CONCAT(couponNum, ' - ', serialNum) AS couponNum,  CONVERT(VARCHAR(10), createAt, 103) AS createAt
-                                FROM Coupons {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
-                                ORDER BY createAt DESC
-                            ";
+                                BQID,
+                                agency,
+                                CONVERT(VARCHAR(10), mealDate, 103) AS mealDate,
+                                mealType,
+                                cateringName,
+                                serialNum,
+                                SUM(quantity) AS quantity,  -- รวม quantity
+                                CONVERT(VARCHAR(10), MIN(createAt), 103) AS createAt
+                            FROM Coupons
+                            {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
+                            GROUP BY BQID, agency, mealDate, mealType, cateringName, serialNum
+                            ORDER BY MIN(createAt) DESC
+                           ";
+
+
                     break;
 
                 case "รายงานการลบคูปอง":
@@ -119,7 +137,7 @@ namespace BanquetCoupons
 
                 case "รายงานการแก้ไขคูปอง":
                     sql = $@"
-                            SELECT EID, BQID, Username, quantity, editAt
+                            SELECT EID, BQID, Username, quantity, serialNum, editAt
                             FROM UpdateCoupons
                             {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
                             ORDER BY editAt DESC
@@ -139,7 +157,12 @@ namespace BanquetCoupons
                 SqlDataAdapter adapter = new SqlDataAdapter(sql, conn);
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
-                dataGridView1.DataSource = dt;
+
+                fullTable = dt; // ⭐ เก็บข้อมูลทั้งหมด
+                totalPages = (int)Math.Ceiling((double)fullTable.Rows.Count / pageSize); // ⭐ คำนวณจำนวนหน้า
+                currentPage = 1; // ⭐ รีเซ็ตกลับหน้าแรก
+
+                DisplayPage(currentPage); // ⭐ แสดงหน้าแรก
             }
         }
 
@@ -181,52 +204,48 @@ namespace BanquetCoupons
 
         }
 
+        private XFont FitTextToWidth(XGraphics gfx, string text, double maxWidth, string fontName, double initialSize)
+        {
+            double fontSize = initialSize;
+            XFont font = new XFont(fontName, fontSize);
+
+            // ลดขนาดฟอนต์ลงจนพอดีกับคอลัมน์ หรือถึงขนาดต่ำสุด
+            while (gfx.MeasureString(text, font).Width > maxWidth && fontSize > 6)
+            {
+                fontSize -= 0.5;
+                font = new XFont(fontName, fontSize);
+            }
+
+            return font;
+        }
+
         private void exportFilePDF()
         {
             try
             {
                 string fontPath = Path.Combine(Application.StartupPath, "Fonts", "NotoSansThai-Regular.ttf");
                 GlobalFontSettings.FontResolver = new CustomFontResolver(fontPath);
-
-                // สร้างไฟล์ชั่วคราวชื่อ ExportData.pdf ในโฟลเดอร์ Temp
+        
                 string filePath = Path.Combine(Path.GetTempPath(), "ExportData.pdf");
-
-
+        
                 PdfDocument document = new PdfDocument();
                 document.Info.Title = "รายงานข้อมูลจาก DataGridView";
-
-                // กำหนด orientation ตาม topic
-                PdfPage page;
-                XGraphics gfx;
-
-                string topic = cbTopic.SelectedItem?.ToString() ?? "";
-
-                if (topic == "รายงานการสร้างคูปอง")
-                {
-                    page = document.AddPage();
-                    page.Orientation = PdfSharp.PageOrientation.Landscape;
-                    gfx = XGraphics.FromPdfPage(page);
-                }
-                else
-                {
-                    page = document.AddPage();
-                    page.Orientation = PdfSharp.PageOrientation.Portrait;
-                    gfx = XGraphics.FromPdfPage(page);
-                }
-
+        
+                PdfPage page = document.AddPage();
+                page.Orientation = PdfSharp.PageOrientation.Landscape;
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+        
                 XFont titleFont = new XFont("NotoSansThai-Regular", 16);
-                XFont font = new XFont("NotoSansThai-Regular", 10);
-
+                XFont defaultFont = new XFont("NotoSansThai-Regular", 10);
+        
+                string topic = cbTopic.SelectedItem?.ToString() ?? "";
                 double margin = 40;
                 double yPoint = margin;
-
-                gfx.DrawString($"รายงานข้อมูลจาก {topic}", titleFont, XBrushes.Black,
+        
+                gfx.DrawString($"{topic}", titleFont, XBrushes.Black,
                     new XRect(0, yPoint, page.Width, 40), XStringFormats.TopCenter);
                 yPoint += 50;
-
-                // ... (โค้ดวาดตารางเหมือนเดิม)
-
-                // กรองคอลัมน์ oldBQID กับ status ออก ถ้าเป็นรายงานสร้างคูปอง
+        
                 List<int> colsToShow = new List<int>();
                 for (int i = 0; i < dataGridView1.Columns.Count; i++)
                 {
@@ -238,75 +257,76 @@ namespace BanquetCoupons
                     }
                     else
                     {
-                        // รายงานอื่นแสดงทุกคอลัมน์
                         colsToShow.Add(i);
                     }
                 }
-
+        
                 int colCount = colsToShow.Count;
                 double pageWidth = page.Width.Point - margin * 2;
                 double colWidth = pageWidth / colCount;
                 double rowHeight = 25;
-
-                // วาด header ตาราง
+        
+                // Header
                 for (int i = 0; i < colCount; i++)
                 {
                     int colIndex = colsToShow[i];
                     string headerText = dataGridView1.Columns[colIndex].HeaderText;
                     var rect = new XRect(margin + i * colWidth, yPoint, colWidth, rowHeight);
                     gfx.DrawRectangle(XPens.Black, rect);
-                    gfx.DrawString(headerText, font, XBrushes.Black, rect, XStringFormats.Center);
+                    gfx.DrawString(headerText, defaultFont, XBrushes.Black, rect, XStringFormats.Center);
                 }
                 yPoint += rowHeight;
-
-                // วาดข้อมูลแถว
+        
+                // Rows
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
                     if (row.IsNewRow) continue;
-
+        
                     for (int i = 0; i < colCount; i++)
                     {
                         int colIndex = colsToShow[i];
                         string cellText = row.Cells[colIndex].Value?.ToString() ?? "";
                         var rect = new XRect(margin + i * colWidth, yPoint, colWidth, rowHeight);
-
+        
                         gfx.DrawRectangle(XPens.Black, rect);
-
-                        // เพิ่ม padding ซ้าย-ขวา
                         var paddedRect = new XRect(rect.X + 5, rect.Y, rect.Width - 10, rect.Height);
+        
+                        XFont adjustedFont = FitTextToWidth(gfx, cellText, paddedRect.Width, "NotoSansThai-Regular", 10);
+        
                         XTextFormatter tf = new XTextFormatter(gfx);
                         tf.Alignment = XParagraphAlignment.Left;
-                        tf.DrawString(cellText, font, XBrushes.Black, paddedRect, XStringFormats.TopLeft);
+
+                        XSize textSize = gfx.MeasureString(cellText, adjustedFont);
+                        double offsetY = rect.Y + (rowHeight - textSize.Height) / 2;
+
+                        var adjustedRect = new XRect(rect.X + 5, offsetY, rect.Width - 10, textSize.Height);
+                        tf.DrawString(cellText, adjustedFont, XBrushes.Black, adjustedRect, XStringFormats.TopLeft);
+
                     }
 
                     yPoint += rowHeight;
-
+        
                     if (yPoint + rowHeight > page.Height.Point - margin)
                     {
                         page = document.AddPage();
-                        if (topic == "รายงานการสร้างคูปอง")
-                            page.Orientation = PdfSharp.PageOrientation.Landscape;
-                        else
-                            page.Orientation = PdfSharp.PageOrientation.Portrait;
-
+                        page.Orientation = PdfSharp.PageOrientation.Landscape;
                         gfx = XGraphics.FromPdfPage(page);
                         yPoint = margin;
                     }
                 }
-
-                // footer รายงาน (เหมือนเดิม)
+        
+                // Footer
                 string footerUser = "ชื่อผู้จัดทำรายงาน";
-                gfx.DrawString($"ผู้จัดทำรายงาน: {footerUser}", font, XBrushes.Black,
+                gfx.DrawString($"ผู้จัดทำรายงาน: {footerUser}", defaultFont, XBrushes.Black,
                     new XRect(margin, page.Height - 80, page.Width, 20), XStringFormats.TopLeft);
-
-                gfx.DrawString($"วันที่พิมพ์: {DateTime.Now:dd/MM/yyyy HH:mm}", font, XBrushes.Black,
+        
+                gfx.DrawString($"วันที่พิมพ์: {DateTime.Now:dd/MM/yyyy HH:mm}", defaultFont, XBrushes.Black,
                     new XRect(margin, page.Height - 60, page.Width, 20), XStringFormats.TopLeft);
-
-                gfx.DrawString("หมายเหตุ: รายงานนี้สร้างจากระบบอัตโนมัติ", font, XBrushes.Gray,
+        
+                gfx.DrawString("หมายเหตุ: รายงานนี้สร้างจากระบบอัตโนมัติ", defaultFont, XBrushes.Gray,
                     new XRect(margin, page.Height - 40, page.Width, 20), XStringFormats.TopLeft);
-
+        
                 document.Save(filePath);
-
                 Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
             }
             catch (Exception ex)
@@ -315,5 +335,50 @@ namespace BanquetCoupons
             }
         }
 
+        private DataTable fullTable; // เก็บข้อมูลทั้งหมด
+        private int pageSize = 2;
+        private int currentPage = 1;
+        private int totalPages = 1;
+
+
+
+        private void DisplayPage(int page)
+        {
+            if (fullTable == null) return;
+
+            DataTable currentPageTable = fullTable.Clone(); // โครงสร้างเหมือนกัน
+
+            int startIndex = (page - 1) * pageSize;
+            int endIndex = Math.Min(startIndex + pageSize, fullTable.Rows.Count);
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                currentPageTable.ImportRow(fullTable.Rows[i]);
+            }
+
+            dataGridView1.DataSource = currentPageTable;
+            //labelPageInfo.Text = $"หน้า {currentPage} จาก {totalPages}";
+            btnNext.Enabled = currentPage < totalPages;
+            btnPrev.Enabled = currentPage > 1;
+
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                DisplayPage(currentPage);
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                DisplayPage(currentPage);
+            }
+        }
     }
 }

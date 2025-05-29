@@ -1,4 +1,8 @@
-﻿using System;
+﻿using PdfSharp.Drawing.Layout;
+using PdfSharp.Drawing;
+using PdfSharp.Fonts;
+using PdfSharp.Pdf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,7 +30,6 @@ namespace BanquetCoupons
 
         private string user;
         private FontManager fontManager;
-        private DataTable fullDataTable;
 
         private void financeHome_Load(object sender, EventArgs e)
         {
@@ -49,54 +52,24 @@ namespace BanquetCoupons
             cbMonth.SelectedIndex = DateTime.Now.Month - 1;
             cbYear.SelectedItem = DateTime.Now.Year.ToString();
 
-            LoadChart(); // โหลดกราฟเริ่มต้น
             int selectedMonth = cbMonth.SelectedIndex + 1; // เดือนเริ่มที่ 0 ต้อง +1
             int selectedYear = int.Parse(cbYear.SelectedItem.ToString());
 
             LoadEventsByMonthAndYear(selectedMonth, selectedYear);
-        }
+            dataGridView1.Font = new Font("Segoe UI", 10, FontStyle.Regular);  // ปรับขนาดตามต้องการ
+            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dataGridView1.RowTemplate.Height = 25;  // ปรับให้สูงขึ้นตามฟอนต์
 
-        private void LoadChart()
-        {
-            if (cbMonth.SelectedIndex == -1 || cbYear.SelectedIndex == -1) return;
-
-            int selectedMonth = cbMonth.SelectedIndex + 1;
-            string selectedYear = cbYear.SelectedItem.ToString();
-
-            DateTime fromDate = new DateTime(int.Parse(selectedYear), selectedMonth, 1);
-            DateTime toDate = fromDate.AddMonths(1).AddDays(-1);
-
-            int usedCoupons = 0;
-            int unusedCoupons = 0;
-
-            string connStr = connectDB();
-            using (SqlConnection conn = new SqlConnection(connStr))
+            foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                conn.Open();
-                string sql = @"
-            SELECT 
-                SUM(CASE WHEN status = 'usage' THEN 1 ELSE 0 END) AS UsedCount,
-                SUM(CASE WHEN status IS NULL THEN 1 ELSE 0 END) AS UnusedCount
-            FROM Coupons
-            WHERE mealDate BETWEEN @fromDate AND @toDate;
-        ";
-
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            usedCoupons = reader["UsedCount"] != DBNull.Value ? Convert.ToInt32(reader["UsedCount"]) : 0;
-                            unusedCoupons = reader["UnusedCount"] != DBNull.Value ? Convert.ToInt32(reader["UnusedCount"]) : 0;
-                        }
-                    }
-                }
+                row.Height = 25;
             }
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.White;
+
         }
+
+
 
 
         string connectDB()
@@ -117,19 +90,13 @@ namespace BanquetCoupons
             return connectionString;
         }
 
-        private void cbMonth_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            LoadChart();
-        }
 
-        private void cbYear_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            LoadChart();
-        }
 
         private void LoadEventsByMonthAndYear(int selectedMonth, int selectedYear)
         {
-            flowLayoutPanel1.Controls.Clear();
+            dataGridView1.DataSource = null;  // ✅ แก้ไขตรงนี้ก่อน
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Clear();
 
             string connectionString = connectDB();
 
@@ -138,17 +105,49 @@ namespace BanquetCoupons
                 try
                 {
                     conn.Open();
+
+                    var usageQuantities = new Dictionary<string, int>();
+                    string usageQuery = @"
+                SELECT BQID, ISNULL(SUM(quantity), 0) AS totalUsage
+                FROM CouponUsage
+                WHERE MONTH(useTime) = @Month AND YEAR(useTime) = @Year
+                GROUP BY BQID";
+
+                    using (SqlCommand cmdUsage = new SqlCommand(usageQuery, conn))
+                    {
+                        cmdUsage.Parameters.AddWithValue("@Month", selectedMonth);
+                        cmdUsage.Parameters.AddWithValue("@Year", selectedYear);
+                        using (SqlDataReader readerUsage = cmdUsage.ExecuteReader())
+                        {
+                            while (readerUsage.Read())
+                            {
+                                string bqid = readerUsage["BQID"].ToString();
+                                int qty = Convert.ToInt32(readerUsage["totalUsage"]);
+                                usageQuantities[bqid] = qty;
+                            }
+                        }
+                    }
+
                     string query = @"
                 SELECT 
                     BQID,
                     cateringName,
                     agency,
                     mealDate,
-                    SUM(quantity) AS totalQuantity,
-                    SUM(CASE WHEN status = 'usage' THEN quantity ELSE 0 END) AS usedQuantity
+                    SUM(quantity) AS totalQuantity
                 FROM Coupons
-                WHERE MONTH(createAt) = @Month AND YEAR(createAt) = @Year
+                WHERE MONTH(mealDate) = @Month AND YEAR(mealDate) = @Year
                 GROUP BY BQID, cateringName, agency, mealDate";
+
+                    DataTable table = new DataTable();
+                    table.Columns.Add("BQID");
+                    table.Columns.Add("วันที่จัด");
+                    table.Columns.Add("Catering");
+                    table.Columns.Add("Agency");
+                    table.Columns.Add("รวม");
+                    table.Columns.Add("ใช้แล้ว");
+                    table.Columns.Add("คงเหลือ");
+                    table.Columns.Add("เปอร์เซ็นต์ใช้ (%)");
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -160,104 +159,44 @@ namespace BanquetCoupons
                             while (reader.Read())
                             {
                                 int total = Convert.ToInt32(reader["totalQuantity"]);
-                                int used = Convert.ToInt32(reader["usedQuantity"]);
-
-                                // แปลงวันที่ mealDate
-                                DateTime mealDate = Convert.ToDateTime(reader["mealDate"]);
-                                string formattedDate = mealDate.ToString("dd/MM/yyyy"); // แสดงแบบวัน/เดือน/ปี
-
+                                string bqid = reader["BQID"].ToString();
+                                int used = usageQuantities.ContainsKey(bqid) ? usageQuantities[bqid] : 0;
                                 int remaining = total - used;
                                 double percentUsed = total > 0 ? ((double)used / total) * 100 : 0;
 
-                                Panel card = new Panel
-                                {
-                                    Width = 260,
-                                    Height = 200,
-                                    BorderStyle = BorderStyle.FixedSingle,
-                                    Margin = new Padding(10),
-                                    BackColor = Color.White
-                                };
+                                string mealDate = Convert.ToDateTime(reader["mealDate"]).ToString("dd/MM/yyyy");
 
-                                int y = 10;
-                                int spacing = 20;
-
-                                Label lblBQID = new Label
-                                {
-                                    Text = "🆔 BQID: " + reader["BQID"].ToString(),
-                                    Location = new Point(10, y),
-                                    Font = new Font("Segoe UI", 9, FontStyle.Regular),
-                                    AutoSize = true
-                                }; y += spacing;
-
-                                Label lblMealDate = new Label
-                                {
-                                    Text = "📅 วันที่จัด: " + formattedDate,
-                                    Location = new Point(10, y),
-                                    Font = new Font("Segoe UI", 9, FontStyle.Regular),
-                                    AutoSize = true
-                                }; y += spacing;
-
-                                Label lblCatering = new Label
-                                {
-                                    Text = "🍽️ " + reader["cateringName"].ToString(),
-                                    Location = new Point(10, y),
-                                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                                    AutoSize = true
-                                }; y += spacing;
-
-                                Label lblAgency = new Label
-                                {
-                                    Text = "🏢 " + reader["agency"].ToString(),
-                                    Location = new Point(10, y),
-                                    AutoSize = true
-                                }; y += spacing;
-
-                                Label lblQty = new Label
-                                {
-                                    Text = "🎟️ รวม: " + total,
-                                    Location = new Point(10, y),
-                                    AutoSize = true
-                                }; y += spacing;
-
-                                Label lblUsed = new Label
-                                {
-                                    Text = "✅ ใช้แล้ว: " + used,
-                                    Location = new Point(10, y),
-                                    AutoSize = true
-                                }; y += spacing;
-
-                                Label lblRemaining = new Label
-                                {
-                                    Text = "📦 คงเหลือ: " + remaining,
-                                    Location = new Point(10, y),
-                                    AutoSize = true
-                                }; y += spacing;
-
-                                Label lblPercent = new Label
-                                {
-                                    Text = $"📊 ใช้แล้ว: {percentUsed:F1}%",
-                                    Location = new Point(10, y),
-                                    AutoSize = true
-                                };
-
-                                card.Tag = reader["BQID"].ToString();
-                                card.Cursor = Cursors.Hand;
-                                card.Click += Card_Click;
-
-                                // เพิ่ม Label ลง Panel
-                                card.Controls.Add(lblBQID);
-                                card.Controls.Add(lblMealDate);
-                                card.Controls.Add(lblCatering);
-                                card.Controls.Add(lblAgency);
-                                card.Controls.Add(lblQty);
-                                card.Controls.Add(lblUsed);
-                                card.Controls.Add(lblRemaining);
-                                card.Controls.Add(lblPercent);
-
-                                flowLayoutPanel1.Controls.Add(card);
+                                table.Rows.Add(
+                                    bqid,
+                                    mealDate,
+                                    reader["cateringName"].ToString(),
+                                    reader["agency"].ToString(),
+                                    total,
+                                    used,
+                                    remaining,
+                                    percentUsed.ToString("F1")
+                                );
                             }
                         }
                     }
+
+                    dataGridView1.DataSource = table;
+
+                    dataGridView1.Columns[0].HeaderText = "BQID";
+                    dataGridView1.Columns[1].HeaderText = "วันที่จัด";
+                    dataGridView1.Columns[2].HeaderText = "ผู้จัดเลี้ยง";
+                    dataGridView1.Columns[3].HeaderText = "หน่วยงาน";
+                    dataGridView1.Columns[4].HeaderText = "รวม";
+                    dataGridView1.Columns[5].HeaderText = "ใช้แล้ว";
+                    dataGridView1.Columns[6].HeaderText = "คงเหลือ";
+                    dataGridView1.Columns[7].HeaderText = "เปอร์เซ็นต์ใช้ (%)";
+
+                    fullTable = table;
+                    totalPages = (int)Math.Ceiling((double)fullTable.Rows.Count / pageSize);
+                    currentPage = 1;
+
+                    DisplayPage(currentPage); // แสดงหน้าแรก
+
                 }
                 catch (Exception ex)
                 {
@@ -266,69 +205,8 @@ namespace BanquetCoupons
             }
         }
 
-        private void Card_Click(object sender, EventArgs e)
-        {
-            Panel card = sender as Panel;
-            if (card == null) return;
-
-            string bqid = card.Tag as string;
-            if (string.IsNullOrEmpty(bqid)) return;
-
-            LoadChartForBQID(bqid);
-        }
-
-        private void LoadChartForBQID(string bqid)
-        {
-            if (cbMonth.SelectedIndex == -1 || cbYear.SelectedIndex == -1) return;
-
-            int selectedMonth = cbMonth.SelectedIndex + 1;
-            int selectedYear = int.Parse(cbYear.SelectedItem.ToString());
-
-            DateTime fromDate = new DateTime(selectedYear, selectedMonth, 1);
-            DateTime toDate = fromDate.AddMonths(1).AddDays(-1);
-
-            int usedCoupons = 0;
-            int unusedCoupons = 0;
-
-            string connStr = connectDB();
-            using (SqlConnection conn = new SqlConnection(connStr))
-            {
-                conn.Open();
-                string sql = @"
-            SELECT 
-                SUM(CASE WHEN status = 'usage' THEN quantity ELSE 0 END) AS UsedCount,
-                SUM(CASE WHEN status IS NULL THEN quantity ELSE 0 END) AS UnusedCount
-            FROM Coupons
-            WHERE BQID = @BQID AND mealDate BETWEEN @fromDate AND @toDate;
-        ";
-
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@BQID", bqid);
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            usedCoupons = reader["UsedCount"] != DBNull.Value ? Convert.ToInt32(reader["UsedCount"]) : 0;
-                            unusedCoupons = reader["UnusedCount"] != DBNull.Value ? Convert.ToInt32(reader["UnusedCount"]) : 0;
-                        }
-                    }
-                }
-            }
-
-           
 
 
-            Series series = new Series("คูปอง");
-            // Tooltips
-            series.ToolTip = "#VAL คูปอง";
-            series.ChartType = SeriesChartType.Column;
-            series.Points.AddXY("ใช้แล้ว", usedCoupons);
-            series.Points.AddXY("ยังไม่ใช้", unusedCoupons);
-        }
 
         private void cbMonth_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -350,15 +228,201 @@ namespace BanquetCoupons
             }
         }
 
-        class CouponReportItem
-{
-    public string BQID { get; set; }
-    public DateTime MealDate { get; set; }
-    public string CateringName { get; set; }
-    public string Agency { get; set; }
-    public int TotalQuantity { get; set; }
-    public int UsedQuantity { get; set; }
-}
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("ไม่มีข้อมูลในตารางให้ส่งออก");
+                return;
+            }
+            exportFilePDF();
+        }
 
+        private XFont FitTextToWidth(XGraphics gfx, string text, double maxWidth, string fontName, double initialSize)
+        {
+            double fontSize = initialSize;
+            XFont font = new XFont(fontName, fontSize, XFontStyleEx.Regular);
+
+            while (gfx.MeasureString(text, font).Width > maxWidth && fontSize > 6)
+            {
+                fontSize -= 0.5;
+                font = new XFont(fontName, fontSize, XFontStyleEx.Regular);
+            }
+
+            return font;
+        }
+
+        private void exportFilePDF()
+        {
+            try
+            {
+                string fontPath = Path.Combine(Application.StartupPath, "Fonts", "NotoSansThai-Regular.ttf");
+                GlobalFontSettings.FontResolver = new CustomFontResolver(fontPath);
+
+                string filePath = Path.Combine(Path.GetTempPath(), "ExportData.pdf");
+
+                PdfDocument document = new PdfDocument();
+                document.Info.Title = "รายงานข้อมูลจาก DataGridView";
+
+                PdfPage page = document.AddPage();
+                page.Orientation = PdfSharp.PageOrientation.Landscape;
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                XFont titleFont = new XFont("NotoSansThai-Regular", 16, XFontStyleEx.Bold);
+                XFont defaultFont = new XFont("NotoSansThai-Regular", 10, XFontStyleEx.Regular);
+                XTextFormatter tf = new XTextFormatter(gfx);
+
+                double margin = 40;
+                double yPoint = margin;
+                double rowHeight = 25;
+
+                gfx.DrawString("รายงานข้อมูลคูปอง", titleFont, XBrushes.Black,
+                    new XRect(0, yPoint, page.Width, 40), XStringFormats.TopCenter);
+                yPoint += 50;
+
+                List<int> colsToShow = new List<int>();
+                for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                {
+                    colsToShow.Add(i);
+                }
+
+                int colCount = colsToShow.Count;
+                double pageWidth = page.Width.Point - margin * 2;
+
+                // กำหนดน้ำหนักความกว้างของแต่ละคอลัมน์
+                HashSet<string> narrowColumns = new HashSet<string> { "รวม", "ใช้แล้ว", "คงเหลือ", "เปอร์เซ็น" };
+                HashSet<string> wideColumns = new HashSet<string> { "หน่วยงาน", "ผู้จัดเลี้ยง" };
+
+                Dictionary<int, double> columnWeights = new Dictionary<int, double>();
+                double totalWeight = 0;
+
+                foreach (int colIndex in colsToShow)
+                {
+                    string header = dataGridView1.Columns[colIndex].HeaderText;
+                    double weight = narrowColumns.Contains(header) ? 0.5 :
+                                    wideColumns.Contains(header) ? 2.0 : 1.0;
+
+                    columnWeights[colIndex] = weight;
+                    totalWeight += weight;
+                }
+
+                Dictionary<int, double> actualWidths = new Dictionary<int, double>();
+                foreach (var kv in columnWeights)
+                {
+                    actualWidths[kv.Key] = (kv.Value / totalWeight) * pageWidth;
+                }
+
+                void DrawHeader()
+                {
+                    double x = margin;
+                    foreach (int colIndex in colsToShow)
+                    {
+                        double width = actualWidths[colIndex];
+                        string headerText = dataGridView1.Columns[colIndex].HeaderText;
+
+                        var rect = new XRect(x, yPoint, width, rowHeight);
+                        gfx.DrawRectangle(XPens.Black, rect);
+                        gfx.DrawString(headerText, defaultFont, XBrushes.Black, rect, XStringFormats.Center);
+                        x += width;
+                    }
+                    yPoint += rowHeight;
+                }
+
+                DrawHeader();
+
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (row.IsNewRow) continue;
+
+                    if (yPoint + rowHeight > page.Height.Point - margin - 60)
+                    {
+                        page = document.AddPage();
+                        page.Orientation = PdfSharp.PageOrientation.Landscape;
+                        gfx = XGraphics.FromPdfPage(page);
+                        tf = new XTextFormatter(gfx);
+                        yPoint = margin;
+                        DrawHeader();
+                    }
+
+                    double x = margin;
+
+                    foreach (int colIndex in colsToShow)
+                    {
+                        string cellText = row.Cells[colIndex].Value?.ToString() ?? "";
+                        double width = actualWidths[colIndex];
+                        var rect = new XRect(x, yPoint, width, rowHeight);
+                        gfx.DrawRectangle(XPens.Black, rect);
+
+                        // ปรับขนาดฟอนต์ให้พอดีกับช่อง
+                        XFont fittedFont = FitTextToWidth(gfx, cellText, width - 6, "NotoSansThai-Regular", 12);
+
+                        var paddedRect = new XRect(rect.X + 3, rect.Y, rect.Width - 6, rect.Height);
+                        gfx.DrawString(cellText, fittedFont, XBrushes.Black, paddedRect, XStringFormats.CenterLeft);
+
+                        x += width;
+                    }
+
+                    yPoint += rowHeight;
+                }
+
+                // Footer
+                string footerUser = "ชื่อผู้จัดทำรายงาน";
+                gfx.DrawString($"ผู้จัดทำรายงาน: {footerUser}", defaultFont, XBrushes.Black,
+                    new XRect(margin, page.Height - 80, page.Width, 20), XStringFormats.TopLeft);
+
+                gfx.DrawString($"วันที่พิมพ์: {DateTime.Now:dd/MM/yyyy HH:mm}", defaultFont, XBrushes.Black,
+                    new XRect(margin, page.Height - 60, page.Width, 20), XStringFormats.TopLeft);
+
+                gfx.DrawString("หมายเหตุ: รายงานนี้สร้างจากระบบอัตโนมัติ", defaultFont, XBrushes.Gray,
+                    new XRect(margin, page.Height - 40, page.Width, 20), XStringFormats.TopLeft);
+
+                document.Save(filePath);
+                Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("เกิดข้อผิดพลาด: " + ex.Message);
+            }
+        }
+
+        private DataTable fullTable; // เก็บข้อมูลทั้งหมด
+        private int pageSize = 15;
+        private int currentPage = 1;
+        private int totalPages = 1;
+
+        private void DisplayPage(int page)
+        {
+            if (fullTable == null) return;
+
+            DataTable currentPageTable = fullTable.Clone(); // โครงสร้างเหมือนกัน
+
+            int startIndex = (page - 1) * pageSize;
+            int endIndex = Math.Min(startIndex + pageSize, fullTable.Rows.Count);
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                currentPageTable.ImportRow(fullTable.Rows[i]);
+            }
+
+            dataGridView1.DataSource = currentPageTable;
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                DisplayPage(currentPage);
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                DisplayPage(currentPage);
+            }
+        }
     }
 }

@@ -108,7 +108,6 @@ namespace BanquetCoupons
         private void LoadEventsByDate(DateTime selectedDate)
         {
             flowLayoutPanel1.Controls.Clear();
-
             string connectionString = connectDB();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -116,6 +115,30 @@ namespace BanquetCoupons
                 try
                 {
                     conn.Open();
+
+                    // 1. ดึงข้อมูล CouponUsage quantity รวมทุก BQID ที่มีในวันนั้นเก็บใน Dictionary
+                    var usageQuantities = new Dictionary<string, int>();
+                    string usageQuery = @"
+                SELECT BQID, ISNULL(SUM(quantity),0) AS totalUsage
+                FROM CouponUsage
+                WHERE CAST(useTime AS DATE) = @SelectedDate
+                GROUP BY BQID";
+
+                    using (SqlCommand cmdUsage = new SqlCommand(usageQuery, conn))
+                    {
+                        cmdUsage.Parameters.Add("@SelectedDate", SqlDbType.Date).Value = selectedDate.Date;
+                        using (SqlDataReader readerUsage = cmdUsage.ExecuteReader())
+                        {
+                            while (readerUsage.Read())
+                            {
+                                string bqid = readerUsage["BQID"].ToString();
+                                int qty = Convert.ToInt32(readerUsage["totalUsage"]);
+                                usageQuantities[bqid] = qty;
+                            }
+                        }
+                    }
+
+                    // 2. ดึงข้อมูล Coupons ตามวัน
                     string query = @"
                 SELECT 
                     BQID,
@@ -125,7 +148,6 @@ namespace BanquetCoupons
                 FROM Coupons
                 WHERE CAST(mealDate AS DATE) = @SelectedDate
                 GROUP BY BQID, cateringName, agency";
-
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -137,29 +159,33 @@ namespace BanquetCoupons
                             {
                                 string bqid = reader["BQID"].ToString();
                                 string canteen = reader["cateringName"].ToString();
-                                string qty = reader["totalQuantity"].ToString();
+                                string agency = reader["agency"].ToString();
+                                string totalQty = reader["totalQuantity"].ToString();
 
+                                int usageQty = usageQuantities.ContainsKey(bqid) ? usageQuantities[bqid] : 0;
+
+                                // สร้างการ์ด UI
                                 Panel card = new Panel
                                 {
                                     Width = 250,
-                                    Height = 120,
+                                    Height = 140,
                                     BorderStyle = BorderStyle.FixedSingle,
                                     Margin = new Padding(10),
                                     BackColor = Color.White,
-                                    Cursor = Cursors.Hand // เปลี่ยนเมาส์เป็นรูปมือ
+                                    Cursor = Cursors.Hand
                                 };
 
                                 Label lblBQID = new Label
                                 {
                                     Text = "🆔 BQID: " + bqid,
                                     Location = new Point(10, 10),
-                                    Font = new Font("Segoe UI", 9, FontStyle.Regular),
+                                    Font = new Font("Segoe UI", 9),
                                     AutoSize = true
                                 };
 
                                 Label lblCatering = new Label
                                 {
-                                    Text = "🍽️ " + reader["cateringName"].ToString(),
+                                    Text = "🍽️ " + canteen,
                                     Location = new Point(10, 30),
                                     Font = new Font("Segoe UI", 10, FontStyle.Bold),
                                     AutoSize = true
@@ -167,15 +193,22 @@ namespace BanquetCoupons
 
                                 Label lblAgency = new Label
                                 {
-                                    Text = "🏢 " + reader["agency"].ToString(),
+                                    Text = "🏢 " + agency,
                                     Location = new Point(10, 55),
                                     AutoSize = true
                                 };
 
                                 Label lblQty = new Label
                                 {
-                                    Text = "จำนวน: " + reader["totalQuantity"].ToString(),
+                                    Text = "จำนวนที่จอง: " + totalQty,
                                     Location = new Point(10, 80),
+                                    AutoSize = true
+                                };
+
+                                Label lblUsageQty = new Label
+                                {
+                                    Text = "จำนวนที่ใช้: " + usageQty,
+                                    Location = new Point(10, 105),
                                     AutoSize = true
                                 };
 
@@ -183,26 +216,21 @@ namespace BanquetCoupons
                                 card.Controls.Add(lblCatering);
                                 card.Controls.Add(lblAgency);
                                 card.Controls.Add(lblQty);
+                                card.Controls.Add(lblUsageQty);
 
-                                // เพิ่ม event เมื่อคลิกการ์ด
-                                card.Click += (s, e) =>
+                                // Event click
+                                EventHandler clickHandler = (s, e) =>
                                 {
                                     bqTopic.Text = bqid;
                                     lblCanteen.Text = canteen;
-                                    lblSumqty.Text = qty;
+                                    lblSumqty.Text = totalQty;
                                     ShowUsageCount();
                                 };
 
-                                // เพิ่ม event สำหรับ label ด้านใน เพื่อให้คลิกได้ผลเหมือนกัน
+                                card.Click += clickHandler;
                                 foreach (Control ctrl in card.Controls)
                                 {
-                                    ctrl.Click += (s, e) =>
-                                    {
-                                        bqTopic.Text = bqid;
-                                        lblCanteen.Text = canteen;
-                                        lblSumqty.Text = qty;
-                                        ShowUsageCount();
-                                    };
+                                    ctrl.Click += clickHandler;
                                 }
 
                                 flowLayoutPanel1.Controls.Add(card);
@@ -217,6 +245,8 @@ namespace BanquetCoupons
             }
         }
 
+
+
         private void btAdd_Click(object sender, EventArgs e)
         {
             saveData();
@@ -225,8 +255,8 @@ namespace BanquetCoupons
         void saveData()
         {
             string inputBQID = bqTopic.Text.Trim();
-            string inputQty = txtQty.Text.Trim(); // จำนวนคูปอง
-            string sumFromQty = lblSumqty.Text;
+            string inputQty = txtQty.Text.Trim(); // จำนวนคูปองที่ต้องการใช้
+            string sumFromQty = lblSumqty.Text; // จำนวนคูปองทั้งหมด
             string currentUsername = userLogin.Text;
             string connectionString = connectDB();
 
@@ -236,13 +266,40 @@ namespace BanquetCoupons
                 return;
             }
 
+            if (!int.TryParse(sumFromQty, out int fromQty))
+            {
+                MessageBox.Show("ข้อมูลจำนวนคูปองทั้งหมดไม่ถูกต้อง");
+                return;
+            }
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 try
                 {
                     conn.Open();
 
-                    // ตรวจสอบว่ามี BQID อยู่ใน Coupons หรือไม่
+                    // 1. ตรวจสอบยอดรวมคูปองที่ใช้ไปแล้ว
+                    string usedQtyQuery = @"SELECT ISNULL(SUM(quantity),0) FROM CouponUsage WHERE BQID = @BQID";
+                    int usedQty = 0;
+                    using (SqlCommand usedCmd = new SqlCommand(usedQtyQuery, conn))
+                    {
+                        usedCmd.Parameters.AddWithValue("@BQID", inputBQID);
+                        object result = usedCmd.ExecuteScalar();
+                        if (result != null)
+                            usedQty = Convert.ToInt32(result);
+                    }
+
+                    int totalAfterAdd = usedQty + quantity;
+
+                    if (totalAfterAdd > fromQty)
+                    {
+                        MessageBox.Show("จำนวนครบแล้ว ไม่สามารถใช้งานเกินจำนวนคูปองที่มี");
+                        clearData();
+                        return; // หยุดทำงาน ไม่บันทึก
+                        
+                    }
+
+                    // 2. ตรวจสอบว่ามี BQID อยู่ใน Coupons หรือไม่
                     string checkQuery = @"
                 SELECT BQID, cateringName 
                 FROM Coupons 
@@ -261,8 +318,8 @@ namespace BanquetCoupons
                                 reader.Close();
 
                                 string insertQuery = @"
-                            INSERT INTO CouponUsage (BQID, Username, useTime, canteenName, useID, quantity ,fromQty)
-                            VALUES (@BQID, @Username, @useTime, @canteenName, @useID, @quantity ,@fromQty)";
+                            INSERT INTO CouponUsage (BQID, Username, useTime, canteenName, quantity, fromQty)
+                            VALUES (@BQID, @Username, @useTime, @canteenName, @quantity, @fromQty)";
 
                                 using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
                                 {
@@ -270,9 +327,8 @@ namespace BanquetCoupons
                                     insertCmd.Parameters.AddWithValue("@Username", currentUsername);
                                     insertCmd.Parameters.AddWithValue("@useTime", DateTime.Now);
                                     insertCmd.Parameters.AddWithValue("@canteenName", cateringName);
-                                    insertCmd.Parameters.AddWithValue("@useID", currentUsername);
                                     insertCmd.Parameters.AddWithValue("@quantity", quantity);
-                                    insertCmd.Parameters.AddWithValue("@fromQty", sumFromQty);
+                                    insertCmd.Parameters.AddWithValue("@fromQty", fromQty);
 
                                     int rowsAffected = insertCmd.ExecuteNonQuery();
 
@@ -280,6 +336,9 @@ namespace BanquetCoupons
                                     {
                                         ShowUsageCount();
                                         MessageBox.Show("บันทึกจำนวนคูปองที่ใช้งานสำเร็จ");
+                                        this.Controls.Clear();
+                                        InitializeComponent();
+                                        LoadEventsByDate(DateTime.Now);
                                     }
                                     else
                                     {
@@ -302,6 +361,7 @@ namespace BanquetCoupons
 
             clearData();
         }
+
 
 
         void ShowUsageCount()

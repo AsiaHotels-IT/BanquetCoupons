@@ -6,21 +6,18 @@ using System.Windows.Forms;
 public class FontManager
 {
     private PrivateFontCollection privateFonts;
-    private PrivateFontCollection barcodeFonts; // เพิ่ม collection สำหรับฟอนต์บาร์โค้ด
+    private PrivateFontCollection barcodeFonts;
 
     public Font FontSmall { get; private set; }
-
     public Font FontTooltip { get; private set; }
     public Font FontRegular { get; private set; }
     public Font FontBold { get; private set; }
     public Font FontSmallBold { get; private set; }
-
     public Font FontBarcode { get; private set; }
     public Font FontSerial { get; private set; }
-
     public Font FontTopic { get; private set; }
-    public Font FontShowDate { get; }
-    public Font FontShowTopic { get; }
+    public Font FontShowDate { get; private set; }
+    public Font FontShowTopic { get; private set; }
 
     public FontManager()
     {
@@ -35,20 +32,20 @@ public class FontManager
             return;
         }
         privateFonts.AddFontFile(fontPath);
-        FontFamily fontFamily = privateFonts.Families[0];
+        FontFamily thaiFontFamily = privateFonts.Families[0];
 
         // โหลดฟอนต์อังกฤษ
-        string fontSenum = Path.Combine(Application.StartupPath, "fonts", "AsiaHotelBeta-Regular.otf");
-        if (!File.Exists(fontPath))
+        string fontSenumPath = Path.Combine(Application.StartupPath, "fonts", "AsiaHotelBeta-Regular.otf");
+        if (!File.Exists(fontSenumPath))
         {
-            MessageBox.Show("ไม่พบไฟล์ฟอนต์: " + fontPath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("ไม่พบไฟล์ฟอนต์: " + fontSenumPath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-        privateFonts.AddFontFile(fontSenum);
-        FontFamily fontSerialNum = privateFonts.Families[0];
+        privateFonts.AddFontFile(fontSenumPath); // เพิ่มเข้า collection เดิม
+        FontFamily engFontFamily = privateFonts.Families[1]; // ต้องใช้ index 1 เพราะเป็นฟอนต์ที่สอง
 
         // โหลดฟอนต์บาร์โค้ด
-        string barcodeFontPath = Path.Combine(Application.StartupPath, "fonts", "Free3of9.ttf");  // เปลี่ยนชื่อไฟล์ตามฟอนต์จริง
+        string barcodeFontPath = Path.Combine(Application.StartupPath, "fonts", "Free3of9.ttf");
         if (!File.Exists(barcodeFontPath))
         {
             MessageBox.Show("ไม่พบไฟล์ฟอนต์บาร์โค้ด: " + barcodeFontPath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -57,21 +54,22 @@ public class FontManager
         barcodeFonts.AddFontFile(barcodeFontPath);
         FontFamily barcodeFontFamily = barcodeFonts.Families[0];
 
-        //NotoSansThai-Bold.ttf
-        // สร้างฟอนต์ด้วยขนาดต่าง ๆ
-        FontTooltip = new Font(fontFamily,8,FontStyle.Regular);
-        FontSmall = new Font(fontFamily, 10, FontStyle.Regular);
-        FontRegular = new Font(fontFamily, 12, FontStyle.Regular);
-        FontBold = new Font(fontFamily, 12, FontStyle.Bold);
-        FontSmallBold = new Font(fontFamily, 8, FontStyle.Bold);
-        FontTopic = new Font(fontSenum, 16, FontStyle.Regular);
-        FontShowDate = new Font(fontFamily, 16, FontStyle.Regular);
+        // ฟอนต์ไทย
+        FontTooltip = new Font(thaiFontFamily, 9, FontStyle.Regular);
+        FontSmall = new Font(thaiFontFamily, 10, FontStyle.Regular);
+        FontRegular = new Font(thaiFontFamily, 12, FontStyle.Regular);
+        FontBold = new Font(thaiFontFamily, 12, FontStyle.Bold);
+        FontSmallBold = new Font(thaiFontFamily, 8, FontStyle.Bold);
 
+        // ฟอนต์หัวข้อ
+        FontTopic = new Font(thaiFontFamily, 12, FontStyle.Bold);
+        FontShowDate = new Font(thaiFontFamily, 16, FontStyle.Regular);
+        FontShowTopic = new Font(thaiFontFamily, 14, FontStyle.Bold);
 
-        // ฟอนต์บาร์โค้ด ขนาดตามต้องการ 
+        // ฟอนต์บาร์โค้ด
         FontBarcode = new Font(barcodeFontFamily, 11, FontStyle.Regular);
-        //ฟอนต์เลข serialNum
-        FontSerial = new Font(fontSenum, 9, FontStyle.Regular);
+
+        // ฟอนต์ serial number
+        FontSerial = new Font(engFontFamily, 9, FontStyle.Regular);
     }
 }
-
