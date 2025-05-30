@@ -34,6 +34,7 @@ namespace BanquetCoupons
         private void financeHome_Load(object sender, EventArgs e)
         {
             userLogin.Text = user;
+
             fontManager = new FontManager();
             // เดือน
             cbMonth.Items.AddRange(new string[]
@@ -43,11 +44,8 @@ namespace BanquetCoupons
                 "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
             });
 
-            // ปี (สมมุติให้ย้อนหลัง 5 ปี)
-            for (int year = DateTime.Now.Year; year >= DateTime.Now.Year - 2; year--)
-            {
-                cbYear.Items.Add(year.ToString());
-            }
+            cbYear.Items.Add(DateTime.Now.Year.ToString());
+            
 
             cbMonth.SelectedIndex = DateTime.Now.Month - 1;
             cbYear.SelectedItem = DateTime.Now.Year.ToString();
@@ -67,6 +65,14 @@ namespace BanquetCoupons
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
 
+            this.UseWaitCursor = false;
+            this.Cursor = Cursors.Default;
+            dataGridView1.UseWaitCursor = false;
+            dataGridView1.Cursor = Cursors.Default;
+            cbMonth.Cursor= Cursors.Default;
+            cbYear.Cursor= Cursors.Default;
+            btnPrev.Cursor= Cursors.Default;
+            btnNext.Cursor= Cursors.Default;
         }
 
 

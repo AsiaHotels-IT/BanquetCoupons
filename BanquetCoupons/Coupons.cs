@@ -17,6 +17,7 @@ using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using System.Reflection;
+using Org.BouncyCastle.Asn1.Pkcs;
 
 
 namespace BanquetCoupons
@@ -41,35 +42,6 @@ namespace BanquetCoupons
             LoadCateringRooms();
             fontManager = new FontManager();  // สร้างครั้งเดียวตอนโหลดฟอร์ม
 
-
-            // ตั้งค่าฟอนต์ให้ Label ใน panel1
-            foreach (Control ctl in panel1.Controls)
-            {
-                if (ctl is Label label)
-                {
-
-                    if (label.Name == "lblPreview")
-                        label.Font = fontManager.FontSmall;
-                    else if (label.Name == "label9")
-                        label.Font = fontManager.FontTooltip;
-                    else if (label.Name == "lblSerialNumber")
-                        label.Font = fontManager.FontSmall;
-                    else if (label.Name == "seNum")
-                        label.Font = fontManager.FontSmallBold;
-                    else
-                        label.Font = fontManager.FontRegular;
-                }
-            }
-
-            foreach (Control ctl in panelTopic.Controls)
-            {
-                if (ctl is Label label)
-                {
-                    if (label.Name == "label6" || label.Name == "label7" || label.Name == "label8")
-                        label.Font = fontManager.FontBold;
-                }
-            }
-
             CultureInfo thaiCulture = new CultureInfo("th-TH");
             System.Threading.Thread.CurrentThread.CurrentCulture = thaiCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = thaiCulture;
@@ -82,10 +54,7 @@ namespace BanquetCoupons
             lblPreview.Paint += lblPreview_Paint;
             panelTopic.Paint += panelTopic_Paint;
             panelCouponName.Paint += panelCouponName_Paint;
-            label6.Font = fontManager.FontBold;
             label6.Height = 40;
-            label7.Font = fontManager.FontBold;
-            label8.Font = fontManager.FontBold;
 
             comboBoxPaperSize.Items.Add("A4");
             comboBoxPaperSize.SelectedIndex = 0; // ค่าเริ่มต้น
@@ -102,14 +71,18 @@ namespace BanquetCoupons
             dataGridView1.BackgroundColor = Color.White;
 
             quantity.Minimum = 1;
-            quantity.Maximum = 300; // หรือค่าเริ่มต้นทั่วไป เช่น 1000
+            quantity.Maximum = 300; 
             quantity.Value = 1;
 
             canteenName.DropDownStyle = ComboBoxStyle.DropDownList;
 
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
-            //lblPage.Font = fontManager.FontSerial;
+            lblSerialNumber.Font = fontManager.FontBarcode;
+            listBox1.SelectedItem = "TH";
         }
+
+        PrivateFontCollection pfc = new PrivateFontCollection();
+
 
         private void LoadCateringRooms()
         {
@@ -212,10 +185,7 @@ namespace BanquetCoupons
         //    }
         //}
 
-        int currentPage = 1;
-        int pageSize = 20;
-        int totalRecords = 0;
-        int totalPages = 0;
+
 
         void loadData(int page)
         {
@@ -262,7 +232,9 @@ namespace BanquetCoupons
                                         mealDate,
                                         mealType,
                                         cateringName,
-                                        paperSize;
+                                        paperSize
+                                    ORDER BY BQID asc
+                                    OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
                                    ";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
@@ -294,11 +266,19 @@ namespace BanquetCoupons
             mealDate.Format = DateTimePickerFormat.Custom;
             mealDate.CustomFormat = "dd MMMM yyyy";
 
-            CultureInfo thaiCulture = new CultureInfo("th-TH");
-            string MealDate = mealDate.Value.ToString("dd MMMM yyyy", thaiCulture);
+            DateTime selectedDate = mealDate.Value;
 
-            mealDatePreview.Text = $"{MealDate}";
+            // วันที่แบบไทย
+            CultureInfo thaiCulture = new CultureInfo("th-TH");
+            string mealDateThai = selectedDate.ToString("dd MMMM yyyy", thaiCulture);
+            mealDatePreview.Text = mealDateThai;
+
+            // วันที่แบบอังกฤษ
+            CultureInfo engCulture = new CultureInfo("en-US");
+            string mealDateEnglish = selectedDate.ToString("dd MMMM yyyy", engCulture);
+            label18.Text = mealDateEnglish;
         }
+
 
         private void mealDate_ValueChanged(object sender, EventArgs e)
         {
@@ -311,6 +291,7 @@ namespace BanquetCoupons
             string MealType = mealType.Text;
 
             lblPreview.Text = $"{MealType}";
+            label17.Text = MealType;
         }
 
 
@@ -352,12 +333,34 @@ namespace BanquetCoupons
         {
             string Agency = agency.Text;
             agencyPreview.Text = $"{Agency}";
+            label19.Text = $"{Agency}";
+
+            if (label9.Text.Length > 17)
+            {
+                label9.Font = new Font(label9.Font.FontFamily, 20, label9.Font.Style); // ปรับขนาดตามที่ต้องการ
+            }
+
+            if (agencyPreview.Text.Length > 17)
+            {
+                agencyPreview.Font = new Font(agencyPreview.Font.FontFamily, 20, agencyPreview.Font.Style); // ปรับขนาดตามที่ต้องการ
+            }
         }
 
         private void PreviewCanteen()
         {
             string Canteen = canteenName.Text;
             canteenPreview.Text = Canteen;
+            label20.Text= Canteen;
+
+            if (label20.Text.Length > 17)
+            {
+                label20.Font = new Font(label20.Font.FontFamily, 20, label20.Font.Style); // ปรับขนาดตามที่ต้องการ
+            }
+
+            if (canteenPreview.Text.Length > 17)
+            {
+                canteenPreview.Font = new Font(canteenPreview.Font.FontFamily, 20, canteenPreview.Font.Style); // ปรับขนาดตามที่ต้องการ
+            }
         }
 
         private void canteenName_TextChanged(object sender, EventArgs e)
@@ -551,7 +554,6 @@ namespace BanquetCoupons
 
         private void SaveCouponAsPDF(string bqid)
         {
-            string selectedPaper = comboBoxPaperSize.SelectedItem.ToString();
 
             // ✅ ดึง serialNumbers จาก DB โดยใช้ BQID
             List<string> serialNumbers = GetSerialNumbersFromDatabaseByBQID(bqid);
@@ -566,7 +568,7 @@ namespace BanquetCoupons
 
             double pageWidth = 21.0, pageHeight = 29.7;
 
-            double couponWidth = 10.0, couponHeight = 5.0, marginX = 0.2, marginY = 0.0, spacingX = 0.0, spacingY = 0.0;
+            double couponWidth = 10.3, couponHeight = 5.3, marginX = 0.2, marginY = 0.0, spacingX = 0.0, spacingY = 0.0;
             int couponsPerRow = 2;
             int couponsPerColumn = (int)Math.Floor((pageHeight - (2 * marginY)) / (couponHeight + spacingY));
             int couponsPerPage = couponsPerRow * couponsPerColumn;
@@ -593,14 +595,22 @@ namespace BanquetCoupons
 
                         string serial = serialNumbers[index];
                         UpdatePanelWithSerialNumber("AS" + serial);
+
+                        // ✅ เพิ่มขนาดฟอนต์ตรงนี้ให้ใหญ่ขึ้น (ลำดับที่ 2)
+                        seNum.Font = new Font(seNum.Font.FontFamily, 20, FontStyle.Bold); // หรือเปลี่ยนเป็น FontBold ที่คุณปรับไว้แล้วก็ได้
+                        label9.Font = new Font(label9.Font.FontFamily, 25, FontStyle.Regular);
+                        lblPreview.Font = new Font(lblPreview.Font.FontFamily, 28, FontStyle.Regular);
                         seNum.Text = ((index + 1).ToString("D3")) + " - " + serial;
 
                         panel1.CreateControl();
                         panel1.Refresh();
                         System.Windows.Forms.Application.DoEvents();
 
+                        // ✅ ลำดับที่ 1: สร้าง Bitmap และกำหนด DPI เป็น 300
                         using (Bitmap bmp = new Bitmap(panel1.Width, panel1.Height))
                         {
+                            bmp.SetResolution(300, 300); // 🟢 เพิ่มบรรทัดนี้ให้รองรับการพิมพ์ขนาดคมชัด
+
                             panel1.DrawToBitmap(bmp, new Rectangle(0, 0, panel1.Width, panel1.Height));
 
                             using (MemoryStream ms = new MemoryStream())
@@ -631,6 +641,7 @@ namespace BanquetCoupons
             document.Save(tempPath);
             Process.Start(new ProcessStartInfo(tempPath) { UseShellExecute = true });
         }
+
 
         private List<string> GetSerialNumbersFromDatabaseByBQID(string bqid)
         {
@@ -701,7 +712,7 @@ namespace BanquetCoupons
         private void UpdatePanelWithSerialNumber(string serial)
         {
             lblSerialNumber.Text = serial; // หรืออะไรก็ตามที่คุณใช้ใน panel1 เพื่อแสดงหมายเลขคูปอง
-            lblSerialNumber.Font = fontManager.FontBarcode;
+
             panel1.Refresh();
         }
 
@@ -773,20 +784,20 @@ namespace BanquetCoupons
         private void panelTopic_Paint(object sender, PaintEventArgs e)
         {
             Panel pnl = (Panel)sender;
-            int thickness = 12;
+            int thickness = 40;
 
             using (Pen pen = new Pen(Color.Black, thickness))
             {
 
                 // วาดเส้นขวา
-                e.Graphics.DrawLine(pen, pnl.Width - 1, 0, pnl.Width - 1, 115);
+                e.Graphics.DrawLine(pen, pnl.Width - 1, 0, pnl.Width - 1, 250);
             }
         }
 
         private void panelCouponName_Paint(object sender, PaintEventArgs e)
         {
             Panel pnl = (Panel)sender;
-            int thickness = 4;
+            int thickness = 15;
 
             using (Pen dashedPen = new Pen(Color.DarkGray, thickness))
             {
@@ -980,7 +991,6 @@ namespace BanquetCoupons
                             cmdUsage.ExecuteNonQuery();
 
 
-
                             transaction.Commit();
 
                             MessageBox.Show("แก้ไขและสร้างคูปองใหม่เรียบร้อยแล้ว");
@@ -1002,8 +1012,6 @@ namespace BanquetCoupons
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
-
-
 
         private void editedCoupons(string serialNums)
         {
@@ -1242,6 +1250,11 @@ namespace BanquetCoupons
             }
         }
 
+        int currentPage = 1;
+        int pageSize = 10;
+        int totalRecords = 0;
+        int totalPages = 0;
+
         private void btnNext_Click(object sender, EventArgs e)
         {
             if (currentPage < totalPages)
@@ -1277,49 +1290,79 @@ namespace BanquetCoupons
             }
         }
 
-        private void ApplyThaiLanguage()
-        {
-            label6.Text = "หน่วยงาน";
-            label7.Text = "ห้อง";
-            label8.Text = "วันที่";
-            label9.Text = "(โปรดแสดงบัตรก่อนเข้ารับบริการ)";
-
-            // รวม Label ไว้ใน array หรือ list
-            Label[] labels = { label6, label7, label8 };
-
-            foreach (Label lbl in labels)
-            {
-                lbl.Font = fontManager.FontBold;
-            }
-        }
-
-        private void ApplyEnglishLanguage()
-        {
-            label6.Text = "AGENCY";
-            label7.Text = "ROOM";
-            label8.Text = "DATE";
-            label9.Text = "(Please present your Coupon before using the service)";
-
-            // รวม Label ไว้ใน array หรือ list
-            Label[] labels = { label6, label7, label8};
-
-            foreach (Label lbl in labels)
-            {
-                lbl.Font = fontManager.FontTopic;
-            }
-        }
-
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedLanguage = listBox1.SelectedItem.ToString();
-
             if (selectedLanguage == "TH")
             {
-                ApplyThaiLanguage();
+                label6.Visible = true;
+                label7.Visible= true;
+                label8.Visible= true;
+                label9.Visible= true;
+                lblPreview.Visible= true;
+                agencyPreview.Visible= true;
+                canteenPreview.Visible= true;
+                mealDatePreview.Visible= true;
+
+                label10.Visible = false;
+                label11.Visible = false;
+                label12.Visible = false;
+                label16.Visible = false;
+                label17.Visible = false;
+                label18.Visible = false;
+                label19.Visible = false;
+                label20.Visible = false;
+
+
             }
             else if (selectedLanguage == "EN")
             {
-                ApplyEnglishLanguage();
+                label6.Visible = false;
+                label7.Visible = false;
+                label8.Visible = false;
+                label9.Visible = false;
+                lblPreview.Visible = false;
+                agencyPreview.Visible = false;
+                canteenPreview.Visible = false;
+                mealDatePreview.Visible = false;
+
+                label10.Visible = true;
+                label11.Visible = true;
+                label12.Visible = true;
+                label16.Visible = true;
+                label17.Visible = true;
+                label18.Visible = true;
+                label19.Visible = true;
+                label20.Visible = true;
+            }
+        }
+
+        private void agencyPreview_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label17_Paint(object sender, PaintEventArgs e)
+        {
+            Label lbl = (Label)sender;
+            int thickness = 1;
+
+            using (Pen pen = new Pen(Color.Black, thickness))
+            {
+                // ปิดการเบลอของเส้น (optional)
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+
+                // วาดเส้นบน
+                e.Graphics.DrawLine(pen, 0, 0, lbl.Width, 0);
+
+                // วาดเส้นล่าง
+                e.Graphics.DrawLine(pen, 0, lbl.Height - 1, lbl.Width, lbl.Height - 1);
+
+                // วาดเส้นซ้าย
+                e.Graphics.DrawLine(pen, 0, 0, 0, lbl.Height);
+
+                // วาดเส้นขวา
+                e.Graphics.DrawLine(pen, lbl.Width - 1, 0, lbl.Width - 1, lbl.Height);
             }
         }
     }

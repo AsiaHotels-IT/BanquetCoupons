@@ -52,7 +52,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1178, 43);
             this.panel1.TabIndex = 7;
-            this.panel1.UseWaitCursor = true;
             // 
             // label2
             // 
@@ -63,7 +62,6 @@
             this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "User";
-            this.label2.UseWaitCursor = true;
             // 
             // userLogin
             // 
@@ -74,10 +72,10 @@
             this.userLogin.Size = new System.Drawing.Size(55, 13);
             this.userLogin.TabIndex = 2;
             this.userLogin.Text = "Username";
-            this.userLogin.UseWaitCursor = true;
             // 
             // cbYear
             // 
+            this.cbYear.Cursor = System.Windows.Forms.Cursors.Default;
             this.cbYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.cbYear.FormattingEnabled = true;
             this.cbYear.Location = new System.Drawing.Point(385, 74);
@@ -85,11 +83,11 @@
             this.cbYear.Size = new System.Drawing.Size(121, 32);
             this.cbYear.TabIndex = 9;
             this.cbYear.Text = "Year";
-            this.cbYear.UseWaitCursor = true;
             this.cbYear.SelectionChangeCommitted += new System.EventHandler(this.cbYear_SelectionChangeCommitted);
             // 
             // cbMonth
             // 
+            this.cbMonth.Cursor = System.Windows.Forms.Cursors.Default;
             this.cbMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.cbMonth.FormattingEnabled = true;
             this.cbMonth.Location = new System.Drawing.Point(174, 74);
@@ -97,7 +95,6 @@
             this.cbMonth.Size = new System.Drawing.Size(189, 32);
             this.cbMonth.TabIndex = 10;
             this.cbMonth.Text = "Month";
-            this.cbMonth.UseWaitCursor = true;
             this.cbMonth.SelectionChangeCommitted += new System.EventHandler(this.cbMonth_SelectionChangeCommitted);
             // 
             // label1
@@ -109,11 +106,11 @@
             this.label1.Size = new System.Drawing.Size(87, 24);
             this.label1.TabIndex = 11;
             this.label1.Text = "ข้อมูลคูปอง";
-            this.label1.UseWaitCursor = true;
             // 
             // btnPrev
             // 
             this.btnPrev.BackColor = System.Drawing.Color.White;
+            this.btnPrev.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnPrev.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnPrev.Location = new System.Drawing.Point(441, 706);
             this.btnPrev.Name = "btnPrev";
@@ -121,12 +118,12 @@
             this.btnPrev.TabIndex = 13;
             this.btnPrev.Text = "ก่อนหน้า";
             this.btnPrev.UseVisualStyleBackColor = false;
-            this.btnPrev.UseWaitCursor = true;
             this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
             // 
             // btnNext
             // 
             this.btnNext.BackColor = System.Drawing.Color.White;
+            this.btnNext.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnNext.Location = new System.Drawing.Point(609, 706);
             this.btnNext.Name = "btnNext";
@@ -134,21 +131,21 @@
             this.btnNext.TabIndex = 14;
             this.btnNext.Text = "ถัดไป";
             this.btnNext.UseVisualStyleBackColor = false;
-            this.btnNext.UseWaitCursor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.dataGridView1.Location = new System.Drawing.Point(52, 152);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1023, 519);
             this.dataGridView1.TabIndex = 15;
-            this.dataGridView1.UseWaitCursor = true;
             // 
             // btnPrint
             // 
             this.btnPrint.BackColor = System.Drawing.Color.White;
+            this.btnPrint.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnPrint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnPrint.Location = new System.Drawing.Point(547, 67);
             this.btnPrint.Name = "btnPrint";
@@ -156,7 +153,6 @@
             this.btnPrint.TabIndex = 17;
             this.btnPrint.Text = "พิมพ์";
             this.btnPrint.UseVisualStyleBackColor = false;
-            this.btnPrint.UseWaitCursor = true;
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // financeHome
@@ -171,9 +167,9 @@
             this.Controls.Add(this.cbMonth);
             this.Controls.Add(this.cbYear);
             this.Controls.Add(this.panel1);
+            this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Name = "financeHome";
             this.Size = new System.Drawing.Size(1178, 821);
-            this.UseWaitCursor = true;
             this.Load += new System.EventHandler(this.financeHome_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

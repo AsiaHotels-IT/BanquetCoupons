@@ -78,10 +78,13 @@ namespace BanquetCoupons
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    string sql = "SELECT Role FROM Users WHERE Username=@user AND Password=@pass";
+                    string sql = @"SELECT Role FROM Users 
+                           WHERE Username COLLATE Latin1_General_CS_AS = @user 
+                           AND Password COLLATE Latin1_General_CS_AS = @pass";
+
                     SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@user", Username); // ใช้พารามิเตอร์
-                    cmd.Parameters.AddWithValue("@pass", Password); // ใช้พารามิเตอร์
+                    cmd.Parameters.AddWithValue("@user", Username);
+                    cmd.Parameters.AddWithValue("@pass", Password);
                     conn.Open();
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -98,8 +101,9 @@ namespace BanquetCoupons
             {
                 MessageBox.Show("something wrong... \n" + ex.Message);
             }
-            return false; // ต้องมี return เสมอ
+            return false;
         }
+
 
     }
 }

@@ -53,7 +53,7 @@
             this.btnLoadReport.Name = "btnLoadReport";
             this.btnLoadReport.Size = new System.Drawing.Size(118, 69);
             this.btnLoadReport.TabIndex = 23;
-            this.btnLoadReport.Text = "button1";
+            this.btnLoadReport.Text = "ดูข้อมูล";
             this.btnLoadReport.UseVisualStyleBackColor = true;
             this.btnLoadReport.Click += new System.EventHandler(this.btnLoadReport_Click);
             // 

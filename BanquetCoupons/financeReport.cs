@@ -55,7 +55,16 @@ namespace BanquetCoupons
 
             userLogin.Text = user;
 
-           
+            dataGridView1.Font = new Font("Segoe UI", 10, FontStyle.Regular);  // ปรับขนาดตามต้องการ
+            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dataGridView1.RowTemplate.Height = 25;  // ปรับให้สูงขึ้นตามฟอนต์
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                row.Height = 25;
+            }
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.White;
         }
         string connectDB()
         {

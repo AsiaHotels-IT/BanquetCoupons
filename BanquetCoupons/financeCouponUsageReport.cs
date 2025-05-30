@@ -31,17 +31,15 @@ namespace BanquetCoupons
         private void financeCouponUsageReport_Load_1(object sender, EventArgs e)
         {
             fontManager = new FontManager();
-            // เติมปี (สมมติปี 2020-2030)
-            for (int y = 2020; y <= 2030; y++)
-            {
-                cbYear.Items.Add(y.ToString());
-            }
 
-            // เติมเดือน 1-12
-            for (int m = 1; m <= 12; m++)
+            cbYear.Items.Add(DateTime.Now.Year.ToString());
+
+            cbMonth.Items.AddRange(new string[]
             {
-                cbMonth.Items.Add(m.ToString());
-            }
+                "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
+                "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
+                "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+            });
 
             // เติมวัน 1-31
             for (int d = 1; d <= 31; d++)
@@ -49,6 +47,16 @@ namespace BanquetCoupons
                 cbDay.Items.Add(d.ToString());
             }
 
+            dataGridView1.Font = new Font("Segoe UI", 10, FontStyle.Regular);  // ปรับขนาดตามต้องการ
+            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dataGridView1.RowTemplate.Height = 25;  // ปรับให้สูงขึ้นตามฟอนต์
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                row.Height = 25;
+            }
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.White;
         }
 
         string connectDB()
@@ -97,10 +105,7 @@ namespace BanquetCoupons
 
             // คำสั่ง SQL ดึงข้อมูลจาก CouponUsage
             string sql = $@"
-                            SELECT 
-                                BQID, Username, 
-                                CONVERT(VARCHAR(20), useTime, 120) AS useTime,
-                                CONCAT(couponNum, ' - ', serialNum) AS couponNum, canteenName
+                            SELECT *
                             FROM CouponUsage
                             {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
                             ORDER BY useTime DESC

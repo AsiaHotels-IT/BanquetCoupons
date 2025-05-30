@@ -64,6 +64,8 @@ class FontInstaller
                     key.SetValue(fontName, regValue);
                     key.Close();
                 }
+                // ✅ แสดงชื่อฟอนต์ที่ติดตั้ง
+                Console.WriteLine($"ติดตั้งฟอนต์เรียบร้อย: {fontName}");
             }
 
             // ส่งข้อความแจ้งให้ Windows รู้ว่ามีการเปลี่ยนแปลงฟอนต์
