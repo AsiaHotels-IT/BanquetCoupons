@@ -1,0 +1,3064 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Syncfusion.SfCalendar.XForms</name>
+    </assembly>
+    <members>
+        <member name="T:Syncfusion.SfCalendar.XForms.CalendarEventCollection">
+            <summary>
+            Calendar event collection class inherits <c>ObservableCollection&lt;CalendarInlineEvent&gt;</c>.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.CalendarInlineEvent">
+            <summary>
+            Calendar inline event class inherits View class.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.StartTimeProperty">
+            <summary>
+            Determines the event's starting date.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.EndTimeProperty">
+            <summary>
+            Determines the event's ending date.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.SubjectProperty">
+            <summary>
+            Describes the date included event.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.ColorProperty">
+            <summary>
+            Indicates a particular date that has event.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.IsAllDayProperty">
+            <summary>
+            Denotes that there is no staring and ending hours . All day has that event.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.CalendarInlineEvent"/> class.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.StartTime">
+            <summary>
+            Gets or sets the start time of the SfCalendar's inline event.
+            </summary>
+            <value>The start time.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.EndTime">
+            <summary>
+            Gets or sets the end time of the SfCalendar's inline event.
+            </summary>
+            <value>The end time.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.Subject">
+            <summary>
+            Gets or sets the subject of the inline event in SfCalendar.
+            </summary>
+            <value>The subject.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.Color">
+            <summary>
+            Gets or sets the color of the inline events in SfCalendar.
+            </summary>
+            <value>The color.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarInlineEvent.IsAllDay">
+            <summary>
+            Gets or sets a value indicating whether this instance is all day or not.
+            </summary>
+            <value><c>true</c> if this instance is all day; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.CalendarResourceManager">
+            <summary>
+            Calendar resource manager.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarResourceManager.Manager">
+            <summary>
+            Gets or sets the resource manager.
+            </summary>
+            <value>The resource manager.</value>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.SelectionMode">
+            <summary>
+            Selection modes for <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/>.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SelectionMode.SingleSelection">
+            <summary>
+            SelectionMode.SingleSelection, Allows to select a single date,
+            selecting a new date will remove the selection for previous date and
+            updates selection to the newly selected date.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SelectionMode.MultiSelection">
+            <summary>
+            SelectionMode.MultiSelection, Allows multiple date selection,
+            selecting a new date will not remove the selection for previous dates,
+            allows to select as many dates as possible in randam manner. Clicking again on selected dates can do deselection.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SelectionMode.RangeSelection">
+            <summary>
+            SelectionMode.RangeSelection, Allows to select a single range of dates continuously by clicking and dragging.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SelectionMode.MultiRangeSelection">
+            <summary>
+            SelectionMode.MultiRangeSelection, Allows to select a multiple ranges of dates by clicking and dragging.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.NavigationDirection">
+            <summary>
+            The direction that <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> is navigating in.
+            If this property set as <see cref="F:Syncfusion.SfCalendar.XForms.NavigationDirection.Vertical"/> the <b>SfCalendar</b> will navigate to the previous/next views in the vertical direction instead of the horizontal direction.
+            Defaults to <see cref="F:Syncfusion.SfCalendar.XForms.NavigationDirection.Horizontal"/>.
+            </summary>
+            <value>The navigation direction.</value>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.NavigationDirection.Horizontal">
+            <summary>
+            Navigates horizontally.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.NavigationDirection.Vertical">
+            <summary>
+            Navigates vertically.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.ViewMode">
+            <summary>
+            Available views for <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/>. The View Mode contains different type of view modes in calendar such as month, yea, decade and century views.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.ViewMode.MonthView">
+            <summary>
+            This displays entire dates of a particular month, by default current month will be displayed on loading.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.ViewMode.YearView">
+            <summary>
+            This displays entire dates/month of a particular year, by default current year will be displayed on loading.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.ViewMode.Decade">
+            <summary>
+            This displays decade year range in a view, by default current year decade range will be displayed on loading.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.ViewMode.Century">
+            <summary>
+            This displays century year range in a view, by default current century year range will be displayed on loading.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.YearViewMode">
+            <summary>
+            The year view mode contains different type of view modes for year view in calendar such as month and date.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.YearViewMode.Month">
+            <summary>
+            This displays month text for year view, by default current year will be displayed on loading.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.YearViewMode.Date">
+            <summary>
+            This displays date text for year view, by default current year will be displayed on loading.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.TransitionMode">
+            <summary>
+            Displays the transition mode for Calendar in the following ways.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.TransitionMode.Card">
+            <summary>
+            The card.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.TransitionMode.Float">
+            <summary>
+            The float.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.TransitionMode.Reveal">
+            <summary>
+            The reveal.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.TransitionMode.Scroll">
+            <summary>
+            The scroll.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.LabelAlignment">
+            <summary>
+            Aligns the labels in the Calendar control in the directions.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.LabelAlignment.Left">
+            <summary>
+            Aligns the label towards the left.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.LabelAlignment.Right">
+            <summary>
+            Aligns the label towards the riight.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.LabelAlignment.Center">
+            <summary>
+            Aligns the label towards the center.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.InlineViewMode">
+            <summary>
+            Inline view mode in Calendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.InlineViewMode.Inline">
+            <summary>
+            View mode as inline to show appointments in between calendar
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.InlineViewMode.Agenda">
+            <summary>
+            View mode as Agenda to show appointments in below calendar
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.DayLabelTextAlignment">
+            <summary>
+            Day label alignment.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.DayLabelTextAlignment.Center">
+            <summary>
+            Aligns the label towards the left.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.DayLabelTextAlignment.Right">
+            <summary>
+            Aligns the label towards the right.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.DayLabelTextAlignment.Left">
+            <summary>
+            Aligns the label towards the center.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.DateTextAlignment">
+            <summary>
+            Defines date text alignment.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.DateTextAlignment.Default">
+            <summary>
+            The default.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.DateTextAlignment.Center">
+            <summary>
+            The center.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.SelectionShape">
+            <summary>
+            Defines the shape for the selection view in <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/>.
+            If this property set as <see cref="F:Syncfusion.SfCalendar.XForms.SelectionShape.Fill"/> the date selection will render in the rectangle shape in month view.
+            Defaults to <see cref="F:Syncfusion.SfCalendar.XForms.SelectionShape.Circle"/>.
+            </summary>
+            <value>The selection shape.</value>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SelectionShape.Circle">
+            <summary>
+            Select circle.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SelectionShape.Fill">
+            <summary>
+            Select Fill.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.CellGridOptions">
+            <summary>
+            Cell grid options to draw borders for month cell.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CellGridOptions.VerticalLines">
+            <summary>
+            Vertical lines
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CellGridOptions.HorizontalLines">
+            <summary>
+            Horizontal Lines
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CellGridOptions.Both">
+            <summary>
+            Both vertical and Horizontal Lines
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CellGridOptions.None">
+            <summary>
+            No lines
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.BlackoutDatesViewMode">
+            <summary>
+            Calendar blackout dates view mode.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.BlackoutDatesViewMode.Strikethrough">
+            <summary>
+            Strike through the text of blackout dates.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.BlackoutDatesViewMode.Stripes">
+            <summary>
+            Add the stripes view to the blckout dates.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.ViewModeChangedEventArgs">
+            <summary>
+            Calendar tapped event arguments.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.ViewModeChangedEventArgs.dateTime">
+            <summary>
+            The date time value.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.ViewModeChangedEventArgs.Calendar">
+            <summary>
+            Gets the calendar.
+            </summary>
+            <value>The calendar.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.ViewModeChangedEventArgs.datetime">
+            <summary>
+            Gets the date time.
+            </summary>
+            <value>The date time.</value>
+            <exclude />
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.ViewModeChangedEventArgs.DateTime">
+            <summary>
+            Gets the date time.
+            </summary>
+            <value>The date time.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.ViewModeChangedEventArgs.ViewMode">
+            <summary>
+            Gets the view mode.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.ViewModeChangedEventArgs.FormsCalendar">
+            <summary>
+            Gets or sets the forms calendar.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.SelectionChangedEventArgs">
+            <summary>
+            Selection changed event arguments.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SelectionChangedEventArgs.Calendar">
+            <summary>
+            Gets the calendar.
+            </summary>
+            <value>The calendar.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SelectionChangedEventArgs.DateRemoved">
+            <summary>
+            Gets the date removed.
+            </summary>
+            <value>The date removed.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SelectionChangedEventArgs.DateAdded">
+            <summary>
+            Gets the date added.
+            </summary>
+            <value>The date added.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SelectionChangedEventArgs.NewRangeAdded">
+            <summary>
+            Gets the range added.
+            </summary>
+            <value>The range added.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SelectionChangedEventArgs.FormsCalendar">
+            <summary>
+            Gets or sets the forms calendar.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.MonthChangingEventArgs">
+            <summary>
+            Month changed event arguments.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthChangingEventArgs.previousmonth">
+            <summary>
+            The previousmonth value.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthChangingEventArgs.previousMonth">
+            <summary>
+            Gets the calendar.
+            </summary>
+            <value>The calendar.</value>
+            <exclude />
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthChangingEventArgs.PreviousMonth">
+            <summary>
+            Gets the date of the previous month.
+            </summary>
+            <value>The calendar.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthChangingEventArgs.NavigatingMonth">
+            <summary>
+            Gets the date selection range.
+            </summary>
+            <value>The date time.</value>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.MonthChangedEventArgs">
+            <summary>
+            Month changed event arguments.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthChangedEventArgs.eventParameters">
+            <summary>
+            The event parameters value.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthChangedEventArgs.Calendar">
+            <summary>
+            Gets the calendar.
+            </summary>
+            <value>The calendar.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthChangedEventArgs.args">
+            <summary>
+            Gets the date selection range.
+            </summary>
+            <value>The date time.</value>
+            <exclude />
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthChangedEventArgs.PreviousValue">
+            <summary>
+            Gets the previous value.
+            </summary>
+            <value>The previous value.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthChangedEventArgs.CurrentValue">
+            <summary>
+            Gets the current value.
+            </summary>
+            <value>The current value.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthChangedEventArgs.VisibleDates">
+            <summary>
+            Gets the visible dates.
+            </summary>
+            <value>The visible dates.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthChangedEventArgs.FormsCalendar">
+            <summary>
+            Gets or sets the Forms Calendar.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.InlineItemTappedEventArgs">
+            <summary>
+            Inline tapped event arguments.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineItemTappedEventArgs.InlineEvent">
+            <summary>
+            Gets the selected date.
+            </summary>
+            <value>The selected date.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineItemTappedEventArgs.SelectedDate">
+            <summary>
+            Gets the selected appointment.
+            </summary>
+            <value>The appointment.</value>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.CalendarTappedEventArgs">
+            <summary>
+            Calendar tapped event arguments.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CalendarTappedEventArgs.dateTime">
+            <summary>
+            The date of the calendar tapped.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.CalendarTappedEventArgs.selectedappointment">
+            <summary>
+            The selected appointment in the calendar tapped.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarTappedEventArgs.Calendar">
+            <summary>
+            Gets the calendar.
+            </summary>
+            <value>The calendar.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarTappedEventArgs.datetime">
+            <summary>
+            Gets the date time.
+            </summary>
+            <value>The date time.</value>
+            <exclude/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarTappedEventArgs.DateTime">
+            <summary>
+            Gets the date time.
+            </summary>
+            <value>The date time.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarTappedEventArgs.selectedAppointment">
+            <summary>
+            Gets the selected appointment.
+            </summary>
+            <value>The selected appointment.</value>
+            <exclude />
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarTappedEventArgs.SelectedAppointment">
+            <summary>
+            Gets the selected appointment.
+            </summary>
+            <value>The selected appointment.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarTappedEventArgs.FormsCalendar">
+            <summary>
+            Gets or sets the FormsCalendar.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.InlineToggledEventArgs">
+            <summary>
+            Inline toggled event arguments.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.InlineToggledEventArgs.selectedappointment">
+            <summary>
+            The selected appointment value.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineToggledEventArgs.Calendar">
+            <summary>
+            Gets the calendar.
+            </summary>
+            <value>The calendar.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineToggledEventArgs.selectedAppointment">
+            <summary>
+            Gets the selected appointment.
+            </summary>
+            <value>The date time.</value>
+            <exclude />
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineToggledEventArgs.DateTime">
+            <summary>
+            Gets the date time of the in-line toggled.
+            </summary>
+            <value>The date time.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineToggledEventArgs.SelectedAppointment">
+            <summary>
+            Gets the selected appointment.
+            </summary>
+            <value>The date time.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineToggledEventArgs.FormsCalendar">
+            <summary>
+            Gets or sets the Forms Calendar.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.DayCellHoldingEventArgs">
+            <summary>
+            Arguments of the Day cell holding event.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.DayCellHoldingEventArgs.Calendar">
+            <summary>
+            Gets the calendar.
+            </summary>
+            <value>The calendar.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.DayCellHoldingEventArgs.Date">
+            <summary>
+            Gets the long pressed date.
+            </summary>
+            <value>The date time.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.DayCellHoldingEventArgs.FormsCalendar">
+            <summary>
+            Gets or sets the Forms Calendar.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.InlineEventArgs">
+            <summary>
+            Inline event arguments.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.InlineEventArgs.appointmentCollection">
+            <summary>
+            The appointment collection value.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineEventArgs.Calendar">
+            <summary>
+            Gets the calendar.
+            </summary>
+            <value>The calendar.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineEventArgs.DateTime">
+            <summary>
+            Gets the date time.
+            </summary>
+            <value>The date time.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineEventArgs.appointments">
+            <summary>
+            Gets the appointment.
+            </summary>
+            <value>The appointment.</value>
+            <exclude />
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineEventArgs.Appointments">
+            <summary>
+            Gets the appointment.
+            </summary>
+            <value>The appointment.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineEventArgs.appointment">
+            <summary>
+            Gets the appointment.
+            </summary>
+            <value>The appointment.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineEventArgs.View">
+            <summary>
+            Gets or sets the view.
+            </summary>
+            <value>The view.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineEventArgs.FormsCalendar">
+            <summary>
+            Gets or sets the FormsCalendar value.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.InlineEventArgs.InlineAppointment">
+            <summary>
+            Gets or sets the inline appointment.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.CalendarHeaderEventArgs">
+            <summary>
+            Calendar header event arguments.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarHeaderEventArgs.Calendar">
+            <summary>
+            Gets the calendar.
+            </summary>
+            <value>The calendar.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarHeaderEventArgs.View">
+            <summary>
+            Gets or sets the view.
+            </summary>
+            <value>The view.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.CalendarHeaderEventArgs.FormsCalendar">
+            <summary>
+            Gets or sets the calendar value.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.ICalendar">
+            <summary>
+            ICalendar interface.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendar.AddDatesInPast">
+            <summary>
+            Adds the dates in past.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendar.MoveToDate(System.DateTime)">
+            <summary>
+            Moves to date.
+            </summary>
+            <param name="date">Date.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendar.ExpandInlineView(System.DateTime)">
+            <summary>
+            Expands the inline view.
+            </summary>
+            <param name="date">Date.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendar.CollapseInlineView(System.DateTime)">
+            <summary>
+            Collapses the inline view.
+            </summary>
+            <param name="date">Date.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendar.Refresh">
+            <summary>
+            Refreshing the calendar data.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendar.AddDatesInPast(System.Object)">
+            <summary>
+            Adds the dates in past.
+            </summary>
+            <param name="obj">Object.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendar.MoveToDate(System.DateTime,System.Object)">
+            <summary>
+            Moves to date.
+            </summary>
+            <param name="date">Date.</param>
+            <param name="obj">Object.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendar.ExpandInlineView(System.DateTime,System.Object)">
+            <summary>
+            Expands the inline view.
+            </summary>
+            <param name="date">Date.</param>
+            <param name="obj">Object.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendar.CollapseInlineView(System.DateTime,System.Object)">
+            <summary>
+            Collapses the inline view.
+            </summary>
+            <param name="date">Date.</param>
+            <param name="obj">Object.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendar.Refresh(System.Object)">
+            <summary>
+            Refreshing the calendar data.
+            </summary>
+            <param name="obj">Object.</param>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.ICalendarDirection">
+            <summary>
+            Calendar direction.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendarDirection.Backward">
+            <summary>
+            Month has been moved backward dynamically without any gesture. 
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendarDirection.Forward">
+            <summary>
+            Month has been moved forward dynamically without any gesture.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendarDirection.Backward(System.Object)">
+            <summary>
+            Month has been moved backward dynamically without any gesture. 
+            </summary>
+            <param name="obj">Object.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.ICalendarDirection.Forward(System.Object)">
+            <summary>
+            Month has been moved forward dynamically without any gesture.
+            </summary>
+            <param name="obj">Object.</param>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.MonthCell">
+            <summary>
+            Month cell argument class.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthCell.#ctor(System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.MonthCell"/> class.
+            </summary>
+            <param name="calendar">Calendar.</param>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.BackgroundColor">
+            <summary>
+            Gets or sets the color of the background.
+            </summary>
+            <value>The color of the background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.TextColor">
+            <summary>
+            Gets or sets the color of the text.
+            </summary>
+            <value>The color of the text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.AccessibilityLabelText">
+             <summary>
+             Gets or sets the accessibility label text to read calendar dates.
+             </summary>
+             <remarks>
+             By default, Calendar read the date as in the format (EEEE dd/MMMM/yyyy), for an example Friday 10/October/2022. AccessibilityLabelText property can be used to change the calendar date accessibility format like dates with events for the days.
+             </remarks>
+             <example>
+             <para>The following example describes to get and set the accessibility label text with events.</para>
+             #[C#](#tab/tabid-1)
+             <code Lang="C#">
+             <![CDATA[
+             Calendar.OnMonthCellLoaded += OnMonthCellLoaded;
+             private void OnMonthCellLoaded(object sender, MonthCellLoadedEventArgs e)
+             { 
+               var visibleAppointments = this.GetVisibleAppointments(e.Date); 
+               if (visibleAppointments.Count > 0) 
+               { 
+                 e.AccessibilityLabelText = e.Date.ToString("dddd dd/MMMM/yyyy") + " has " + visibleAppointments.Count.ToString() + " events"; 
+               } 
+             } 
+            
+            private CalendarEventCollection GetVisibleAppointments(DateTime currentDate) 
+            { 
+              CalendarEventCollection appointments = new CalendarEventCollection(); 
+              if (calendar.DataSource == null) 
+               return appointments; 
+            
+              foreach (CalendarInlineEvent app in calendar.DataSource) 
+              { 
+               if ((app.StartTime.Date <= currentDate.Date) && (currentDate.Date <= app.EndTime.Date)) 
+                 appointments.Add(app); 
+               }
+                   
+             return appointments; 
+            } 
+             ]]>
+             </code>
+             </example>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.BorderColor">
+            <summary>
+            Gets or sets the color of the border.
+            </summary>
+            <value>The color of the border.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.Date">
+            <summary>
+            Gets the date.
+            </summary>
+            <value>The date.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.Font">
+            <summary>
+            Gets or sets the font.
+            </summary>
+            <value>The font.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.FontAttribute">
+            <summary>
+            Gets or sets the font attribute.
+            </summary>
+            <value>The font attribute.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.FontFamily">
+            <summary>
+            Gets or sets the font family.
+            </summary>
+            <value>The font family.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.View">
+            <summary>
+            Gets or sets the view.
+            </summary>
+            <value>The view.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.CellTemplate">
+            <summary>
+            Gets or sets the view.
+            </summary>
+            <value>The view.</value>
+            <exclude />
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.CellBindingContext">
+            <summary>
+            Gets or sets the view.
+            </summary>
+            <value>The view.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthCell.IsCurrentMonth">
+            <summary>
+            Gets a value indicating whether it is current month or not.
+            </summary>
+            <value>The view.</value>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.MonthCellLoadedEventArgs">
+            <summary>
+            Month cell loaded event arguments.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthCellLoadedEventArgs.#ctor(System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.MonthCellLoadedEventArgs"/> class.
+            </summary>
+            <param name="calendar">Calendar object.</param>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.MonthEventParameters">
+             <summary>
+            Month event parameters inherits the BindableObject.
+             </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthEventParameters.PreviousValueProperty">
+            <summary>
+            Holds the previous month's value.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthEventParameters.CurrentValueProperty">
+            <summary>
+            Holds the current month's value.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthEventParameters.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.MonthEventParameters"/> class.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthEventParameters.PreviousValue">
+            <summary>
+            Gets or sets the previous value.
+            </summary>
+            <value>The previous value.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthEventParameters.CurrentValue">
+            <summary>
+            Gets or sets the current value.
+            </summary>
+            <value>The current value.</value>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.MonthLabelSettings">
+            <summary>
+            Month label settings inherits the view class.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthLabelSettings.DateFormatProperty">
+            <summary>
+            Determines in which the format date of SfCalendar has to be displayed.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthLabelSettings.DayFormatProperty">
+            <summary>
+            Determines in which the format day of SfCalendar has to be displayed.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthLabelSettings.DayLabelSizeProperty">
+            <summary>
+            Determines the size of the day label size in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthLabelSettings.DateLabelSizeProperty">
+            <summary>
+            Determines the size of the date label size.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthLabelSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.MonthLabelSettings"/> class.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthLabelSettings.DateFormat">
+            <summary>
+            Gets or sets the date format.
+            </summary>
+            <value>The date format.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthLabelSettings.DayFormat">
+            <summary>
+            Gets or sets the day format.
+            </summary>
+            <value>The day format.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthLabelSettings.DayLabelSize">
+            <summary>
+            Gets or sets the size of the day label.
+            </summary>
+            <value>The size of the day label.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthLabelSettings.DateLabelSize">
+            <summary>
+            Gets or sets the size of the date label.
+            </summary>
+            <value>The size of the date label.</value>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthLabelSettings.Syncfusion#XForms#Themes#IThemeElement#OnControlThemeChanged(System.String,System.String)">
+            <summary>
+            The control theme changed.
+            </summary>
+            <param name="oldTheme">Old theme.</param>
+            <param name="newTheme">New theme.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthLabelSettings.Syncfusion#XForms#Themes#IThemeElement#OnCommonThemeChanged(System.String,System.String)">
+            <summary>
+            The common theme changed.
+            </summary>
+            <param name="oldTheme">Old theme.</param>
+            <param name="newTheme">New theme.</param>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.MonthViewSettings">
+            <summary>
+            Month view settings inherits the <c>View</c> class.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeightProperty">
+            <summary>
+            Sets the height of the day cell in the SfCalendar control.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.CellTemplateProperty">
+            <summary>
+            The DataSource holds the details about the events to be rendered in calendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.InlineItemTemplateProperty">
+            <summary>
+            The DataSource holds the details about the events to be rendered in calendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.CellGridOptionsProperty">
+            <summary>
+             The show horizontal line property has <c>True</c> as default value.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.SelectionShapeProperty">
+            <summary>
+            Determines the font settings of the day header in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayLabelTextAlignmentProperty">
+            <summary>
+            The day label text alignment  property determines the alignment positoin of day label in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderTextColorProperty">
+            <summary>
+            Determines the text color of the header in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderBackgroundColorProperty">
+            <summary>
+            The header background color property determines background color of header in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderFontAttributesProperty">
+            <summary>
+            Gets or sets FontAttributes.This is bindable property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderFontAttributesProperty">
+            <summary>
+            Gets or sets FontAttributes.This is bindable property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayFontAttributesProperty">
+            <summary>
+            Gets or sets FontAttributes.This is bindable property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderFontFamilyProperty">
+            <summary>
+            Determines the font family of the day header in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayCellFontFamilyProperty">
+            <summary>
+            Determines the font family of the day cell in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderFontFamilyProperty">
+            <summary>
+            Determines the font family of the header in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderFontSizeProperty">
+            <summary>
+            Determines the size of the header label size in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderFontSizeProperty">
+            <summary>
+            Determines the size of the day header label size in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayFontSizeProperty">
+            <summary>
+            Determines the size of the day label size in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayCellFontProperty">
+            <summary>
+            Determines the font settings of day cell in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderFontProperty">
+            <summary>
+            Determines the font settings of the day header in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderFontProperty">
+            <summary>
+            Determines the font settings of the header in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.WeekEndBackgroundColorProperty">
+            <summary>
+            Determines the background color of the week end dates in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderBackgroundColorProperty">
+            <summary>
+            Determines the background color of the day header in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderTextColorProperty">
+            <summary>
+            Determines the text color of the day header in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.WeekEndTextColorProperty">
+            <summary>
+            Determines the text color of the week end date in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.MonthViewLabelSettingsProperty">
+            <summary>
+            Determines the settings of the month label in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.CurrentMonthTextColorProperty">
+            <summary>
+            Determines the text color of the current month in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.CurrentMonthBackgroundColorProperty">
+            <summary>
+            Determines the background color of the current month in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.TodaySelectionBackgroundColorProperty">
+            <summary>
+            Determines the selection Background color of the today date in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.TodaySelectionTextColorProperty">
+            <summary>
+            Determines the selection text color of the today date in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.TodayTextColorProperty">
+            <summary>
+            Determines the text color of the today date in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.PreviousMonthTextColorProperty">
+            <summary>
+            Determines the text color of the previous month in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.PreviousMonthBackgroundColorProperty">
+            <summary>
+            Determines the background color of the previous month in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DisabledTextColorProperty">
+            <summary>
+            Determines the text color of the disabled days in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DisabledBackgroundColorProperty">
+            <summary>
+            Determines the background color of the disabled days in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.WeekDayTextColorProperty">
+            <summary>
+            Determines the text color of the week days in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.WeekDayBackgroundColorProperty">
+            <summary>
+            Determines the background color of the week days in SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.TodayBorderColorProperty">
+            <summary>
+            Gets or sets the today border color for month view settings to customize the border color of today cell in month view. This is a bindable property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.BorderColorProperty">
+            <summary>
+            Determines the color of border in the SfCalendar control.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.SelectedDayTextColorProperty">
+            <summary>
+            The text color of selected date in monthview.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DateSelectionColorProperty">
+            <summary>
+            Determines the selected date color.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.InlineBackgroundColorProperty">
+            <summary>
+            Sets and gets the background color of the inline event cell.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.BlackoutColorProperty">
+            <summary>
+            Sets and gets the blackout date color.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DateTextAlignmentProperty">
+            <summary>
+            The inline text color property used to set and get the text color of Inline event 's text in SfCalendar control.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderFormatProperty">
+            <summary>
+            Determines in which the format day of SfCalendar has to be displayed.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.SelectionRadiusProperty">
+            <summary>
+            Sets and gets the text color of the inline event text in the SfCalendar control.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.AgendaSelectedDateColorProperty">
+            <summary>
+            Sets and gets the text color of the agenda date text in the SfCalendar control.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.MonthViewSettings.InlineTextColorProperty">
+            <summary>
+            Sets and gets the text color of the inline event text in the SfCalendar control.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthViewSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.MonthViewSettings"/> class.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeight">
+            <summary>
+            Gets or sets the height of the day.
+            </summary>
+            <value>The height of the day.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.CellTemplate">
+            <summary>
+            Gets or sets the template to customizes the default month cell of calendar.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.InlineItemTemplate">
+            <summary>
+            Gets or sets the inline item template.
+            </summary>
+            <value>The inline item template.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.InlineTextColor">
+            <summary>
+            Gets or sets the color of the inline text.
+            </summary>
+            <value>The color of the inline text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.AgendaSelectedDateColor">
+            <summary>
+            Gets or sets the color of the agenda date text.
+            </summary>
+            <value>The color of the inline text.</value>
+            <remarks> Not applicable for UWP.</remarks>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.SelectionRadius">
+            <summary>
+            Gets or sets the color of the inline text.
+            </summary>
+            <value>The color of the inline text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderFormat">
+            <summary>
+            Gets or sets the day format.
+            </summary>
+            <value>The day format.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DateTextAlignment">
+            <summary>
+            Gets or sets the color of the inline text.
+            </summary>
+            <value>The color of the inline text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.BlackoutColor">
+            <summary>
+            Gets or sets the color of the blackout.
+            </summary>
+            <value>The color of the blackout.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.InlineBackgroundColor">
+            <summary>
+            Gets or sets the color of the inline background.
+            </summary>
+            <value>The color of the inline background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DateSelectionColor">
+            <summary>
+            Gets or sets the color of the date selection.
+            </summary>
+            <value>The color of the date selection.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.SelectedDayTextColor">
+            <summary>
+            Gets or sets the color of the selected date text.
+            </summary>
+            <value>The color of the selected date text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.BorderColor">
+            <summary>
+            Gets or sets the color of the border.
+            </summary>
+            <value>The color of the border.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.TodayBorderColor">
+            <summary>
+            Gets or sets the today border color for month view settings to customize the border color of today cell in month view.
+            </summary>
+            <value>The color of the today border.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.WeekDayBackgroundColor">
+            <summary>
+            Gets or sets the color of the week day background.
+            </summary>
+            <value>The color of the week day background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.WeekDayTextColor">
+            <summary>
+            Gets or sets the color of the week day text.
+            </summary>
+            <value>The color of the week day text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DisabledBackgroundColor">
+            <summary>
+            Gets or sets the color of the disabled background.
+            </summary>
+            <value>The color of the disabled background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DisabledTextColor">
+            <summary>
+            Gets or sets the color of the disabled text.
+            </summary>
+            <value>The color of the disabled text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.PreviousMonthBackgroundColor">
+            <summary>
+            Gets or sets the color of the previous month background.
+            </summary>
+            <value>The color of the previous month background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.PreviousMonthTextColor">
+            <summary>
+            Gets or sets the color of the previous month text.
+            </summary>
+            <value>The color of the previous month text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.TodayTextColor">
+            <summary>
+            Gets or sets the color of the today text.
+            </summary>
+            <value>The color of the today text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.TodaySelectionTextColor">
+            <summary>
+            Gets or sets the selection color of the today text.
+            </summary>
+            <value>The color of the today selection text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.TodaySelectionBackgroundColor">
+            <summary>
+            Gets or sets the selection Background color of the today.
+            </summary>
+            <value>The color of the today selection background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.CurrentMonthBackgroundColor">
+            <summary>
+            Gets or sets the color of the current month background.
+            </summary>
+            <value>The color of the current month background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.CurrentMonthTextColor">
+            <summary>
+            Gets or sets the color of the current month text.
+            </summary>
+            <value>The color of the current month text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.MonthLabelSettings">
+            <summary>
+            Gets or sets the month label settings.
+            </summary>
+            <value>The month label settings.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.WeekEndTextColor">
+            <summary>
+            Gets or sets the color of the week end text.
+            </summary>
+            <value>The color of the week end text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderTextColor">
+            <summary>
+            Gets or sets the color of the day header text.
+            </summary>
+            <value>The color of the day header text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderBackgroundColor">
+            <summary>
+            Gets or sets the color of the day header background.
+            </summary>
+            <value>The color of the day header background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.WeekEndBackgroundColor">
+            <summary>
+            Gets or sets the color of the week end background.
+            </summary>
+            <value>The color of the week end background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderFont">
+            <summary>
+            Gets or sets the header font.
+            </summary>
+            <value>The header font.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderFont">
+            <summary>
+            Gets or sets the day header font.
+            </summary>
+            <value>The day header font.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayCellFont">
+            <summary>
+            Gets or sets the day cell font.
+            </summary>
+            <value>The day cell font.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayFontSize">
+            <summary>
+            Gets or sets the size of the day font.
+            </summary>
+            <value>The size of the day font.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderFontSize">
+            <summary>
+            Gets or sets the size of the day header font.
+            </summary>
+            <value>The size of the day header font.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderFontSize">
+            <summary>
+            Gets or sets the size of the header font.
+            </summary>
+            <value>The size of the header font.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderFontFamily">
+            <summary>
+            Gets or sets the header font family.
+            </summary>
+            <value>The header font family.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayCellFontFamily">
+            <summary>
+            Gets or sets the day cell font family.
+            </summary>
+            <value>The day cell font family.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderFontFamily">
+            <summary>
+            Gets or sets the day header font family.
+            </summary>
+            <value>The day header font family.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayFontAttributes">
+            <summary>
+            Gets or sets the day font attributes.
+            </summary>
+            <value>The day font attributes.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayHeaderFontAttributes">
+            <summary>
+            Gets or sets the day header font attributes.
+            </summary>
+            <value>The day header font attributes.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderFontAttributes">
+            <summary>
+            Gets or sets the header font attributes.
+            </summary>
+            <value>The header font attributes.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderBackgroundColor">
+            <summary>
+            Gets or sets the color of the header background.
+            </summary>
+            <value>The color of the header background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.HeaderTextColor">
+            <summary>
+            Gets or sets the color of the header text.
+            </summary>
+            <value>The color of the header text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.DayLabelTextAlignment">
+            <summary>
+            Gets or sets Day Label Text Alignment.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.SelectionShape">
+            <summary>
+            Gets or sets the day header font.
+            </summary>
+            <value>The day header font.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.CellGridOptions">
+            <summary>
+            Gets or sets a value indicating whether <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> show horizontal lines.
+            </summary>
+            <value><c>true</c> if show horizontal line; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthViewSettings.Syncfusion#XForms#Themes#IThemeElement#OnControlThemeChanged(System.String,System.String)">
+            <summary>
+            The control theme changed.
+            </summary>
+            <param name="oldTheme">Old theme.</param>
+            <param name="newTheme">New theme.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthViewSettings.Syncfusion#XForms#Themes#IThemeElement#OnCommonThemeChanged(System.String,System.String)">
+            <summary>
+            The common theme changed.
+            </summary>
+            <param name="oldTheme">Old theme.</param>
+            <param name="newTheme">New theme.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthViewSettings.OnHeaderFontPropertyChanged(Xamarin.Forms.BindableObject,System.Object,System.Object)">
+            <summary>
+            Ons the header font property changed.
+            </summary>
+            <param name="bindable">Bindable.</param>
+            <param name="oldValue">Old value.</param>
+            <param name="newValue">New value.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthViewSettings.OnDayHeaderFontPropertyChanged(Xamarin.Forms.BindableObject,System.Object,System.Object)">
+            <summary>
+            Ons the day header font property changed.
+            </summary>
+            <param name="bindable">Bindable.</param>
+            <param name="oldValue">Old value.</param>
+            <param name="newValue">New value.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthViewSettings.OnDayCellFontPropertyChanged(Xamarin.Forms.BindableObject,System.Object,System.Object)">
+            <summary>
+            Ons the day cell font property changed.
+            </summary>
+            <param name="bindable">Bindable.</param>
+            <param name="oldValue">Old value.</param>
+            <param name="newValue">New value.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.MonthViewSettings.SetParent(Xamarin.Forms.Element,Xamarin.Forms.Element)">
+            <summary>
+            Sets the parent value to the child element.
+            </summary>
+            <param name="oldElement">Old element.</param>
+            <param name="newElement">New element.</param>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.SelectionRange">
+            <summary>
+            Selection range inherits from BindableObject.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SelectionRange.StartDateProperty">
+            <summary>
+            Determines the start date of the selection.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SelectionRange.EndDateProperty">
+            <summary>
+            Determines the end date of the selection.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SelectionRange.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.SelectionRange"/> class.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SelectionRange.#ctor(System.DateTime,System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.SelectionRange"/> class.
+            </summary>
+            <param name="startDate">Start date.</param>
+            <param name="endDate">End Date.</param>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SelectionRange.StartDate">
+            <summary>
+            Gets or sets the start date.
+            </summary>
+            <value>The start date.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SelectionRange.EndDate">
+            <summary>
+            Gets or sets the end date.
+            </summary>
+            <value>The end date.</value>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SelectionRange.InitiateProperties">
+            <summary>
+            Initiates the properties.
+            </summary>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.SfCalendar">
+            <summary>
+            Represents a control that enables a user to select a date by using a visual calendar display.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.TapCommandProperty">
+            <summary>
+            Calendar cell tapped command property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionChangedCommandProperty">
+            <summary>
+            Calendar Selection changed command property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.HeaderViewProperty">
+            <summary>
+            The thickness of navigation arrow indicator of the navigation buttons.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.NumberOfWeeksInViewProperty">
+            <summary>
+            Gets or sets the Number of Weeks in View property for calendar to define the number of weeks to display in month view. This is a bindable property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.MoveToDateProperty">
+            <summary>
+            Navigates the selection to the require date.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.ViewModeProperty">
+             <summary>
+            <c>ViewMode</c> property determines the view of SfCalendar control in MonthView or YearView.
+             </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.YearViewModeProperty">
+             <summary>
+            Gets or set the year view mode property for schedule to define the appearance of year view in calendar. This is a bindable property.
+             </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.NavigationDirectionProperty">
+            <summary>
+            The <c>ViewMode</c> property that determines the view of the SfCalendar control in month or year.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.EnableSwipingProperty">
+            <summary>
+            The enable swiping property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.DataSourceProperty">
+            <summary>
+            Holds the details about the events to be rendered in calendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.YearViewSettingsProperty">
+            <summary>
+            The year view settings property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionModeProperty">
+            <summary>
+            Gets or sets the selection mode. This is a bindable property.
+            SelecionMode has three types: SingleSelection, MultiSelection, and RangeSelection.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.TransitionModeProperty">
+            <summary>
+            Determines the navigations with scroll animations.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.InlineViewModeProperty">
+            <summary>
+            Determines navigations with scroll animations.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.MaximumEventIndicatorCountProperty">
+            <summary>
+            Determines the appointment display count in month cell.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.AgendaViewHeightProperty">
+            <summary>
+            The MaximumEventIndicatorCount property determines appointment display count in monthcell.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.MonthViewSettingsProperty">
+            <summary>
+            The month view settings property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.MinDateProperty">
+            <summary>
+            Determines the restriction of date selection.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.DisplayDateProperty">
+            <summary>
+            The display date property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.MaxDateProperty">
+            <summary>
+            Gets or sets the max date. This is a bindable property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedDateProperty">
+            <summary>
+            The selected date property determines the selected date in SfCalendar control with SingleSelection mode.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.NullableSelectedDateProperty">
+            <summary>
+            Determines the selected date in the SfCalendar control with SingleSelection mode.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedDatesProperty">
+            <summary>
+            Determines the selected dates in the SfCalendar control with Multiple or Range selection mode.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedRangeProperty">
+            <summary>
+            Determines the selected range in the SfCalendar control with Range selection mode.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.ShowYearViewProperty">
+            <summary>
+            Determines whether year view has to be showed or not.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.LocaleProperty">
+            <summary>
+            Defines the culture value of SfCalendar.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.ShowInlineEventsProperty">
+            <summary>
+            Determines whether the inline events has to be showed or not.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.EnableDatesInPastProperty">
+            <summary>
+            The enable add dates in past property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.NavigateToMonthOnInActiveDatesSelectionProperty">
+            <summary>
+            Navigates to month in the active dates selection property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.ShowNavigationButtonsProperty">
+            <summary>
+            The show navigation buttons property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.ShowLeadingAndTrailingDaysProperty">
+            <summary>
+            The show leading and trailing days property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.ToggleDaySelectionProperty">
+            <summary>
+            The toggle day selection property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.VisibleDatesProperty">
+            <summary>
+            Determines the visible dates of the month view. 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.FirstDayofWeekProperty">
+            <summary>
+            Changes the first day of a week that will be applied to both month and year views.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.HeaderHeightProperty">
+            <summary>
+            Changes the SfCalendar header height.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.ShowHeaderProperty">
+            <summary>
+             The show header property has <c>true</c> as default value.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.BlackoutDatesProperty">
+            <summary>
+            Determines the disabled dates that restrict the user from selection. 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.CustomDayLabelsProperty">
+            <summary>
+            Determines the collection of labels replaced instead of weekday labels.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.NavigationButtonWidthProperty">
+            <summary>
+            Sets the navigation button width.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.NavigationArrowThicknessProperty">
+            <summary>
+            The thickness of navigation arrow indicator of the navigation buttons.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.BlackoutDatesViewModeProperty">
+             <summary>
+            Gets or set the black out dates view mode property for schedule to define the appearance of year view in calendar. This is a bindable property.
+             </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.NavigationButtonHeightProperty">
+            <summary>
+            Sets the navigation button height.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.HoldCommandProperty">
+            <summary>
+            Calendar date cell holding command property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.MonthChangedCommandProperty">
+            <summary>
+            Calendar Month changed command property.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.SfCalendar.SuspendAppointmentUpdateProperty">
+            <summary>
+            Appointment update command property.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> class.
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.OnCalendarTapped">
+            <summary>
+            Returns calendar tapped event args
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.InlineItemTapped">
+            <summary>
+            Triggers when inline item tapped.
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.OnDateCellHolding">
+            <summary>
+            On Date cell Holding event
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.OnInlineLoaded">
+            <summary>
+            Inline loaded event to customize inline view
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.OnHeaderLoaded">
+            <summary>
+            Header loaded event to customize calendar header view
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.OnViewModeChanged">
+            <summary>
+            Triggers when view mode changed
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.OnMonthCellLoaded">
+            <summary>
+            Month cell loaded event to customize calendar month view
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.OnYearCellLoaded">
+            <summary>
+            Year cell loaded event to customize calendar Year view
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionChanged">
+            <summary>
+            Triggers when calendar selection changes
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.InlineToggled">
+            <summary>
+            Triggers when inline view is toggled.
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.MonthChanging">
+            <summary>
+            Triggers when calendar month changes
+            </summary>
+        </member>
+        <member name="E:Syncfusion.SfCalendar.XForms.SfCalendar.MonthChanged">
+            <summary>
+            On Month Changed event
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.TapCommand">
+            <summary>
+            Gets or sets the <see cref="T:System.Windows.Input.ICommand"/> which will be executed when the calendar date is tapped.
+            </summary>
+            <example>
+            <code lang="XAML">
+            <![CDATA[ 
+            <calendar:SfCalendar x:Name="calendar" TapCommand="{Binding CalendarCellTapped}">
+                   <calendar:SfCalendar.BindingContext>
+                      <local:CalendarViewModel/>
+                   </calendar:SfCalendar.BindingContext>
+               </calendar:SfCalendar>
+            ]]>
+            </code>
+            <code lang="C#">
+            <![CDATA[   
+            public class CalendarViewModel
+            {
+                public ICommand CalendarCellTapped { get; set; }
+            
+                public CalendarViewModel()
+                {
+                    CalendarCellTapped = new Command<CalendarTappedEventArgs>(CellTapped);
+                }
+              
+                private void CellTapped(CalendarTappedEventArgs obj)
+                {
+                }
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionChangedCommand">
+            <summary>
+            Gets or sets the <see cref="T:System.Windows.Input.ICommand"/> which will be executed when the selection is changed in calendar.
+            </summary>
+            <example>
+            <code lang="XAML">
+            <![CDATA[ 
+            <calendar:SfCalendar x:Name="calendar" SelectionChangedCommand="{Binding OnSelectionChanged}">
+                   <calendar:SfCalendar.BindingContext>
+                      <local:CalendarViewModel/>
+                   </calendar:SfCalendar.BindingContext>
+               </calendar:SfCalendar>
+            ]]>
+            </code>
+            <code lang="C#">
+            <![CDATA[   
+            public class CalendarViewModel
+            {
+                public ICommand OnSelectionChanged { get; set; }
+            
+                public CalendarViewModel()
+                {
+                    OnSelectionChanged = new Command<Syncfusion.SfCalendar.XForms.SelectionChangedEventArgs>(SelectionChanged);
+                }
+              
+                private void SelectionChanged(Syncfusion.SfCalendar.XForms.SelectionChangedEventArgs args)
+                {
+                }
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.MonthChangedCommand">
+            <summary>
+            Gets or sets the <see cref="T:System.Windows.Input.ICommand"/> which will be executed when the month is changed in calendar.
+            </summary>
+            <example>
+            <code lang="XAML">
+            <![CDATA[ 
+            <calendar:SfCalendar x:Name="calendar"  MonthChangedCommand="{Binding OnMonthChanged}"">
+                   <calendar:SfCalendar.BindingContext>
+                      <local:CalendarViewModel/>
+                   </calendar:SfCalendar.BindingContext>
+               </calendar:SfCalendar>
+            ]]>
+            </code>
+            <code lang="C#">
+            <![CDATA[   
+            public class CalendarViewModel
+            {
+                public ICommand OnMonthChanged { get; set; }
+            
+                public CalendarViewModel()
+                {
+                    OnMonthChanged = new Command<MonthChangedEventArgs>(MonthChanged);
+                }
+              
+                private void MonthChanged(MonthChangedEventArgs args)
+                {
+                }
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.HoldCommand">
+            <summary>
+            Gets or sets the <see cref="T:System.Windows.Input.ICommand"/> which will be executed when the calendar date is long pressed.
+            </summary>
+            <example>
+            <code lang="XAML">
+            <![CDATA[ 
+            <calendar:SfCalendar x:Name="calendar" HoldCommand="{Binding OnDateCellHolding}">
+                   <calendar:SfCalendar.BindingContext>
+                      <local:CalendarViewModel/>
+                   </calendar:SfCalendar.BindingContext>
+               </calendar:SfCalendar>
+            ]]>
+            </code>
+            <code lang="C#">
+            <![CDATA[   
+            public class CalendarViewModel
+            {
+                public ICommand OnDateCellHolding { get; set; }
+            
+                public CalendarViewModel()
+                {
+                    OnDateCellHolding = new Command<DayCellHoldingEventArgs>(DateCellHolding);
+                }
+              
+                private void DateCellHolding(DayCellHoldingEventArgs obj)
+                {
+                }
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.HeaderView">
+            <summary>
+            Gets or sets the UI elements for header of the SfCalendar.
+            </summary>
+            <remarks>
+            The <see cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.HeaderView"/> is a custom view for the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> header. The interaction of the header view is managed by user end for switching among month, year, decade and century views.
+            </remarks>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.NumberOfWeeksInView">
+            <summary>
+            Gets or sets the number of weeks in the month view of the SfCalendar.
+            </summary>
+            <value>Displays the number of weeks in view. By default, it starts from the current week, and this can be modified using the <see cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MoveToDate"/> property of calendar. </value>
+            <remarks>
+            <b>NumberOfWeeksInView</b> is applicable only for the month view of the SfCalendar.
+            <see cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.ShowLeadingAndTrailingDays"/> is not applicable if the <b>NumberOfWeeksInView</b> is lesser than 6.
+            Week number ranges from 1 to 6. If lesser or greater than these range is considered, <b>NumberOfWeeksInView</b> will be displayed as 6.
+            Inline view considers <b>NumberOfWeeksInView</b> as only 6. For other count, only agenda view will be displayed in calendar.
+            Dynamically changing <b>NumberOfWeeksInView</b> shows the first row of month view dates. It can be handled using the <b>MoveToDate</b> property of calendar. 
+            </remarks>  
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.FirstDayofWeek"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MinDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MaxDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionMode"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.MoveToDate">
+            <summary>
+            Gets or sets the value used to move the visible dates to a particular SfCalendar date.
+            </summary>
+            <value>The move to date will move to any specific month,year,decade,century view based on the <see cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.ViewMode"/>.</value>
+            <remarks>The specified date should lie between <b>MinDate</b> and <b>MaxDate</b>, if the specified date is greater than <b>MaxDate</b> then the view will be moved to <b>MaxDate</b> and if the specified date is lesser than the <b>MinDate</b> then the view will be moved to MinDate.</remarks>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MinDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MaxDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.ViewMode"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.ViewMode">
+            <summary>
+            Gets or sets the built in views such month, year, decade and century of the SfCalendar.
+            </summary>
+            <value>The default view mode is <see cref="F:Syncfusion.SfCalendar.XForms.ViewMode.MonthView"/>. It allows users to easily select and navigate between all built-in views.</value>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.YearView"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.Century"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.Decade"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.YearViewMode"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MonthViewSettings"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.YearViewSettings"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.YearViewMode">
+            <summary>
+            Gets or sets if the SfCalendar shows year view as the entire month with dates or all months of the year.
+            </summary>
+            <value>
+            <see cref="F:Syncfusion.SfCalendar.XForms.YearViewMode.Date"/> displays all the months with dates in a particular year view. 
+            <see cref="F:Syncfusion.SfCalendar.XForms.YearViewMode.Month"/> displays all the months in a particular year view.
+            </value>
+            <remarks>
+            The <see cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.YearViewMode"/> property is only applicable for calendar in <b>Android</b> and <b>iOS</b> platforms.
+            </remarks>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.YearView"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.YearViewSettings"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.NavigationDirection">
+            <summary>
+            Gets or sets the direction that navigating the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> views such as <b>MonthView</b>, <b>YeraView</b>, <b>DecadeView</b> and <b>CenturyView</b> either vertical or horizontal.
+            </summary>
+            <value>If this property set as <see cref="F:Syncfusion.SfCalendar.XForms.NavigationDirection.Vertical"/> the <b>SfCalendar</b> will navigate to the previous/next views in the vertical direction instead of the horizontal direction. Defaults to <see cref="F:Syncfusion.SfCalendar.XForms.NavigationDirection.Horizontal"/>.</value>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.MonthView"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.YearView"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.Decade"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.Century"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.EnableSwiping">
+            <summary>
+            Gets or sets a value indicating whether <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> allows to switch between previous and next views by swiping or not.
+            </summary>
+            <value><b>True</b> to enable swiping to switch between previous and next views. <b>False</b> to restrict the swiping.</value> 
+            <remarks>
+            Swiping of <b>SfCalendar</b> has been restricted only with <see cref="F:Syncfusion.SfCalendar.XForms.SelectionMode.RangeSelection"/>. With that <b>RangeSelection</b> mode can swipe the month by using navigation buttons.
+            </remarks>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionMode"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.SelectionMode.RangeSelection"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.DataSource">
+            <summary>
+            Gets or sets the calendar event collection to displays the events with indicator by the SfCalendar using its built-in capability.
+            </summary>
+            <value>The data source is the calendar event collection used to displays the event by <b>SfCalendar</b>. For events to be listed for a particular day, enable the inline feature in the month view cell.</value>
+            <seealso cref="T:Syncfusion.SfCalendar.XForms.CalendarEventCollection"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.ShowInlineEvents"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.MonthView"/>
+            <seealso cref="T:Syncfusion.SfCalendar.XForms.CalendarInlineEvent"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.InlineViewMode"/>
+            <example>
+            <code lang="XAML">
+            <![CDATA[ 
+            <?xml version = "1.0" encoding="utf-8"?>
+            <ContentPage xmlns = "http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:CalendarSample" x:Class="CalendarSample.MainPage" xmlns:syncfusion="clr-namespace:Syncfusion.SfCalendar.XForms;assembly=Syncfusion.SfCalendar.XForms">
+            <syncfusion:SfCalendar.BindingContext>
+                   <local:CalendarViewModel/>
+            </syncfusion:SfCalendar.BindingContext>
+            <syncfusion:SfCalendar x:Name="calendar" 
+                                   ViewMode="MonthView" 
+                                   ShowInlineEvents="True" 
+                                   InlineViewMode="Inline" 
+                                   MaximumEventIndicatorCount="1" 
+                                   DataSource="{Binding CalendarInlineEvents}">
+            </syncfusion:SfCalendar>
+            </ContentPage>
+            ]]>
+            </code>
+            <code lang="C#">
+            <![CDATA[   
+            public class CalendarViewModel
+            {
+                public CalendarEventCollection CalendarInlineEvents { get; set; } = new CalendarEventCollection();
+                public CalendarViewModel()
+                {
+                    CalendarInlineEvent event1 = new CalendarInlineEvent();
+                    event1.StartTime = new DateTime(2017, 5, 1, 5, 0, 0);
+                    event1.EndTime = new DateTime(2017, 5, 1, 7, 0, 0);
+                    event1.Subject = "Go to Meeting";
+                    event1.Color = Color.Fuchsia;
+                    CalendarInlineEvent event2 = new CalendarInlineEvent();
+                    event2.StartTime = new DateTime(2017, 5, 1, 10, 0, 0);
+                    event2.EndTime = new DateTime(2017, 5, 1, 12, 0, 0);
+                    event2.Subject = "Planning";
+                    event2.Color = Color.Green;
+                    CalendarInlineEvents.Add(event1);
+                    CalendarInlineEvents.Add(event2);
+                }
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.YearViewSettings">
+            <summary>
+            Gets or sets properties which allow to customize the year, decade and century view of the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/>.
+            </summary>
+            <value>The year view settings.</value>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.YearView"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.Century"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.Decade"/>
+            <example>
+            <code lang="XAML">
+            <![CDATA[ 
+            <?xml version = "1.0" encoding="utf-8"?>
+            <syncfusion:SfCalendar x:Name="calendar">
+            	<syncfusion:SfCalendar.YearViewSettings>
+            		<syncfusion:YearViewSettings
+                                LayoutBackground = "#ffe4b5"
+                                DateTextColor="#E6E6FA"
+                                HeaderBackground="#8B4513"
+                                YearHeaderTextColor="#FFFFFF"
+                                MonthHeaderBackground="#bfff00"
+                                LabelAlignment="Centre" />
+                </syncfusion:SfCalendar.YearViewSettings>
+            </syncfusion:SfCalendar>
+            ]]>
+            </code>
+            <code lang="C#">
+            <![CDATA[   
+            SfCalendar calendar = new SfCalendar();
+            YearViewSettings yearViewSettings = new YearViewSettings();
+            yearViewSettings.LayoutBackground = Color.FromHex("#ffe4b5");
+            yearViewSettings.DateTextColor = Color.FromHex("#008000");
+            yearViewSettings.YearHeaderTextColor = Color.FromHex("#ff0000");
+            yearViewSettings.MonthHeaderBackground = Color.FromHex("#bfff00");
+            yearViewSettings.LabelAlignment = LabelAlignment.Centre;
+            calendar.YearViewSettings = yearViewSettings;
+            this.Content = calendar;
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionMode">
+            <summary>
+            Gets or sets the value to selects the dates in two modes such as single and multiple selection.
+            </summary>
+            <value>The selection mode used to select the dates in teo modes such as single or multiple selection.</value>
+            <remarks>
+            Selection does not work for the month view beyond the min and max date range.
+            </remarks>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedDates"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedRange"/>
+            <seealso cref="M:Syncfusion.SfCalendar.XForms.SfCalendar.ClearSelection"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MinDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MaxDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.BlackoutDates"/>
+            <seealso cref="E:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionChanged"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionChangedCommand"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.TransitionMode">
+            <summary>
+            Gets or sets the transition mode.
+            </summary>
+            <value>The transition mode.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.InlineViewMode">
+            <summary>
+            Gets or sets the value which handles the appointments display in the month view.
+            </summary>
+            <value>The <b>InlineViewMode</b> used to handle the appointments display in the month view.</value>
+            <remarks>
+            If there is no appointment for the selected day, then <b>Inline</b> and <b>Agenda</b> view displays the text as <b>No Appointments</b>.
+            The <b>Inline</b> and <b>Agenda</b> view will be available only in the month view with single selection mode.
+            </remarks>
+            <seealso cref="T:Syncfusion.SfCalendar.XForms.CalendarEventCollection"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.DataSource"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.InlineViewMode.Inline"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.InlineViewMode.Agenda"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MaximumEventIndicatorCount"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.InlineItemTemplate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.ShowInlineEvents"/>
+            <seealso cref="E:Syncfusion.SfCalendar.XForms.SfCalendar.InlineItemTapped"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.MaximumEventIndicatorCount">
+            <summary>
+            Gets or sets the value which customize the number of appointment indicators displayed in the month cell.
+            </summary>
+            <value>The <b>MaximumEventIndicatorCount</b> used to customzie the number of appointment indicators to be displayed in the month cell. Default value is <b>5</b>.</value>
+            <remarks>
+            If appointments count are lesser than the appointment indicator count value in the particular day, then according to number of appointments available, indicator will be displayed in the month cell.
+            Appointment indicator will be shown on the basis of date meetings, usable month cell size and indicator count. For eg, if the month cell size is less(available for only 4 dots) and the indicator count is 10, then 4 indicators will be displayed.
+            </remarks>
+            <seealso cref="T:Syncfusion.SfCalendar.XForms.CalendarEventCollection"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.DataSource"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.AgendaViewHeight">
+            <summary>
+            Gets or sets the value to customize the height of the agenda view in <b>MonthView</b>.
+            </summary>
+            <value>The value used to customize the height of the agenda view in <b>MonthView</b>.</value>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.MonthView"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.ShowInlineEvents"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.InlineViewMode.Agenda"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.MonthViewSettings.InlineItemTemplate"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.MonthViewSettings">
+            <summary>
+            Gets or sets properties which allow to customize the month view of the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/>.
+            </summary>
+            <value>The properties settings used to customize teh month view.</value>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MonthViewSettings"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.ViewMode.MonthView"/>
+            <example>
+            <code lang="XAML">
+            <![CDATA[ 
+            <?xml version = "1.0" encoding="utf-8"?>
+            <syncfusion:SfCalendar x:Name="calendar">
+                <syncfusion:SfCalendar.MonthViewSettings>
+                    <syncfusion:MonthViewSettings
+                                CurrentMonthBackgroundColor = "#800080"
+                                CurrentMonthTextColor="#ffffff"
+                                PreviousMonthBackgroundColor="#9895F0"
+                                PreviousMonthTextColor="#000000"
+                                DateSelectionColor="#ffffff"
+                                SelectedDayTextColor="#000000"
+                                DayHeaderFormat="EEEEE"
+                                DayFontSize="12"
+                                DayHeaderFontSize="14"
+                                DayHeaderBackgroundColor="#fed766"
+                                SelectionRadius="15"
+                                TodaySelectionTextColor="Black"
+                                TodaySelectionBackgroundColor="Green"
+                                DayHeaderTextColor="Black"
+                                HeaderBackgroundColor="Pink"
+                                HeaderFontAttributes="Italic"
+                                HeaderFontSize="16"
+                                WeekEndTextColor="#fe4a49"
+                                WeekEndBackgroundColor="#2ab7ca">
+                        <syncfusion:MonthViewSettings.HeaderFontFamily>
+                            <OnPlatform x:TypeArguments="x:String" iOS="Lobster-Regular" Android="Lobster-Regular.ttf" WinPhone="Assets/Lobster-Regular.ttf#Lobster" />
+                        </syncfusion:MonthViewSettings.HeaderFontFamily>
+                        <syncfusion:MonthViewSettings.DayHeaderFontFamily>
+                            <OnPlatform x:TypeArguments="x:String" iOS="Lobster-Regular" Android="Lobster-Regular.ttf" WinPhone="Assets/Lobster-Regular.ttf#Lobster" />                
+                        </syncfusion:MonthViewSettings.DayHeaderFontFamily>
+                        <syncfusion:MonthViewSettings.DayCellFontFamily>
+                            <OnPlatform x:TypeArguments="x:String" iOS="Lobster-Regular" Android="Lobster-Regular.ttf" WinPhone="Assets/Lobster-Regular.ttf#Lobster" />
+                        </syncfusion:MonthViewSettings.DayCellFontFamily>
+                    </syncfusion:MonthViewSettings>
+            </syncfusion:SfCalendar.MonthViewSettings>
+            </syncfusion:SfCalendar>
+            ]]>
+            </code>
+            <code lang="C#">
+            <![CDATA[   
+            SfCalendar calendar = new SfCalendar();    
+            MonthViewSettings monthViewSettings = new MonthViewSettings();
+            monthViewSettings.CurrentMonthBackgroundColor = Color.FromHex("#800080");
+            monthViewSettings.CurrentMonthTextColor = Color.FromHex("#ffffff");
+            monthViewSettings.PreviousMonthBackgroundColor = Color.FromHex("#9895F0");
+            monthViewSettings.PreviousMonthTextColor = Color.FromHex("#000000");
+            monthViewSettings.DateSelectionColor = Color.FromHex("#ffffff");
+            monthViewSettings.SelectedDayTextColor = Color.FromHex("#000000");
+            monthViewSettings.DayHeaderFormat = "EEEEE";
+            monthViewSettings.DayFontSize = 12;
+            monthViewSettings.DayHeaderFontSize = 14;
+            monthViewSettings.DayHeaderBackgroundColor = Color.FromHex("#fed766");
+            monthViewSettings.SelectionRadius = 15;
+            monthViewSettings.TodaySelectionTextColor = Color.Black;
+            monthViewSettings.TodaySelectionBackgroundColor = Color.Green;
+            monthViewSettings.DayHeaderTextColor = Color.Black;
+            monthViewSettings.DayHeaderFontFamily = Device.OnPlatform("Lobster-Regular", "Lobster-Regular.ttf", "Assets/Lobster-Regular.ttf#Lobster");
+            monthViewSettings.HeaderBackgroundColor = Color.Pink;
+            monthViewSettings.HeaderFontAttributes = FontAttributes.Italic;
+            monthViewSettings.HeaderFontFamily = Device.OnPlatform("Lobster-Regular", "Lobster-Regular.ttf", "Assets/Lobster-Regular.ttf#Lobster");
+            monthViewSettings.HeaderFontSize = 16;
+            monthViewSettings.DayCellFontFamily = Device.OnPlatform("Lobster-Regular", "Lobster-Regular.ttf", "Assets/Lobster-Regular.ttf#Lobster");
+            monthViewSettings.WeekEndTextColor = Color.FromHex("#fe4a49");
+            monthViewSettings.WeekEndBackgroundColor = Color.FromHex("#2ab7ca");
+            monthViewSettings.AgendaSelectedDateColor = Color.Blue;
+            calendar.MonthViewSettings = monthViewSettings;
+            this.Content = calendar;
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.MinDate">
+            <summary>
+            Gets or sets the minimum vsiible dates of <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> can be selected which applicable for all the views.
+            </summary>
+            <value>The minimum visible dates of <b>SfCalendar</b> can be selected.</value>
+            <remarks>
+            The inline feature in month view will work only within the min max date range. Date navigation features of move to date will be restricted. Cannot swipe the control using touch gesture. Selection does not work for month view. The tapped delegates will not be triggered while tapped on the MonthCell.
+            </remarks>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MaxDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MoveToDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionMode"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.EnableSwiping"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.DisplayDate">
+            <summary>
+            Gets the display date. This is bindable property.
+            </summary>
+            <value>The display date.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.MaxDate">
+            <summary>
+            Gets or sets the maximum vsiible dates of <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> can be selected which applicable for all the views.
+            </summary>
+            <value>The maximum visible dates of <b>SfCalendar</b> can be selected.</value>
+            <remarks>
+            The inline feature in month view will work only within the min max date range. Date navigation features of move to date will be restricted. Cannot swipe the control using touch gesture. Selection does not work for month view. The tapped delegates will not be triggered while tapped on the MonthCell.
+            </remarks>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MinDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MoveToDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionMode"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.EnableSwiping"/>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedDate">
+            <summary>
+            Gets or sets the selected date programmatically by binding it from the view model.
+            </summary>
+            <value>The selected date.</value>
+            <remarks>
+            The <b>SelectedDate</b> property can only be bound when the <b>SelectionMode</b> is set to <b>SingleSelection</b> in the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/>.
+            </remarks>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionMode"/>
+            <seealso cref="F:Syncfusion.SfCalendar.XForms.SelectionMode.SingleSelection"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedDates"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedRange"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.NullableSelectedDate"/>
+            <seealso cref="E:Syncfusion.SfCalendar.XForms.SfCalendar.SelectionChanged"/>
+            <example>
+            <code lang="XAML">
+            <![CDATA[ 
+            <?xml version = "1.0" encoding="utf-8"?>
+            <calendar:SfCalendar x:Name="calendar"
+                                 ShowInlineEvents="True"
+                                 SelectionMode="SingleSelection"
+                                 SelectedDate="{Binding SelectedDate, Mode=TwoWay}">
+            </calendar:SfCalendar>
+            ]]>
+            </code>
+            <code lang="C#">
+            <![CDATA[   
+            calendar.SetBinding(SfCalendar.SelectedDateProperty, new Binding("SelectedDate", BindingMode.TwoWay));
+            public class MainViewModel 
+            {
+                public DateTime SelectedDate { get; set; }
+                public MainViewModel()
+                {
+                    SelectedDate = new DateTime(2019, 02, 05);
+                }
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.NullableSelectedDate">
+            <summary>
+            Gets or sets the selected date. This is a bindable property.
+            </summary>
+            <value>The selected date.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedDates">
+            <summary>
+            Gets or sets the list of selected dates. This is a bindable property.
+            </summary>
+            <value>The selected date.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.SelectedRange">
+            <summary>
+            Gets or sets the selected range. This is a bindable property.
+            </summary>
+            <value>The selected range.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.ShowYearView">
+            <summary>
+            Gets or sets a value indicating whether <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> show year view or not.
+            </summary>
+            <value><c>true</c> if show year view; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.Locale">
+            <summary>
+            Gets or sets the locale.
+            The SfCalendar control is available with en-US locale by default.
+            </summary>
+            <value>The locale.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.ShowInlineEvents">
+            <summary>
+            Gets or sets a value indicating whether <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> show inline events or not.
+            </summary>
+            <value><c>true</c> if show inline events; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.EnableDatesInPast">
+            <summary>
+            Gets or sets a value indicating whether <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> enable
+            add dates in the past or not.
+            </summary>
+            <value><c>true</c> if enable add dates in past; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.NavigateToMonthOnInActiveDatesSelection">
+            <summary>
+            Gets or sets a value indicating whether <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> navigate to
+            month in active dates selection or not.
+            </summary>
+            <value><c>true</c> if navigate to month on in active dates selection; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.ShowNavigationButtons">
+            <summary>
+            Gets or sets a value indicating whether to show navigation buttons.
+            It is mainly used in RangeSelection mode.
+            </summary>
+            <value>The show navigation buttons.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.ShowLeadingAndTrailingDays">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> show
+            leading and trailing days.
+            </summary>
+            <value><c>true</c> if show leading and trailing days; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.ToggleDaySelection">
+            <summary>
+            Gets or sets a value indicating whether <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> toggle day selection.
+            </summary>
+            <value><c>true</c> if toggle day selection; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.VisibleDates">
+            <summary>
+            Gets the visible dates.
+            </summary>
+            <value>The visible dates.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.FirstDayofWeek">
+            <summary>
+            Gets or sets the first day of a week.This is a bindable property.
+            </summary>
+            <value>The first day of week.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.HeaderHeight">
+            <summary>
+            Gets or sets the height of the header.
+            </summary>
+            <value>The height of the header.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.ShowHeader">
+            <summary>
+            Gets or sets a value indicating whether <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> show header.
+            </summary>
+            <value><c>true</c> if show header; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.BlackoutDates">
+            <summary>
+            Gets or sets the blackout dates.
+            </summary>
+            <value>The blackout dates.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.BlackoutDatesViewMode">
+            <summary>
+            Gets or sets the black out dates view mode property for month view to define the appearance of blackout dates in calendar.
+            </summary>
+            <remarks>BlackoutDatesViewMode property not applicable for UWP.</remarks>
+            <value>The view mode.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CustomDayLabels">
+            <summary>
+            Gets or sets the custom day labels.
+            </summary>
+            <value>The custom day labels.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.NavigationButtonHeight">
+            <summary>
+            Gets or sets the height of the navigation button.
+            </summary>
+            <value>The height of the navigation button.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.NavigationButtonWidth">
+            <summary>
+            Gets or sets the width of the navigation button.
+            </summary>
+            <value>The width of the navigation button.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.NavigationArrowThickness">
+            <summary>
+            Gets or sets the navigation arrow thickness.
+            </summary>
+            <value>The navigation arrow thickness.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.SuspendAppointmentsUpdate">
+            <summary>
+            Gets or sets a value indicating whether Calendar UI update should be suspended or not from the changes of bound data source.
+            By using this flag value we can suspend the appointment collection and resume the 
+            appointment collection update.
+            </summary>
+            <value><c>true</c> if is appointment update; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.NativeCalendar">
+            <summary>
+            Gets or sets native calendar object.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CanDrawMonthCell">
+            <summary>
+            Gets a value indicating whether can draw a month cell.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CanMonthChanged">
+            <summary>
+            Gets a value indicating whether can change month.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CanMonthChanging">
+            <summary>
+            Gets a value indicating whether month is changing or not.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CanHeaderLoaded">
+            <summary>
+            Gets a value indicating whether can load header or not.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CanDrawYearCell">
+            <summary>
+            Gets a value indicating whether can draw year cell or not.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CanViewModeChanged">
+            <summary>
+            Gets a value indicating whether ViewMode can be changed or not.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CanDayCellHolding">
+            <summary>
+            Gets a value indicating whether DayCell can be holding or not.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CanInlineToggled">
+            <summary>
+            Gets a value indicating whether Inline can be toggled or not.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CanInlineItemTapped">
+            <summary>
+            Gets a value indicating whether Inline item can be tapped or not.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.SfCalendar.CanInlineLoaded">
+            <summary>
+            Gets a value indicating whether Inline can be loaded or not.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.SuspendAppointmentUpdate">
+            <summary>
+            Suspends the appointment collection update for calendar to prevent the data source collection update until the resume appointment update method call.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.ResumeAppointmentUpdate">
+            <summary>
+            Resume the appointment collection update for calendar to update the appointments to calendar data source.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.ExpandInlineView(System.DateTime)">
+            <summary>
+            Provides support to expand the inline view that holds the appointments details of the corresponding date.
+            </summary>
+            <param name="date">Date.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.Refresh">
+            <summary>
+            Provides support for refreshing the calendar view.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.CollapseInlineView(System.DateTime)">
+            <summary>
+            Provides support to collapse the inline view that holds the appointments details of the corresponding date.
+            </summary>
+            <param name="date">Date.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.NavigateTo(System.DateTime)">
+            <summary>
+            Navigates the view to the specified visible date.
+            </summary>
+            <param name="date">Date.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.AddDatesInPast">
+            <summary>
+            Adds the dates in past.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.Backward">
+            <summary>
+            Moves to the previous view programmatically with animation by checking that the previous view dates falls between the minimum and maximum date range.
+            </summary>
+            <remarks>
+            If the current view has the minimum date range, it will not move to the previous view.
+            </remarks>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MinDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MaxDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.ViewMode"/>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.Forward">
+            <summary>
+            Moves to the next view programmatically with animation by checking that the next view dates falls between the minimum and maximum date range.
+            </summary>
+            <remarks>
+            If the current view has the maximum date range, it will not move to the next view.
+            </remarks>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MinDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.MaxDate"/>
+            <seealso cref="P:Syncfusion.SfCalendar.XForms.SfCalendar.ViewMode"/>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.Dispose">
+            <summary>
+            Releases all resources used by the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> object.
+            </summary>
+            <remarks>Call <see cref="M:Syncfusion.SfCalendar.XForms.SfCalendar.Dispose"/> when you are finished using the
+            <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/>. The <see cref="M:Syncfusion.SfCalendar.XForms.SfCalendar.Dispose"/> method leaves the
+            <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> in an unusable state. After calling <see cref="M:Syncfusion.SfCalendar.XForms.SfCalendar.Dispose"/>,
+            you must release all references to the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> so the garbage
+            collector can reclaim the memory that the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> was occupying.</remarks>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.Syncfusion#XForms#Themes#IParentThemeElement#GetThemeDictionary">
+            <summary>
+            Get the theme dictionary.
+            </summary>
+            <returns>The XForms. themes. IParent theme element. get theme dictionary.</returns>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.Syncfusion#XForms#Themes#IThemeElement#OnControlThemeChanged(System.String,System.String)">
+            <summary>
+            The control theme changed.
+            </summary>
+            <param name="oldTheme">Old theme.</param>
+            <param name="newTheme">New theme.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.Syncfusion#XForms#Themes#IThemeElement#OnCommonThemeChanged(System.String,System.String)">
+            <summary>
+            The common theme changed.
+            </summary>
+            <param name="oldTheme">Old theme.</param>
+            <param name="newTheme">New theme.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.ClearSelection">
+            <summary>
+            Method to clear the date selection in calendar.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.GetDefaultValue``1(``0,``0,``0)">
+            <summary>
+            Returns the default value for bindable property based on device platform.
+            </summary>
+            <returns>The value based on Device.OnPlatform.</returns>
+            <typeparam name="T">Type.</typeparam>
+            <param name="iOSValue">iOS Value.</param>
+            <param name="androidValue">Android value.</param>
+            <param name="winPhoneValue">Windows phone value.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.CalendarTapped(System.DateTime,System.Object)">
+            <summary>
+            Calendar tapped event.
+            </summary>
+            <param name="tappedDate">Tapped date.</param>
+            <param name="appointments">Appointments.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.OnInlineItemTapped(System.DateTime,Syncfusion.SfCalendar.XForms.CalendarInlineEvent)">
+            <summary>
+            The inline item tapped.
+            </summary>
+            <param name="selectedDate">Selected date.</param>
+            <param name="inlineEvent">Inline event.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.DateCellLongPressing(System.DateTime)">
+            <summary>
+            Occurs when keep tap holding the date cell.
+            </summary>
+            <param name="longPressedDate">Long pressed date.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.DrawInline(Syncfusion.SfCalendar.XForms.InlineEventArgs)">
+            <summary>
+            Draws the inline.
+            </summary>
+            <param name="args">The Inline event's date for the event.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.DrawHeader(Syncfusion.SfCalendar.XForms.CalendarHeaderEventArgs)">
+            <summary>
+            Draws the header.
+            </summary>
+            <param name="args">Arguments.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.ViewModeChanged(Syncfusion.SfCalendar.XForms.ViewMode,System.DateTime)">
+            <summary>
+            Views the mode changed.
+            </summary>
+            <param name="viewMode">View mode.</param>
+            <param name="dateTime">DateTime value.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.DrawMonthCell(Syncfusion.SfCalendar.XForms.MonthCellLoadedEventArgs)">
+            <summary>
+            Draws the month cell.
+            </summary>
+            <param name="args">Arguments.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.DrawYearCell(Syncfusion.SfCalendar.XForms.YearCellLoadedEventArgs)">
+            <summary>
+            Draws the year cell.
+            </summary>
+            <param name="args">Arguments.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.OnSelectionChanged(System.Collections.Generic.IList{System.DateTime},System.Collections.Generic.IList{System.DateTime},System.Collections.Generic.IList{Syncfusion.SfCalendar.XForms.SelectionRange})">
+            <summary>
+            Calls when calendar selection changed.
+            </summary>
+            <param name="dateAdded">Dates added to selection.</param>
+            <param name="dateRemoved">Dates removed from selection.</param>
+            <param name="newRangeAdded">Selection range added.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.OnMonthChanged(System.DateTime,System.DateTime,System.Collections.Generic.List{System.DateTime},System.Boolean@)">
+            <summary>
+            Calls on month view changed.
+            </summary>
+            <param name="navigatedMonth">Navigated month.</param>
+            <param name="previousMonth">Previous month.</param>
+            <param name="visibleDates">Visible dates.</param>
+            <param name="monthChanged">Indicating whether the month is changed or not.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.OnMonthChanging(System.DateTime,System.DateTime,System.Boolean)">
+            <summary>
+            triggers when Month view is about to change.
+            </summary>
+            <param name="newMonth">Current month.</param>
+            <param name="oldMonth">Previous month.</param>
+            <param name="isCalledMonthChange">Indicating whether the MonthChange is called or not.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.OnInlineToggled(System.Object,System.DateTime)">
+            <summary>
+            Triggers when inline toggled.
+            </summary>
+            <param name="selectedAppointment">Selected appointment.</param>
+            <param name="date">Date value.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.OnMeasure(System.Double,System.Double)">
+            <param name="widthConstraint">The available width for the element to use.</param>
+            <param name="heightConstraint">The available height for the element to use.</param>
+            <summary>
+            Called during the measure pass of a layout cycle to get the desired size of an element.
+            </summary>
+            <returns>Size request.</returns>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used by the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendar"/> object.
+            </summary>
+            <param name="disposing">Indicating whether the object is disposing or not.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.OnBlackoutDatesPropertyChanged(Xamarin.Forms.BindableObject)">
+            <summary>
+            Ons the blackout dates property changed.
+            </summary>
+            <param name="bindable">Bindable.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendar.SetParent(Xamarin.Forms.Element,Xamarin.Forms.Element)">
+            <summary>
+            Sets the parent value to the child element.
+            </summary>
+            <param name="oldElement">Old element.</param>
+            <param name="newElement">New element.</param>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.YearCell">
+            <summary>
+            Year cell loaded event argument class.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.YearCell.#ctor(System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.YearCell"/> class.
+            </summary>
+            <param name="calendar">Calendar.</param>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.BackgroundColor">
+            <summary>
+            Gets or sets the color of the background.
+            </summary>
+            <value>The color of the background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.MonthHeaderTextColor">
+            <summary>
+            Gets or sets the color of the month header text.
+            </summary>
+            <value>The color of the month header text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.MonthHeaderBackgroundColor">
+            <summary>
+            Gets or sets the color of the month header background.
+            </summary>
+            <value>The color of the month header background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.MonthLayoutBackgroundColor">
+            <summary>
+            Gets or sets the color of the month layout background.
+            </summary>
+            <value>The color of the month layout background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.TextColor">
+            <summary>
+            Gets or sets the color of the text.
+            </summary>
+            <value>The color of the text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.Month">
+            <summary>
+            Gets the month.
+            </summary>
+            <value>The month.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.Font">
+            <summary>
+            Gets or sets the font.
+            </summary>
+            <value>The font.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.FontFamily">
+            <summary>
+            Gets or sets the font family.
+            </summary>
+            <value>The font family.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.FontAttribute">
+            <summary>
+            Gets or sets the font attribute.
+            Determines the style of the year cell view date text.
+            </summary>
+            <value>The font attribute.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.View">
+            <summary>
+            Gets or sets the view.
+            </summary>
+            <value>The view.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearCell.ViewMode">
+            <summary>
+            Gets the calendar current view mode.
+            </summary>
+            <value>The viewMode.</value>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.YearCellLoadedEventArgs">
+            <summary>
+            Year cell loaded event arguments.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.YearCellLoadedEventArgs.#ctor(System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.YearCellLoadedEventArgs"/> class.
+            </summary>
+            <param name="calendar">Calendar.</param>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.YearViewSettings">
+            <summary>
+            Year view settings inherits the <c>View</c> class.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.YearViewSettings.LayoutBackgroundProperty">
+            <summary>
+            Determines the background color of the layout of year view.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.YearViewSettings.HeaderBackgroundProperty">
+            <summary>
+            Determines the background color of the header of year view. 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.YearViewSettings.MonthLayoutBackgroundProperty">
+            <summary>
+            Determines the background color of the month layout in year view . 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.YearViewSettings.MonthHeaderBackgroundProperty">
+            <summary>
+            Determines the background color of the month header in year view. 
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.YearViewSettings.DateTextColorProperty">
+            <summary>
+            Determines the text color of date text in year view.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.YearViewSettings.MonthHeaderTextColorProperty">
+            <summary>
+            Determines the text color of the month header in year view.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.YearViewSettings.YearHeaderTextColorProperty">
+            <summary>
+            The year header text color property determines the text color of year's header.
+            </summary>
+        </member>
+        <member name="F:Syncfusion.SfCalendar.XForms.YearViewSettings.LabelAlignmentProperty">
+            <summary>
+            Determines the alignment of text in the year view cell.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.YearViewSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.YearViewSettings"/> class.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearViewSettings.LayoutBackground">
+            <summary>
+            Gets or sets the layout background.
+            </summary>
+            <value>The layout background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearViewSettings.HeaderBackground">
+            <summary>
+            Gets or sets the header background.
+            </summary>
+            <value>The header background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearViewSettings.MonthLayoutBackground">
+            <summary>
+            Gets or sets the month layout background.
+            </summary>
+            <value>The month layout background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearViewSettings.MonthHeaderBackground">
+            <summary>
+            Gets or sets the month header background.
+            </summary>
+            <value>The month header background.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearViewSettings.DateTextColor">
+            <summary>
+            Gets or sets the color of the date text.
+            </summary>
+            <value>The color of the date text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearViewSettings.MonthHeaderTextColor">
+            <summary>
+            Gets or sets the color of the month header text.
+            </summary>
+            <value>The color of the month header text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearViewSettings.YearHeaderTextColor">
+            <summary>
+            Gets or sets the color of the year header text.
+            </summary>
+            <value>The color of the year header text.</value>
+        </member>
+        <member name="P:Syncfusion.SfCalendar.XForms.YearViewSettings.LabelAlignment">
+            <summary>
+            Gets or sets the label alignment.
+            </summary>
+            <value>The label alignment.</value>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.YearViewSettings.Syncfusion#XForms#Themes#IThemeElement#OnControlThemeChanged(System.String,System.String)">
+            <summary>
+            The control theme changed.
+            </summary>
+            <param name="oldTheme">Old theme.</param>
+            <param name="newTheme">New theme.</param>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.YearViewSettings.Syncfusion#XForms#Themes#IThemeElement#OnCommonThemeChanged(System.String,System.String)">
+            <summary>
+            The common theme changed.
+            </summary>
+            <param name="oldTheme">Old theme.</param>
+            <param name="newTheme">New theme.</param>
+        </member>
+        <member name="T:Syncfusion.SfCalendar.XForms.SfCalendarStyles">
+            <summary>
+            Calendar styles class.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.SfCalendar.XForms.SfCalendarStyles.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Syncfusion.SfCalendar.XForms.SfCalendarStyles"/> class.
+            </summary>
+        </member>
+    </members>
+</doc>
