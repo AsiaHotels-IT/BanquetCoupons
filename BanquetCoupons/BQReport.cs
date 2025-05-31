@@ -460,8 +460,6 @@ namespace BanquetCoupons
                     double footerMargin = 60;
                     double footerLineHeight = 20;
 
-                    gfx.DrawString($"ผู้จัดทำรายงาน: {user}", font, XBrushes.Black,
-                        new XRect(40, page.Height - footerMargin, page.Width, 20), XStringFormats.TopLeft);
 
                     gfx.DrawString("วันที่พิมพ์: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"), font, XBrushes.Black,
                         new XRect(40, page.Height - footerMargin + footerLineHeight, page.Width, 20), XStringFormats.TopLeft);

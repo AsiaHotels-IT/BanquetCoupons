@@ -118,6 +118,7 @@
             this.Controls.Add(this.panelMenu);
             this.Name = "service";
             this.Text = "service";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.service_Load);
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();

@@ -148,6 +148,7 @@
             this.Controls.Add(this.panelMenu);
             this.Name = "BanquetDepartment";
             this.Text = "BanquetDepartment";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.BanquetDepartment_Load);
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();

@@ -336,8 +336,6 @@ namespace BanquetCoupons
                                     {
                                         ShowUsageCount();
                                         MessageBox.Show("บันทึกจำนวนคูปองที่ใช้งานสำเร็จ");
-                                        this.Controls.Clear();
-                                        InitializeComponent();
                                         LoadEventsByDate(DateTime.Now);
                                     }
                                     else

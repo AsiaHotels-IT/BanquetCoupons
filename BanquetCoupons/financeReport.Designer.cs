@@ -162,7 +162,6 @@
             this.btnNext.TabIndex = 21;
             this.btnNext.Text = "ถัดไป";
             this.btnNext.UseVisualStyleBackColor = false;
-            this.btnNext.UseWaitCursor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnPrev
@@ -175,7 +174,6 @@
             this.btnPrev.TabIndex = 20;
             this.btnPrev.Text = "ก่อนหน้า";
             this.btnPrev.UseVisualStyleBackColor = false;
-            this.btnPrev.UseWaitCursor = true;
             this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
             // 
             // financeReport

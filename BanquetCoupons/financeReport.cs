@@ -40,12 +40,13 @@ namespace BanquetCoupons
                 cbYear.Items.Add(y.ToString());
             }
 
+            cbMonth.Items.AddRange(new string[]
+           {
+                "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
+                "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
+                "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+           });
 
-            // เติมเดือน 1-12
-            for (int m = 1; m <= 12; m++)
-            {
-                cbMonth.Items.Add(m.ToString());
-            }
 
             // เติมวัน 1-31
             for (int d = 1; d <= 31; d++)
@@ -65,6 +66,11 @@ namespace BanquetCoupons
             }
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
+
+            dataGridView1.ReadOnly = true; // ป้องกันไม่ให้แก้ไข
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // เลือกทั้งแถวเมื่อคลิก
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
         }
         string connectDB()
         {
@@ -129,7 +135,7 @@ namespace BanquetCoupons
                             FROM Coupons
                             {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
                             GROUP BY BQID, agency, mealDate, mealType, cateringName, serialNum
-                            ORDER BY MIN(createAt) DESC
+                            ORDER BY BQID DESC
                            ";
 
 
@@ -140,7 +146,7 @@ namespace BanquetCoupons
                             SELECT BQID, deleteAt, Username, mealDate, agency, cateringName, quantity, serialNum
                             FROM RemoveCoupons
                             {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
-                            ORDER BY deleteAt DESC
+                            ORDER BY BQID DESC
                             ";
                     break;
 
@@ -149,7 +155,7 @@ namespace BanquetCoupons
                             SELECT EID, BQID, Username, quantity, serialNum, editAt
                             FROM UpdateCoupons
                             {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
-                            ORDER BY editAt DESC
+                            ORDER BY BQID DESC
                             ";
                     break;
 
@@ -325,9 +331,6 @@ namespace BanquetCoupons
                 }
         
                 // Footer
-                string footerUser = "ชื่อผู้จัดทำรายงาน";
-                gfx.DrawString($"ผู้จัดทำรายงาน: {footerUser}", defaultFont, XBrushes.Black,
-                    new XRect(margin, page.Height - 80, page.Width, 20), XStringFormats.TopLeft);
         
                 gfx.DrawString($"วันที่พิมพ์: {DateTime.Now:dd/MM/yyyy HH:mm}", defaultFont, XBrushes.Black,
                     new XRect(margin, page.Height - 60, page.Width, 20), XStringFormats.TopLeft);
@@ -345,7 +348,7 @@ namespace BanquetCoupons
         }
 
         private DataTable fullTable; // เก็บข้อมูลทั้งหมด
-        private int pageSize = 2;
+        private int pageSize = 20;
         private int currentPage = 1;
         private int totalPages = 1;
 

@@ -69,17 +69,17 @@
             this.label7 = new System.Windows.Forms.Label();
             this.seNum = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.quantity)).BeginInit();
@@ -95,9 +95,9 @@
             this.btnEditNprint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
             this.btnEditNprint.Font = new System.Drawing.Font("Noto Sans Thai", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnEditNprint.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
-            this.btnEditNprint.Location = new System.Drawing.Point(237, 6);
+            this.btnEditNprint.Location = new System.Drawing.Point(237, 0);
             this.btnEditNprint.Name = "btnEditNprint";
-            this.btnEditNprint.Size = new System.Drawing.Size(117, 30);
+            this.btnEditNprint.Size = new System.Drawing.Size(117, 39);
             this.btnEditNprint.TabIndex = 22;
             this.btnEditNprint.Text = "พิมพ์";
             this.btnEditNprint.UseVisualStyleBackColor = false;
@@ -109,9 +109,9 @@
             this.btnDel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
             this.btnDel.Font = new System.Drawing.Font("Noto Sans Thai", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnDel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
-            this.btnDel.Location = new System.Drawing.Point(114, 6);
+            this.btnDel.Location = new System.Drawing.Point(114, 0);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(117, 30);
+            this.btnDel.Size = new System.Drawing.Size(117, 39);
             this.btnDel.TabIndex = 23;
             this.btnDel.Text = "ลบ";
             this.btnDel.UseVisualStyleBackColor = false;
@@ -123,9 +123,9 @@
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
             this.btnCancel.Font = new System.Drawing.Font("Noto Sans Thai", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
-            this.btnCancel.Location = new System.Drawing.Point(362, 6);
+            this.btnCancel.Location = new System.Drawing.Point(362, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(117, 30);
+            this.btnCancel.Size = new System.Drawing.Size(117, 39);
             this.btnCancel.TabIndex = 24;
             this.btnCancel.Text = "ยกเลิก";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -154,7 +154,7 @@
             // btnPrev
             // 
             this.btnPrev.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnPrev.Location = new System.Drawing.Point(1020, 7);
+            this.btnPrev.Location = new System.Drawing.Point(1065, 8);
             this.btnPrev.Name = "btnPrev";
             this.btnPrev.Size = new System.Drawing.Size(62, 26);
             this.btnPrev.TabIndex = 26;
@@ -165,7 +165,7 @@
             // btnNext
             // 
             this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.btnNext.Location = new System.Drawing.Point(1088, 7);
+            this.btnNext.Location = new System.Drawing.Point(1133, 8);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(62, 26);
             this.btnNext.TabIndex = 25;
@@ -178,9 +178,9 @@
             this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
             this.btnEdit.Font = new System.Drawing.Font("Noto Sans Thai", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnEdit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
-            this.btnEdit.Location = new System.Drawing.Point(3, 6);
+            this.btnEdit.Location = new System.Drawing.Point(3, 0);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(106, 30);
+            this.btnEdit.Size = new System.Drawing.Size(106, 39);
             this.btnEdit.TabIndex = 21;
             this.btnEdit.Text = "แก้ไข";
             this.btnEdit.UseVisualStyleBackColor = false;
@@ -193,9 +193,9 @@
             this.btnClearForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
             this.btnClearForm.Font = new System.Drawing.Font("Noto Sans Thai", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClearForm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
-            this.btnClearForm.Location = new System.Drawing.Point(656, 6);
+            this.btnClearForm.Location = new System.Drawing.Point(656, 0);
             this.btnClearForm.Name = "btnClearForm";
-            this.btnClearForm.Size = new System.Drawing.Size(110, 30);
+            this.btnClearForm.Size = new System.Drawing.Size(110, 39);
             this.btnClearForm.TabIndex = 20;
             this.btnClearForm.Text = "ยกเลิก";
             this.btnClearForm.UseCompatibleTextRendering = true;
@@ -208,9 +208,9 @@
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
             this.btnSave.Font = new System.Drawing.Font("Noto Sans Thai", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
-            this.btnSave.Location = new System.Drawing.Point(516, 6);
+            this.btnSave.Location = new System.Drawing.Point(516, 0);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(110, 30);
+            this.btnSave.Size = new System.Drawing.Size(110, 39);
             this.btnSave.TabIndex = 19;
             this.btnSave.Text = "บันทึก";
             this.btnSave.UseCompatibleTextRendering = true;
@@ -338,6 +338,11 @@
             this.quantity.Name = "quantity";
             this.quantity.Size = new System.Drawing.Size(70, 26);
             this.quantity.TabIndex = 9;
+            this.quantity.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.quantity.ValueChanged += new System.EventHandler(this.quantity_ValueChanged);
             // 
             // label13
@@ -513,11 +518,11 @@
             // 
             this.lblPreview.AutoSize = true;
             this.lblPreview.BackColor = System.Drawing.Color.Transparent;
-            this.lblPreview.Font = new System.Drawing.Font("Noto Sans Thai", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPreview.Font = new System.Drawing.Font("Noto Sans Thai", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPreview.Location = new System.Drawing.Point(16, 0);
             this.lblPreview.Name = "lblPreview";
             this.lblPreview.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.lblPreview.Size = new System.Drawing.Size(6, 44);
+            this.lblPreview.Size = new System.Drawing.Size(6, 56);
             this.lblPreview.TabIndex = 0;
             this.lblPreview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblPreview.UseCompatibleTextRendering = true;
@@ -614,6 +619,130 @@
             this.panel1.Size = new System.Drawing.Size(1181, 591);
             this.panel1.TabIndex = 14;
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.Color.Transparent;
+            this.label17.Font = new System.Drawing.Font("Asia Hotel Beta", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(16, -1);
+            this.label17.Name = "label17";
+            this.label17.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
+            this.label17.Size = new System.Drawing.Size(40, 45);
+            this.label17.TabIndex = 21;
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label17.UseCompatibleTextRendering = true;
+            this.label17.Visible = false;
+            this.label17.Paint += new System.Windows.Forms.PaintEventHandler(this.label17_Paint);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Asia Hotel Beta", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(339, 434);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(377, 56);
+            this.label18.TabIndex = 20;
+            this.label18.Text = "__________________";
+            this.label18.UseCompatibleTextRendering = true;
+            this.label18.Visible = false;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Asia Hotel Beta", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(339, 228);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(377, 56);
+            this.label19.TabIndex = 18;
+            this.label19.Text = "__________________";
+            this.label19.UseCompatibleTextRendering = true;
+            this.label19.Visible = false;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Asia Hotel Beta", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(339, 331);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(377, 56);
+            this.label20.TabIndex = 19;
+            this.label20.Text = "__________________";
+            this.label20.UseCompatibleTextRendering = true;
+            this.label20.Visible = false;
+            // 
+            // label16
+            // 
+            this.label16.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label16.AutoSize = true;
+            this.label16.BackColor = System.Drawing.Color.Transparent;
+            this.label16.Font = new System.Drawing.Font("Asia Hotel Beta", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(200, 534);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(673, 39);
+            this.label16.TabIndex = 17;
+            this.label16.Text = "(Please present your Coupon before using the service)";
+            this.label16.UseCompatibleTextRendering = true;
+            this.label16.Visible = false;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.Font = new System.Drawing.Font("Asia Hotel Beta", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(16, -1);
+            this.label15.Name = "label15";
+            this.label15.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.label15.Size = new System.Drawing.Size(6, 35);
+            this.label15.TabIndex = 16;
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label15.UseCompatibleTextRendering = true;
+            this.label15.Visible = false;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Asia Hotel Beta", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label12.Location = new System.Drawing.Point(17, 435);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(124, 56);
+            this.label12.TabIndex = 15;
+            this.label12.Text = "DATE";
+            this.label12.UseCompatibleTextRendering = true;
+            this.label12.Visible = false;
+            // 
+            // label11
+            // 
+            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Font = new System.Drawing.Font("Asia Hotel Beta", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label11.Location = new System.Drawing.Point(17, 332);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(142, 56);
+            this.label11.TabIndex = 14;
+            this.label11.Text = "ROOM";
+            this.label11.UseCompatibleTextRendering = true;
+            this.label11.Visible = false;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.Font = new System.Drawing.Font("Asia Hotel Beta", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label10.Location = new System.Drawing.Point(17, 225);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(184, 56);
+            this.label10.TabIndex = 13;
+            this.label10.Text = "AGENCY";
+            this.label10.UseCompatibleTextRendering = true;
+            this.label10.Visible = false;
+            // 
             // label8
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -637,130 +766,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(177, 130);
             this.panel2.TabIndex = 0;
-            // 
-            // label10
-            // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Font = new System.Drawing.Font("Asia Hotel Beta", 32.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label10.Location = new System.Drawing.Point(17, 225);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(169, 60);
-            this.label10.TabIndex = 13;
-            this.label10.Text = "Agency";
-            this.label10.UseCompatibleTextRendering = true;
-            this.label10.Visible = false;
-            // 
-            // label11
-            // 
-            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label11.AutoSize = true;
-            this.label11.BackColor = System.Drawing.Color.Transparent;
-            this.label11.Font = new System.Drawing.Font("Asia Hotel Beta", 32.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label11.Location = new System.Drawing.Point(17, 332);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(153, 60);
-            this.label11.TabIndex = 14;
-            this.label11.Text = "ROOM";
-            this.label11.UseCompatibleTextRendering = true;
-            this.label11.Visible = false;
-            // 
-            // label12
-            // 
-            this.label12.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label12.AutoSize = true;
-            this.label12.BackColor = System.Drawing.Color.Transparent;
-            this.label12.Font = new System.Drawing.Font("Asia Hotel Beta", 32.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label12.Location = new System.Drawing.Point(17, 435);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(133, 60);
-            this.label12.TabIndex = 15;
-            this.label12.Text = "DATE";
-            this.label12.UseCompatibleTextRendering = true;
-            this.label12.Visible = false;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.Font = new System.Drawing.Font("Asia Hotel Beta", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(16, -1);
-            this.label15.Name = "label15";
-            this.label15.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.label15.Size = new System.Drawing.Size(6, 35);
-            this.label15.TabIndex = 16;
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label15.UseCompatibleTextRendering = true;
-            this.label15.Visible = false;
-            // 
-            // label16
-            // 
-            this.label16.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.label16.AutoSize = true;
-            this.label16.BackColor = System.Drawing.Color.Transparent;
-            this.label16.Font = new System.Drawing.Font("Asia Hotel Beta", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(200, 534);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(673, 39);
-            this.label16.TabIndex = 17;
-            this.label16.Text = "(Please present your Coupon before using the service)";
-            this.label16.UseCompatibleTextRendering = true;
-            this.label16.Visible = false;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.BackColor = System.Drawing.Color.Transparent;
-            this.label17.Font = new System.Drawing.Font("Asia Hotel Beta", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(16, -1);
-            this.label17.Name = "label17";
-            this.label17.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.label17.Size = new System.Drawing.Size(6, 38);
-            this.label17.TabIndex = 21;
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label17.UseCompatibleTextRendering = true;
-            this.label17.Visible = false;
-            this.label17.Paint += new System.Windows.Forms.PaintEventHandler(this.label17_Paint);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Asia Hotel Beta", 32.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(339, 431);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(406, 60);
-            this.label18.TabIndex = 20;
-            this.label18.Text = "__________________";
-            this.label18.UseCompatibleTextRendering = true;
-            this.label18.Visible = false;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Asia Hotel Beta", 32.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(339, 225);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(406, 60);
-            this.label19.TabIndex = 18;
-            this.label19.Text = "__________________";
-            this.label19.UseCompatibleTextRendering = true;
-            this.label19.Visible = false;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Asia Hotel Beta", 32.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(339, 328);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(406, 60);
-            this.label20.TabIndex = 19;
-            this.label20.Text = "__________________";
-            this.label20.UseCompatibleTextRendering = true;
-            this.label20.Visible = false;
             // 
             // Coupons
             // 

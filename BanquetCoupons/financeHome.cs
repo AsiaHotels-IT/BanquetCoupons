@@ -37,6 +37,7 @@ namespace BanquetCoupons
 
             fontManager = new FontManager();
             // เดือน
+            // เพิ่มชื่อเดือนใน ComboBox cbMonth
             cbMonth.Items.AddRange(new string[]
             {
                 "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
@@ -44,14 +45,28 @@ namespace BanquetCoupons
                 "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
             });
 
-            cbYear.Items.Add(DateTime.Now.Year.ToString());
-            
-
+            // ตั้งค่าค่าเริ่มต้นของเดือนให้ตรงกับเดือนปัจจุบัน
             cbMonth.SelectedIndex = DateTime.Now.Month - 1;
-            cbYear.SelectedItem = DateTime.Now.Year.ToString();
 
-            int selectedMonth = cbMonth.SelectedIndex + 1; // เดือนเริ่มที่ 0 ต้อง +1
-            int selectedYear = int.Parse(cbYear.SelectedItem.ToString());
+            // เพิ่มปีลงใน ComboBox cbYear ตั้งแต่ปีปัจจุบันถึงอีก 10 ปีข้างหน้า
+            int currentYear = DateTime.Now.Year;
+            int futureYear = currentYear + 10;
+            for (int y = currentYear; y <= futureYear; y++)
+            {
+                cbYear.Items.Add(y.ToString());
+            }
+
+            // ตั้งค่าค่าเริ่มต้นของปีให้ตรงกับปีปัจจุบัน
+            cbYear.SelectedItem = currentYear.ToString();
+
+            // ถ้าต้องการใช้ค่าเดือนและปีที่ถูกเลือก
+            int selectedMonth = cbMonth.SelectedIndex + 1; // เพราะ SelectedIndex เริ่มที่ 0
+            int selectedYear = currentYear; // Default
+
+            if (cbYear.SelectedItem != null)
+            {
+                int.TryParse(cbYear.SelectedItem.ToString(), out selectedYear);
+            }
 
             LoadEventsByMonthAndYear(selectedMonth, selectedYear);
             dataGridView1.Font = new Font("Segoe UI", 10, FontStyle.Regular);  // ปรับขนาดตามต้องการ
@@ -73,6 +88,11 @@ namespace BanquetCoupons
             cbYear.Cursor= Cursors.Default;
             btnPrev.Cursor= Cursors.Default;
             btnNext.Cursor= Cursors.Default;
+
+            dataGridView1.ReadOnly = true; // ป้องกันไม่ให้แก้ไข
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // เลือกทั้งแถวเมื่อคลิก
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
         }
 
 
@@ -372,9 +392,6 @@ namespace BanquetCoupons
                 }
 
                 // Footer
-                string footerUser = "ชื่อผู้จัดทำรายงาน";
-                gfx.DrawString($"ผู้จัดทำรายงาน: {footerUser}", defaultFont, XBrushes.Black,
-                    new XRect(margin, page.Height - 80, page.Width, 20), XStringFormats.TopLeft);
 
                 gfx.DrawString($"วันที่พิมพ์: {DateTime.Now:dd/MM/yyyy HH:mm}", defaultFont, XBrushes.Black,
                     new XRect(margin, page.Height - 60, page.Width, 20), XStringFormats.TopLeft);
@@ -392,7 +409,7 @@ namespace BanquetCoupons
         }
 
         private DataTable fullTable; // เก็บข้อมูลทั้งหมด
-        private int pageSize = 15;
+        private int pageSize = 23;
         private int currentPage = 1;
         private int totalPages = 1;
 

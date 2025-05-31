@@ -70,15 +70,19 @@ namespace BanquetCoupons
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
 
-            quantity.Minimum = 1;
-            quantity.Maximum = 300; 
-            quantity.Value = 1;
+            dataGridView1.ReadOnly = true; // ป้องกันไม่ให้แก้ไข
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // เลือกทั้งแถวเมื่อคลิก
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+
 
             canteenName.DropDownStyle = ComboBoxStyle.DropDownList;
 
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             lblSerialNumber.Font = fontManager.FontBarcode;
             listBox1.SelectedItem = "TH";
+
+            
         }
 
         PrivateFontCollection pfc = new PrivateFontCollection();
@@ -126,67 +130,6 @@ namespace BanquetCoupons
             }
         }
 
-
-
-        //void loadData()
-        //{
-        //    string iniPath = "config.ini"; // ที่อยู่ไฟล์ .ini
-        //
-        //    // อ่าน config จาก section Database
-        //    var config = IniReader.ReadIni(iniPath, "Database");
-        //
-        //    // ดึงค่าตัวแปรออกมา
-        //    string server = config.ContainsKey("Server") ? config["Server"] : "";
-        //    string database = config.ContainsKey("Database") ? config["Database"] : "";
-        //    string user = config.ContainsKey("User") ? config["User"] : "";
-        //    string password = config.ContainsKey("Password") ? config["Password"] : "";
-        //
-        //    // สร้าง connection string (SQL Server Auth)
-        //    string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
-        //
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        try
-        //        {
-        //            conn.Open();
-        //
-        //            string sql = @"
-        //                            SELECT 
-        //                                COALESCE(BQID, oldBQID) AS BQID,
-        //                                agency,
-        //                                mealDate,
-        //                                mealType,
-        //                                cateringName,
-        //                                paperSize,
-        //                                COUNT(DISTINCT serialNum) AS quantity
-        //                            FROM Coupons
-        //                            GROUP BY 
-        //                                COALESCE(BQID, oldBQID),
-        //                                agency,
-        //                                mealDate,
-        //                                mealType,
-        //                                cateringName,
-        //                                paperSize
-        //                            ORDER BY 
-        //                                CAST(SUBSTRING(COALESCE(BQID, oldBQID), 5, LEN(COALESCE(BQID, oldBQID))) AS INT),
-        //                                paperSize;
-        //                           ";
-        //
-        //            SqlDataAdapter adapter = new SqlDataAdapter(sql, conn);
-        //            DataTable dt = new DataTable();
-        //            adapter.Fill(dt);
-        //
-        //            dataGridView1.DataSource = dt; // ต้องมี DataGridView ชื่อ dataGridView1 บนฟอร์ม
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("เชื่อมต่อฐานข้อมูลไม่สำเร็จ: " + ex.Message);
-        //        }
-        //    }
-        //}
-
-
-
         void loadData(int page)
         {
             string iniPath = "config.ini";
@@ -233,7 +176,7 @@ namespace BanquetCoupons
                                         mealType,
                                         cateringName,
                                         paperSize
-                                    ORDER BY BQID asc
+                                    ORDER BY BQID desc
                                     OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
                                    ";
 
@@ -335,14 +278,26 @@ namespace BanquetCoupons
             agencyPreview.Text = $"{Agency}";
             label19.Text = $"{Agency}";
 
-            if (label9.Text.Length > 17)
+            if (label19.Text.Length > 17)
             {
-                label9.Font = new Font(label9.Font.FontFamily, 20, label9.Font.Style); // ปรับขนาดตามที่ต้องการ
+                label19.Font = new Font(label19.Font.FontFamily, 20, label19.Font.Style); // ปรับขนาดตามที่ต้องการ
+                label19.Location = new Point(339, 225); // เปลี่ยนตำแหน่ง
+            }
+            else
+            {
+                label19.Font = new Font(label19.Font.FontFamily, 30, label19.Font.Style); // กลับไปขนาดปกติ
+                label19.Location = new Point(339, 225); // เปลี่ยนตำแหน่ง
             }
 
             if (agencyPreview.Text.Length > 17)
             {
                 agencyPreview.Font = new Font(agencyPreview.Font.FontFamily, 20, agencyPreview.Font.Style); // ปรับขนาดตามที่ต้องการ
+                agencyPreview.Location = new Point(339, 225); // เปลี่ยนตำแหน่ง
+            }
+            else
+            {
+                agencyPreview.Font = new Font(agencyPreview.Font.FontFamily, 30, label9.Font.Style); // กลับไปขนาดปกติ
+                agencyPreview.Location = new Point(339, 225); // เปลี่ยนตำแหน่ง
             }
         }
 
@@ -351,15 +306,28 @@ namespace BanquetCoupons
             string Canteen = canteenName.Text;
             canteenPreview.Text = Canteen;
             label20.Text= Canteen;
+            label20.Location = new Point(339, 328); // ล็อกตำแหน่งไว้ก่อน
 
             if (label20.Text.Length > 17)
             {
                 label20.Font = new Font(label20.Font.FontFamily, 20, label20.Font.Style); // ปรับขนาดตามที่ต้องการ
+                label20.Location = new Point(339, 330);
+            }
+            else
+            {
+                label20.Font = new Font(label20.Font.FontFamily, 30, label20.Font.Style); // กลับไปขนาดปกติ
+                label20.Location = new Point(339, 328);
             }
 
             if (canteenPreview.Text.Length > 17)
             {
                 canteenPreview.Font = new Font(canteenPreview.Font.FontFamily, 20, canteenPreview.Font.Style); // ปรับขนาดตามที่ต้องการ
+                canteenPreview.Location = new Point(339, 330);
+            }
+            else
+            {
+                canteenPreview.Font = new Font(canteenPreview.Font.FontFamily, 30, canteenPreview.Font.Style); // กลับไปขนาดปกติ
+                canteenPreview.Location = new Point(339, 328);
             }
         }
 
@@ -372,7 +340,7 @@ namespace BanquetCoupons
         {
             mealType.Text = "";
             agency.Text = "";
-            canteenName.Text = "";
+            canteenName.ValueMember = " ";
             quantity.Text = "";
             comboBoxPaperSize.Text = "";
             lblSerialNumber.Text = "";
@@ -483,9 +451,9 @@ namespace BanquetCoupons
                 return;
             }
 
-            double pageWidth = 21.0, pageHeight = 29.7;
+            double pageWidth = 21.3, pageHeight = 30.0;
 
-            double couponWidth = 10.0, couponHeight = 5.0, marginX = 0.2, marginY = 0.0, spacingX = 0.0, spacingY = 0.0;
+            double couponWidth = 10.5, couponHeight = 5.5, marginX = 0.0, marginY = 0.0, spacingX = 0.0, spacingY = 0.0;
             int couponsPerRow = 2;
             int couponsPerColumn = (int)Math.Floor((pageHeight - (2 * marginY)) / (couponHeight + spacingY));
             int couponsPerPage = couponsPerRow * couponsPerColumn;
@@ -513,7 +481,8 @@ namespace BanquetCoupons
                         string serial = serialNumbers[index]; // ✅ ใช้ serialNum ที่สุ่มไว้
 
                         UpdatePanelWithSerialNumber("AS" + serial);
-
+                        // ✅ เพิ่มขนาดฟอนต์ตรงนี้ให้ใหญ่ขึ้น (ลำดับที่ 2)
+                        seNum.Font = new Font(seNum.Font.FontFamily, 20, FontStyle.Bold); // หรือเปลี่ยนเป็น FontBold ที่คุณปรับไว้แล้วก็ได้
                         seNum.Text = ((index + 1).ToString("D3")) + " - " + serial;
                         panel1.CreateControl();
                         panel1.Refresh();
@@ -566,9 +535,9 @@ namespace BanquetCoupons
 
             int count = serialNumbers.Count;
 
-            double pageWidth = 21.0, pageHeight = 29.7;
+            double pageWidth = 21.3, pageHeight = 30.0;
 
-            double couponWidth = 10.3, couponHeight = 5.3, marginX = 0.2, marginY = 0.0, spacingX = 0.0, spacingY = 0.0;
+            double couponWidth = 10.5, couponHeight = 5.5, marginX = 0.0, marginY = 0.0, spacingX = 0.0, spacingY = 0.0;
             int couponsPerRow = 2;
             int couponsPerColumn = (int)Math.Floor((pageHeight - (2 * marginY)) / (couponHeight + spacingY));
             int couponsPerPage = couponsPerRow * couponsPerColumn;
@@ -1275,17 +1244,21 @@ namespace BanquetCoupons
 
         private void quantity_ValueChanged(object sender, EventArgs e)
         {
+            quantity.Minimum = 1;
+            quantity.Maximum = 300;
+
             if (int.TryParse(quantity.Text, out int sumQty))
             {
-                if (quantity.Value >= 300)
+                if (sumQty > quantity.Maximum)
                 {
-                    MessageBox.Show($"กรอกตัวเลขได้ไม่เกิน {sumQty}", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"กรอกตัวเลขได้ไม่เกิน {quantity.Maximum}", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     quantity.BackColor = Color.Red;
-                    quantity.Value = sumQty;
+                    quantity.Value = quantity.Maximum; // กำหนดแค่สูงสุดที่อนุญาต
                 }
                 else
                 {
                     quantity.BackColor = Color.White;
+                    quantity.Value = sumQty;
                 }
             }
         }

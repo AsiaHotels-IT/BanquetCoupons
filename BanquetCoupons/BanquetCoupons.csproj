@@ -237,12 +237,6 @@
     <Compile Include="CouponsUsage.Designer.cs">
       <DependentUpon>CouponsUsage.cs</DependentUpon>
     </Compile>
-    <Compile Include="serviceReport.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="serviceReport.Designer.cs">
-      <DependentUpon>serviceReport.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -291,9 +285,6 @@
     </Compile>
     <EmbeddedResource Include="service.resx">
       <DependentUpon>service.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="serviceReport.resx">
-      <DependentUpon>serviceReport.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="config.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

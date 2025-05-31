@@ -133,6 +133,7 @@
             this.Controls.Add(this.panelMenu);
             this.Name = "FinanceForm";
             this.Text = "FinanceForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FinanceForm_Load);
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();

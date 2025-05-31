@@ -39,13 +39,6 @@ namespace BanquetCoupons
             panelContent.Controls.Add(CU);
         }
 
-        private void btnReport_Click(object sender, EventArgs e)
-        {
-            panelContent.Controls.Clear();
-            serviceReport SR = new serviceReport(user);
-            SR.Dock= DockStyle.Fill;
-            panelContent.Controls.Add(SR);
-        }
 
         private void btnHome_Click(object sender, EventArgs e)
         {
