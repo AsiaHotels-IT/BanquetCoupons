@@ -278,27 +278,9 @@ namespace BanquetCoupons
             agencyPreview.Text = $"{Agency}";
             label19.Text = $"{Agency}";
 
-            if (label19.Text.Length > 17)
-            {
-                label19.Font = new Font(label19.Font.FontFamily, 20, label19.Font.Style); // ปรับขนาดตามที่ต้องการ
-                label19.Location = new Point(339, 225); // เปลี่ยนตำแหน่ง
-            }
-            else
-            {
-                label19.Font = new Font(label19.Font.FontFamily, 30, label19.Font.Style); // กลับไปขนาดปกติ
-                label19.Location = new Point(339, 225); // เปลี่ยนตำแหน่ง
-            }
+            label19.Font = new Font(label19.Font.FontFamily, 30, label19.Font.Style); // กลับไปขนาดปกติ
+            agencyPreview.Font = new Font(agencyPreview.Font.FontFamily, 30, agencyPreview.Font.Style); // กลับไปขนาดปกติ
 
-            if (agencyPreview.Text.Length > 17)
-            {
-                agencyPreview.Font = new Font(agencyPreview.Font.FontFamily, 20, agencyPreview.Font.Style); // ปรับขนาดตามที่ต้องการ
-                agencyPreview.Location = new Point(339, 225); // เปลี่ยนตำแหน่ง
-            }
-            else
-            {
-                agencyPreview.Font = new Font(agencyPreview.Font.FontFamily, 30, label9.Font.Style); // กลับไปขนาดปกติ
-                agencyPreview.Location = new Point(339, 225); // เปลี่ยนตำแหน่ง
-            }
         }
 
         private void PreviewCanteen()
@@ -306,28 +288,20 @@ namespace BanquetCoupons
             string Canteen = canteenName.Text;
             canteenPreview.Text = Canteen;
             label20.Text= Canteen;
-            label20.Location = new Point(339, 328); // ล็อกตำแหน่งไว้ก่อน
 
-            if (label20.Text.Length > 17)
-            {
-                label20.Font = new Font(label20.Font.FontFamily, 20, label20.Font.Style); // ปรับขนาดตามที่ต้องการ
-                label20.Location = new Point(339, 330);
-            }
-            else
-            {
-                label20.Font = new Font(label20.Font.FontFamily, 30, label20.Font.Style); // กลับไปขนาดปกติ
-                label20.Location = new Point(339, 328);
-            }
+            label20.Font = new Font(label20.Font.FontFamily, 30, label20.Font.Style); // กลับไปขนาดปกติ
+            canteenPreview.Font = new Font(canteenPreview.Font.FontFamily, 30, canteenPreview.Font.Style); // กลับไปขนาดปกติ
 
-            if (canteenPreview.Text.Length > 17)
+            int selectedIndex = canteenName.SelectedIndex;
+            label20.AutoSize = false;
+            label20.Location = new Point(339, 331);
+
+            if (selectedIndex == 18)
             {
-                canteenPreview.Font = new Font(canteenPreview.Font.FontFamily, 20, canteenPreview.Font.Style); // ปรับขนาดตามที่ต้องการ
-                canteenPreview.Location = new Point(339, 330);
-            }
-            else
-            {
-                canteenPreview.Font = new Font(canteenPreview.Font.FontFamily, 30, canteenPreview.Font.Style); // กลับไปขนาดปกติ
-                canteenPreview.Location = new Point(339, 328);
+                // เพิ่ม \n เพื่อขึ้นบรรทัดใหม่เอง หรือปล่อยให้ตัดอัตโนมัติ
+                label20.Text = "   RATCHATHEWI \nGRAND BALLROOM";
+                label20.AutoSize = true;
+                label20.Location = new Point(339, 311);
             }
         }
 
@@ -340,7 +314,7 @@ namespace BanquetCoupons
         {
             mealType.Text = "";
             agency.Text = "";
-            canteenName.ValueMember = " ";
+            canteenName.SelectedIndex = 0;
             quantity.Text = "";
             comboBoxPaperSize.Text = "";
             lblSerialNumber.Text = "";
@@ -350,7 +324,7 @@ namespace BanquetCoupons
             // ล้างวันที่
             mealDate.Format = DateTimePickerFormat.Custom;
             mealDate.CustomFormat = " ";      // แสดงเป็นค่าว่าง
-            mealDate.Value = DateTime.Now;    // ค่าภายใน (ไม่แสดง)
+            mealDate.Value = DateTime.Now;
             isDatePicked = false;
 
             // ล้าง preview
@@ -484,6 +458,7 @@ namespace BanquetCoupons
                         // ✅ เพิ่มขนาดฟอนต์ตรงนี้ให้ใหญ่ขึ้น (ลำดับที่ 2)
                         seNum.Font = new Font(seNum.Font.FontFamily, 20, FontStyle.Bold); // หรือเปลี่ยนเป็น FontBold ที่คุณปรับไว้แล้วก็ได้
                         seNum.Text = ((index + 1).ToString("D3")) + " - " + serial;
+                        label9.Font = new Font(label9.Font.FontFamily, 25, FontStyle.Regular);
                         panel1.CreateControl();
                         panel1.Refresh();
                         System.Windows.Forms.Application.DoEvents();
