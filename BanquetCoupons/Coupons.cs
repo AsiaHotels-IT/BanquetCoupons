@@ -659,10 +659,6 @@ namespace BanquetCoupons
 
             panel1.Refresh();
         }
-
-
-
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             bool isValid = true;
