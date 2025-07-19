@@ -32,6 +32,7 @@
             this.btnDel = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btnAddPrint = new System.Windows.Forms.Button();
             this.btnPrev = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -48,8 +49,6 @@
             this.canteenName = new System.Windows.Forms.ComboBox();
             this.mealDate = new System.Windows.Forms.DateTimePicker();
             this.quantity = new System.Windows.Forms.NumericUpDown();
-            this.label13 = new System.Windows.Forms.Label();
-            this.comboBoxPaperSize = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.userLogin = new System.Windows.Forms.Label();
             this.bqid = new System.Windows.Forms.Label();
@@ -80,6 +79,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
+            this.comboBoxPaperSize = new System.Windows.Forms.ComboBox();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.quantity)).BeginInit();
@@ -99,7 +100,7 @@
             this.btnEditNprint.Name = "btnEditNprint";
             this.btnEditNprint.Size = new System.Drawing.Size(117, 39);
             this.btnEditNprint.TabIndex = 22;
-            this.btnEditNprint.Text = "พิมพ์";
+            this.btnEditNprint.Text = "พิมพ์ซ้ำ";
             this.btnEditNprint.UseVisualStyleBackColor = false;
             this.btnEditNprint.Visible = false;
             this.btnEditNprint.Click += new System.EventHandler(this.btnEditNprint_Click);
@@ -123,7 +124,7 @@
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
             this.btnCancel.Font = new System.Drawing.Font("Noto Sans Thai", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
-            this.btnCancel.Location = new System.Drawing.Point(362, 0);
+            this.btnCancel.Location = new System.Drawing.Point(491, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(117, 39);
             this.btnCancel.TabIndex = 24;
@@ -136,6 +137,7 @@
             // 
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.Controls.Add(this.btnAddPrint);
             this.panel4.Controls.Add(this.btnCancel);
             this.panel4.Controls.Add(this.btnPrev);
             this.panel4.Controls.Add(this.btnNext);
@@ -148,11 +150,26 @@
             this.panel4.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(50, 0, 50, 0);
-            this.panel4.Size = new System.Drawing.Size(1312, 41);
+            this.panel4.Size = new System.Drawing.Size(1307, 41);
             this.panel4.TabIndex = 21;
+            // 
+            // btnAddPrint
+            // 
+            this.btnAddPrint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
+            this.btnAddPrint.Font = new System.Drawing.Font("Noto Sans Thai", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.btnAddPrint.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
+            this.btnAddPrint.Location = new System.Drawing.Point(360, 1);
+            this.btnAddPrint.Name = "btnAddPrint";
+            this.btnAddPrint.Size = new System.Drawing.Size(117, 39);
+            this.btnAddPrint.TabIndex = 27;
+            this.btnAddPrint.Text = "พิมพ์เพิ่ม";
+            this.btnAddPrint.UseVisualStyleBackColor = false;
+            this.btnAddPrint.Visible = false;
+            this.btnAddPrint.Click += new System.EventHandler(this.btnAddPrint_Click);
             // 
             // btnPrev
             // 
+            this.btnPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrev.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnPrev.Location = new System.Drawing.Point(1065, 8);
             this.btnPrev.Name = "btnPrev";
@@ -164,6 +181,7 @@
             // 
             // btnNext
             // 
+            this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.btnNext.Location = new System.Drawing.Point(1133, 8);
             this.btnNext.Name = "btnNext";
@@ -193,7 +211,7 @@
             this.btnClearForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
             this.btnClearForm.Font = new System.Drawing.Font("Noto Sans Thai", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClearForm.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
-            this.btnClearForm.Location = new System.Drawing.Point(656, 0);
+            this.btnClearForm.Location = new System.Drawing.Point(750, 1);
             this.btnClearForm.Name = "btnClearForm";
             this.btnClearForm.Size = new System.Drawing.Size(110, 39);
             this.btnClearForm.TabIndex = 20;
@@ -208,7 +226,7 @@
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(186)))), ((int)(((byte)(128)))));
             this.btnSave.Font = new System.Drawing.Font("Noto Sans Thai", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(101)))), ((int)(((byte)(0)))), ((int)(((byte)(10)))));
-            this.btnSave.Location = new System.Drawing.Point(516, 0);
+            this.btnSave.Location = new System.Drawing.Point(624, 0);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(110, 39);
             this.btnSave.TabIndex = 19;
@@ -285,6 +303,7 @@
             // 
             // mealType
             // 
+            this.mealType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.mealType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mealType.FormattingEnabled = true;
             this.mealType.Items.AddRange(new object[] {
@@ -313,6 +332,7 @@
             // 
             // canteenName
             // 
+            this.canteenName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.canteenName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.canteenName.FormattingEnabled = true;
             this.canteenName.Location = new System.Drawing.Point(409, 90);
@@ -344,26 +364,6 @@
             0,
             0});
             this.quantity.ValueChanged += new System.EventHandler(this.quantity_ValueChanged);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(231, 155);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(96, 24);
-            this.label13.TabIndex = 10;
-            this.label13.Text = "ขนาดกระดาษ";
-            this.label13.UseCompatibleTextRendering = true;
-            // 
-            // comboBoxPaperSize
-            // 
-            this.comboBoxPaperSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxPaperSize.FormattingEnabled = true;
-            this.comboBoxPaperSize.Location = new System.Drawing.Point(335, 151);
-            this.comboBoxPaperSize.Name = "comboBoxPaperSize";
-            this.comboBoxPaperSize.Size = new System.Drawing.Size(222, 28);
-            this.comboBoxPaperSize.TabIndex = 11;
             // 
             // panel3
             // 
@@ -767,6 +767,27 @@
             this.panel2.Size = new System.Drawing.Size(177, 130);
             this.panel2.TabIndex = 0;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(231, 155);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(96, 24);
+            this.label13.TabIndex = 10;
+            this.label13.Text = "ขนาดกระดาษ";
+            this.label13.UseCompatibleTextRendering = true;
+            // 
+            // comboBoxPaperSize
+            // 
+            this.comboBoxPaperSize.Enabled = false;
+            this.comboBoxPaperSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxPaperSize.FormattingEnabled = true;
+            this.comboBoxPaperSize.Location = new System.Drawing.Point(335, 151);
+            this.comboBoxPaperSize.Name = "comboBoxPaperSize";
+            this.comboBoxPaperSize.Size = new System.Drawing.Size(222, 28);
+            this.comboBoxPaperSize.TabIndex = 11;
+            // 
             // Coupons
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -817,8 +838,6 @@
         private System.Windows.Forms.ComboBox canteenName;
         private System.Windows.Forms.DateTimePicker mealDate;
         private System.Windows.Forms.NumericUpDown quantity;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox comboBoxPaperSize;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label bqid;
         private System.Windows.Forms.Button btnNext;
@@ -851,5 +870,8 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button btnAddPrint;
+        private System.Windows.Forms.ComboBox comboBoxPaperSize;
+        private System.Windows.Forms.Label label13;
     }
 }

@@ -82,7 +82,7 @@ namespace BanquetCoupons
             lblSerialNumber.Font = fontManager.FontBarcode;
             listBox1.SelectedItem = "TH";
 
-            
+
         }
 
         PrivateFontCollection pfc = new PrivateFontCollection();
@@ -287,7 +287,7 @@ namespace BanquetCoupons
         {
             string Canteen = canteenName.Text;
             canteenPreview.Text = Canteen;
-            label20.Text= Canteen;
+            label20.Text = Canteen;
 
             label20.Font = new Font(label20.Font.FontFamily, 30, label20.Font.Style); // กลับไปขนาดปกติ
             canteenPreview.Font = new Font(canteenPreview.Font.FontFamily, 30, canteenPreview.Font.Style); // กลับไปขนาดปกติ
@@ -655,14 +655,13 @@ namespace BanquetCoupons
 
         private void UpdatePanelWithSerialNumber(string serial)
         {
-            lblSerialNumber.Text = serial; // หรืออะไรก็ตามที่คุณใช้ใน panel1 เพื่อแสดงหมายเลขคูปอง
-
+            lblSerialNumber.Text = serial; 
             panel1.Refresh();
         }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             bool isValid = true;
-
             if (string.IsNullOrWhiteSpace(mealType.Text))
             {
                 mealType.BackColor = Color.MistyRose;
@@ -717,7 +716,6 @@ namespace BanquetCoupons
             {
                 mealDate.BackColor = Color.White;
             }
-
             saveData();
         }
 
@@ -832,9 +830,9 @@ namespace BanquetCoupons
             {
                 mealDate.BackColor = Color.White;
             }
-            
+
             EditNprint();
-            
+
             btnEdit.Visible = false;
             btnEditNprint.Visible = false;
             btnSave.Visible = true;
@@ -937,7 +935,7 @@ namespace BanquetCoupons
                             loadData(currentPage);
                             SaveCouponAsPDF(selectedBQID);
                             clearData();
-                            
+
                         }
                         catch (Exception ex)
                         {
@@ -1173,6 +1171,7 @@ namespace BanquetCoupons
                 btnDel.Visible = true;
                 btnCancel.Visible = true;
                 btnEditNprint.Visible = true;
+                btnAddPrint.Visible = true;
 
 
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
@@ -1240,13 +1239,13 @@ namespace BanquetCoupons
             if (selectedLanguage == "TH")
             {
                 label6.Visible = true;
-                label7.Visible= true;
-                label8.Visible= true;
-                label9.Visible= true;
-                lblPreview.Visible= true;
-                agencyPreview.Visible= true;
-                canteenPreview.Visible= true;
-                mealDatePreview.Visible= true;
+                label7.Visible = true;
+                label8.Visible = true;
+                label9.Visible = true;
+                lblPreview.Visible = true;
+                agencyPreview.Visible = true;
+                canteenPreview.Visible = true;
+                mealDatePreview.Visible = true;
 
                 label10.Visible = false;
                 label11.Visible = false;
@@ -1308,6 +1307,433 @@ namespace BanquetCoupons
                 // วาดเส้นขวา
                 e.Graphics.DrawLine(pen, lbl.Width - 1, 0, lbl.Width - 1, lbl.Height);
             }
+        }
+
+        private void btnAddPrint_Click(object sender, EventArgs e)
+        {
+            {
+                bool isValid = true;
+
+                if (string.IsNullOrWhiteSpace(mealType.Text))
+                {
+                    mealType.BackColor = Color.MistyRose;
+                    MessageBox.Show("กรุณากรอกประเภทมื้ออาหาร", "ข้อมูลไม่ถูกต้อง", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                    isValid = false;
+                }
+                else
+                {
+                    mealType.BackColor = Color.White;
+                }
+                if (string.IsNullOrWhiteSpace(agency.Text))
+                {
+                    agency.BackColor = Color.MistyRose;
+                    MessageBox.Show("กรุณากรอกชื่อหน่วยงาน", "ข้อมูลไม่ถูกต้อง", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                    isValid = false;
+                }
+                else
+                {
+                    agency.BackColor = Color.White;
+                }
+                if (string.IsNullOrWhiteSpace(canteenName.Text))
+                {
+                    canteenName.BackColor = Color.MistyRose;
+                    MessageBox.Show("กรุณากรอกชื่อห้องจัดเลี้ยง", "ข้อมูลไม่ถูกต้อง", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                    isValid = false;
+                }
+                else
+                {
+                    canteenName.BackColor = Color.White;
+                }
+                if (!int.TryParse(quantity.Text, out int qty) || qty <= 0)
+                {
+                    quantity.BackColor = Color.MistyRose;
+                    MessageBox.Show("กรุณากรอกจำนวนที่เป็นตัวเลขและต้องมากกว่า 0", "ข้อมูลไม่ถูกต้อง", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    quantity.BackColor = Color.White;
+                }
+
+                if (!isDatePicked)
+                {
+                    mealDate.BackColor = Color.MistyRose;
+                    MessageBox.Show("กรุณากรอกวันที่", "ข้อมูลไม่ถูกต้อง", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    mealDate.BackColor = Color.White;
+                }
+
+                if (!isDatePicked)
+                {
+                    mealDate.BackColor = Color.MistyRose;
+                    MessageBox.Show("กรุณากรอกวันที่", "ข้อมูลไม่ถูกต้อง", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    mealDate.BackColor = Color.White;
+                }
+
+                EditAddprint();
+
+                btnEdit.Visible = false;
+                btnEditNprint.Visible = false;
+                btnSave.Visible = true;
+                btnClearForm.Visible = true;
+                btnDel.Visible = false;
+                btnCancel.Visible = false;
+
+            }
+        }
+        private void EditAddprint()
+        {
+            try
+            {
+                string iniPath = "config.ini";
+                var config = IniReader.ReadIni(iniPath, "Database");
+                string server = config.ContainsKey("Server") ? config["Server"] : "";
+                string database = config.ContainsKey("Database") ? config["Database"] : "";
+                string user = config.ContainsKey("User") ? config["User"] : "";
+                string password = config.ContainsKey("Password") ? config["Password"] : "";
+                string selectedBQID = bqid.Text;
+                string currentUser = userLogin.Text;
+                string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+
+                // --- ขอเหตุผลจากผู้ใช้ก่อน ---
+                AddCouponInput userInput = Prompt.ShowAddCouponDialog("ระบุจำนวนและเหตุผลในการเพิ่มคูปอง");
+                int addQty = userInput.Quantity;
+                string reason = userInput.Reason;
+
+                if (addQty <= 0)
+                {
+                    MessageBox.Show("กรุณากรอกจำนวนที่เป็นตัวเลขและมากกว่า 0", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(reason))
+                {
+                    MessageBox.Show("กรุณากรอกเหตุผล!", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                List<string> newCouponNums = new List<string>();
+                List<string> usedSerialNums = new List<string>();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (SqlTransaction transaction = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            // 1. ดึง serialNum เดิมใน BQID นี้
+                            List<string> oldSerials = new List<string>();
+                            string selectSerialSql = "SELECT DISTINCT serialNum FROM Coupons WHERE BQID = @BQID";
+                            using (SqlCommand cmd = new SqlCommand(selectSerialSql, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@BQID", selectedBQID);
+                                using (SqlDataReader reader = cmd.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        oldSerials.Add(reader["serialNum"].ToString());
+                                    }
+                                }
+                            }
+                            if (oldSerials.Count == 0)
+                            {
+                                MessageBox.Show("ไม่พบ serialNum เดิมใน BQID นี้", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
+                            // 2. หาค่า couponNum เดิมสูงสุด
+                            int lastCouponNum = 0;
+                            using (SqlCommand cmd = new SqlCommand("SELECT ISNULL(MAX(CAST(couponNum AS int)),0) FROM Coupons WHERE BQID = @BQID", conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@BQID", selectedBQID);
+                                object result = cmd.ExecuteScalar();
+                                lastCouponNum = Convert.ToInt32(result);
+                            }
+
+                            // 3. ดึงข้อมูลหลักของ BQID เดิม (เพื่อเติมข้อมูลอื่น ๆ)
+                            string sqlDetail = "SELECT TOP 1 mealDate, mealType, agency, cateringName, paperSize FROM Coupons WHERE BQID = @BQID";
+                            DateTime mealDate = DateTime.Now;
+                            string mealType = "", agency = "", cateringName = "", paperSize = "";
+                            using (SqlCommand cmd = new SqlCommand(sqlDetail, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@BQID", selectedBQID);
+                                using (var r = cmd.ExecuteReader())
+                                {
+                                    if (r.Read())
+                                    {
+                                        mealDate = r.GetDateTime(0);
+                                        mealType = r.GetString(1);
+                                        agency = r.GetString(2);
+                                        cateringName = r.GetString(3);
+                                        paperSize = r.GetString(4);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("ไม่พบ BQID นี้");
+                                        return;
+                                    }
+                                }
+                            }
+
+                            // 4. เพิ่มคูปองใหม่ ใช้ serialNum เดิม กระจายตามจำนวนที่เพิ่ม
+                            int serialCount = oldSerials.Count;
+                            List<string> addedSerials = new List<string>();
+                            List<string> addedCouponNums = new List<string>();
+
+                            for (int i = 1; i <= addQty; i++)
+                            {
+                                int newCouponNum = lastCouponNum + i;
+                                string couponNumStr = newCouponNum.ToString("D3");
+                                // วน serialNum เดิม เช่น ถ้ามี 3 serialNum แล้วเพิ่ม 6 ใบ จะวน serialNum เดิม
+                                string useSerialNum = oldSerials[(newCouponNum - 1) % serialCount];
+                                addedSerials.Add(useSerialNum);
+                                addedCouponNums.Add(couponNumStr);
+
+                                string sqlInsert = @"INSERT INTO Coupons 
+                            (BQID, mealDate, mealType, agency, cateringName, quantity, paperSize, serialNum, status, couponNum)
+                            VALUES (@BQID, @mealDate, @mealType, @agency, @cateringName, 1, @paperSize, @serialNum, 'added', @couponNum)";
+                                using (SqlCommand cmd = new SqlCommand(sqlInsert, conn, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@BQID", selectedBQID);
+                                    cmd.Parameters.AddWithValue("@mealDate", mealDate);
+                                    cmd.Parameters.AddWithValue("@mealType", mealType);
+                                    cmd.Parameters.AddWithValue("@agency", agency);
+                                    cmd.Parameters.AddWithValue("@cateringName", cateringName);
+                                    cmd.Parameters.AddWithValue("@paperSize", paperSize);
+                                    cmd.Parameters.AddWithValue("@serialNum", useSerialNum);
+                                    cmd.Parameters.AddWithValue("@couponNum", couponNumStr);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            // 5. Log ลง UpdateCoupons
+                            string serialNum = oldSerials[0];
+                            string sqlLog = @"INSERT INTO UpdateCoupons (BQID, serialNum, quantity, editAt, Username, Reason)
+                                            VALUES (@BQID, @serialNum, @quantity, GETDATE(), @Username, @Reason)";
+                            using (SqlCommand cmd = new SqlCommand(sqlLog, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@BQID", selectedBQID);
+                                cmd.Parameters.AddWithValue("@serialNum", serialNum);
+                                cmd.Parameters.AddWithValue("@quantity", addQty);
+                                cmd.Parameters.AddWithValue("@Username", currentUser);
+                                cmd.Parameters.AddWithValue("@Reason", reason);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            transaction.Commit();
+
+                            MessageBox.Show("เพิ่มคูปองใหม่และพร้อมปริ๊นแล้ว");
+                            loadData(currentPage);
+
+                            // 6. ปริ๊นเฉพาะที่เพิ่มใหม่ (ส่ง serialNum และ couponNum ที่เพิ่มใหม่)
+                            PrintCoupons(selectedBQID, addedSerials, addedCouponNums);
+
+                            clearData();
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            MessageBox.Show("เกิดข้อผิดพลาด: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+        public static class Prompt
+        {
+            public static AddCouponInput ShowAddCouponDialog(string caption)
+            {
+                AddCouponInput result = new AddCouponInput();
+
+                Form prompt = new Form()
+                {
+                    Width = 400,
+                    Height = 220,
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    Text = caption,
+                    StartPosition = FormStartPosition.CenterScreen
+                };
+
+                Label lblQty = new Label() { Left = 20, Top = 20, Text = "จำนวนที่ต้องการเพิ่ม:", Width = 340 };
+                TextBox qtyBox = new TextBox() { Left = 20, Top = 45, Width = 340 };
+
+                Label lblReason = new Label() { Left = 20, Top = 80, Text = "เหตุผลในการเพิ่มคูปอง:", Width = 340 };
+                TextBox reasonBox = new TextBox() { Left = 20, Top = 105, Width = 340 };
+
+                Button confirmation = new Button() { Text = "OK", Left = 200, Width = 80, Top = 150, DialogResult = DialogResult.OK };
+                Button cancel = new Button() { Text = "Cancel", Left = 290, Width = 80, Top = 150, DialogResult = DialogResult.Cancel };
+                confirmation.Click += (sender, e) => { prompt.Close(); };
+                cancel.Click += (sender, e) => { prompt.Close(); };
+
+                prompt.Controls.Add(lblQty);
+                prompt.Controls.Add(qtyBox);
+                prompt.Controls.Add(lblReason);
+                prompt.Controls.Add(reasonBox);
+                prompt.Controls.Add(confirmation);
+                prompt.Controls.Add(cancel);
+                prompt.AcceptButton = confirmation;
+                prompt.CancelButton = cancel;
+
+                if (prompt.ShowDialog() == DialogResult.OK)
+                {
+                    if (!int.TryParse(qtyBox.Text, out result.Quantity) || result.Quantity <= 0)
+                        result.Quantity = 0;
+                    result.Reason = reasonBox.Text.Trim();
+                }
+                else
+                {
+                    result.Quantity = 0;
+                    result.Reason = "";
+                }
+                return result;
+            }
+        }
+        private void PrintCoupons(string bqid, List<string> serialNums, List<string> couponNums)
+        {
+            if (serialNums == null || couponNums == null || serialNums.Count == 0 || couponNums.Count == 0)
+            {
+                MessageBox.Show("ไม่มีข้อมูลคูปองสำหรับปริ๊น", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string iniPath = "config.ini";
+            var config = IniReader.ReadIni(iniPath, "Database");
+            string connectionString = $"Server={config["Server"]};Database={config["Database"]};User Id={config["User"]};Password={config["Password"]};";
+
+            // เตรียมข้อมูลคูปองที่จะปริ๊น
+            List<CouponData> coupons = new List<CouponData>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                // สร้าง WHERE ... serialNum = @s0 AND couponNum = @c0 OR serialNum = @s1 AND couponNum = @c1 ...
+                List<string> whereParts = new List<string>();
+                for (int i = 0; i < serialNums.Count; i++)
+                    whereParts.Add($"(serialNum = @s{i} AND couponNum = @c{i})");
+                string whereClause = string.Join(" OR ", whereParts);
+
+                string query = $@"
+                    SELECT serialNum, couponNum
+                    FROM Coupons
+                    WHERE BQID = @BQID AND ({whereClause})
+                    ORDER BY CAST(couponNum AS int) ASC
+                ";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@BQID", bqid);
+                    for (int i = 0; i < serialNums.Count; i++)
+                    {
+                        cmd.Parameters.AddWithValue($"@s{i}", serialNums[i]);
+                        cmd.Parameters.AddWithValue($"@c{i}", couponNums[i]);
+                    }
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            coupons.Add(new CouponData
+                            {
+                                SerialNum = reader["serialNum"].ToString(),
+                                CouponNum = reader["couponNum"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+
+            if (coupons.Count == 0)
+            {
+                MessageBox.Show("ไม่พบคูปองที่ต้องการปริ๊น", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // --------------- สร้าง PDF ----------------
+            double pageWidth = 21.3, pageHeight = 30.0; // A4
+            double couponWidth = 10.5, couponHeight = 5.5, marginX = 0.0, marginY = 0.0, spacingX = 0.0, spacingY = 0.0;
+            int couponsPerRow = 2;
+            int couponsPerColumn = (int)Math.Floor((pageHeight - (2 * marginY)) / (couponHeight + spacingY));
+            int couponsPerPage = couponsPerRow * couponsPerColumn;
+            int pageCount = (int)Math.Ceiling(coupons.Count / (double)couponsPerPage);
+
+            PdfSharp.Pdf.PdfDocument document = new PdfSharp.Pdf.PdfDocument();
+            document.Info.Title = "Banquet Coupons Print";
+
+            for (int p = 0; p < pageCount; p++)
+            {
+                var page = document.AddPage();
+                page.Width = PdfSharp.Drawing.XUnit.FromCentimeter(pageWidth);
+                page.Height = PdfSharp.Drawing.XUnit.FromCentimeter(pageHeight);
+                var gfx = PdfSharp.Drawing.XGraphics.FromPdfPage(page);
+
+                for (int row = 0; row < couponsPerColumn; row++)
+                {
+                    for (int col = 0; col < couponsPerRow; col++)
+                    {
+                        int index = p * couponsPerPage + (row * couponsPerRow + col);
+                        if (index >= coupons.Count) break;
+
+                        var coupon = coupons[index];
+                        UpdatePanelWithSerialNumber("AS" + coupon.SerialNum);
+                        seNum.Font = new Font(seNum.Font.FontFamily, 20, FontStyle.Bold);
+                        seNum.Text = $"{coupon.CouponNum} - {coupon.SerialNum}";
+                        label9.Font = new Font(label9.Font.FontFamily, 25, FontStyle.Regular);
+                        lblPreview.Font = new Font(lblPreview.Font.FontFamily, 28, FontStyle.Regular);
+
+                        panel1.CreateControl();
+                        panel1.Refresh();
+                        System.Windows.Forms.Application.DoEvents();
+
+                        using (Bitmap bmp = new Bitmap(panel1.Width, panel1.Height))
+                        {
+                            bmp.SetResolution(300, 300);
+                            panel1.DrawToBitmap(bmp, new Rectangle(0, 0, panel1.Width, panel1.Height));
+                            using (MemoryStream ms = new MemoryStream())
+                            {
+                                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                                ms.Position = 0;
+                                var ximg = PdfSharp.Drawing.XImage.FromStream(ms);
+
+                                double drawX = marginX + col * (couponWidth + spacingX);
+                                double drawY = marginY + row * (couponHeight + spacingY);
+
+                                gfx.DrawImage(
+                                    ximg,
+                                    PdfSharp.Drawing.XUnit.FromCentimeter(drawX).Point,
+                                    PdfSharp.Drawing.XUnit.FromCentimeter(drawY).Point,
+                                    PdfSharp.Drawing.XUnit.FromCentimeter(couponWidth).Point,
+                                    PdfSharp.Drawing.XUnit.FromCentimeter(couponHeight).Point
+                                );
+                            }
+                        }
+                    }
+                }
+            }
+
+            string tempPath = Path.Combine(Path.GetTempPath(), $"BanquetCoupons_{bqid}_{DateTime.Now:yyyyMMddHHmmss}.pdf");
+            document.Save(tempPath);
+            Process.Start(new ProcessStartInfo(tempPath) { UseShellExecute = true });
+        }
+        public class CouponData
+        {
+            public string SerialNum { get; set; }
+            public string CouponNum { get; set; }
+        }
+        public struct AddCouponInput
+        {
+            public int Quantity;
+            public string Reason;
         }
     }
 }

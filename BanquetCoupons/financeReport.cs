@@ -152,7 +152,7 @@ namespace BanquetCoupons
 
                 case "รายงานการแก้ไขคูปอง":
                     sql = $@"
-                            SELECT EID, BQID, Username, quantity, serialNum, editAt
+                            SELECT EID, BQID, Username, quantity, serialNum, editAt, Reason
                             FROM UpdateCoupons
                             {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)}
                             ORDER BY BQID DESC
